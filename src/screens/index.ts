@@ -1,6 +1,7 @@
 import Book from "./Book";
 import When from "./When";
 import Login from "./Login";
+import Start from "./Start";
 import Review from "./Review";
 import Contact from "./Contact";
 import Profile from "./Profile";
@@ -14,6 +15,7 @@ export {
     When,
     Book,
     Login,
+    Start,
     Review,
     Profile,
     Contact,

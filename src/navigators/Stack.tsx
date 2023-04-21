@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import Bottom from './Bottom';
 import { NavigationContainer } from '@react-navigation/native';
-import { When } from '../screens';
+import { Start, When } from '../screens';
 import { HeaderLeftBtn } from '../components';
 
 const Stck = createNativeStackNavigator();
@@ -29,6 +29,13 @@ const Stack = () => {
                         }
                     })}
                 /> */}
+            {/* <Stck.Screen
+                name='Start'
+                component={Start}
+                options={{
+                    headerShown: false,
+                }}
+            /> */}
             <Stck.Screen
                 name='Bottom_tab_container'
                 component={Bottom}
