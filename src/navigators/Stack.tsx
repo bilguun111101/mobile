@@ -5,7 +5,7 @@ import {
 } from 'react-native';
 import Bottom from './Bottom';
 import { NavigationContainer } from '@react-navigation/native';
-import { Start, When } from '../screens';
+import { Start, Vehicles, When } from '../screens';
 import { HeaderLeftBtn } from '../components';
 
 const Stck = createNativeStackNavigator();
@@ -36,16 +36,17 @@ const Stack = () => {
                     headerShown: false,
                 }}
             /> */}
-            <Stck.Screen
+            {/* <Stck.Screen
                 name='Bottom_tab_container'
                 component={Bottom}
                 options={{
                     headerShown: false,
                 }}
-            />
-            <Stck.Screen
+            /> */}
+            {/* <Stck.Screen
                 name='When'
                 component={When}
+
                 // options={{
                 //     headerLeft: () => (
                 //         <HeaderLeftBtn />
@@ -54,8 +55,26 @@ const Stack = () => {
                 //     headerBackTitleVisible: false
                 // }}
                 options={{
-                    headerTitle: "When", 
-                    headerBackTitleVisible: false,
+                    headerTitle: "", 
+                    headerBackTitleVisible: false, 
+                    headerTitleStyle: { color: 'black' },
+                    headerStyle: {
+                        backgroundColor: 'white',
+                    },
+                    headerShadowVisible: false,
+                }}
+            /> */}
+            <Stck.Screen
+                name='Vehicles'
+                component={Vehicles}
+                options={{
+                    title: 'Vehicles',
+                    headerBackTitleVisible: false, 
+                    headerTitleStyle: { color: 'black' },
+                    headerStyle: {
+                        backgroundColor: 'white',
+                    },
+                    headerShadowVisible: false,
                 }}
             />
         </Stck.Navigator>
