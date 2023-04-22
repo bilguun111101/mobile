@@ -1,9 +1,14 @@
-import { Image, SafeAreaView, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 
 const Review = () => {
+  const extras = [
+    { source: require('../assets/insurance.png'), text: 'Insurance' },
+    { source: require('../assets/baby-car-seat.png'), text: "Car seats" },
+    { source: require("../assets/gps.png"), text: 'GPS' }
+  ]
   return (
     <SafeAreaView className="flex-1 bg-white relative">
-      <ScrollView className="">
+      <ScrollView>
         <View className="w-full bg-[#F1F1F1] relative">
           <View className="w-full pt-3 pb-6 flex-row justify-end ">
             <Image
@@ -36,7 +41,68 @@ const Review = () => {
             </View>
           </View>
         </View>
-        
+
+        <View className="w-full p-[25px]">
+          <View className="w-full p-[3px] flex-column gap-y-[14px]">
+            <Text className="font-medium text-base">Coverage & extras</Text>
+            {extras.map((el, idx) => {
+              const { source, text } = el;
+              return (
+                <View className="flex-row items-center justify-between" key={idx}>
+                  <View className="flex-row items-center gap-x-[11px]">
+                    <Image
+                      source={source}
+                      className='w-[20px] h-[20px]'
+                    />
+                    <Text className="font-medium text-base">{ text }</Text>
+                  </View>
+                  <Pressable className={`bg-[#444444] rounded-[20px] w-[70px] p-[4px]`}>
+                    <Text className="font-bold text-[13px] text-white text-center">Added</Text>
+                  </Pressable>
+                </View>
+              )
+            })}
+          </View>
+
+          <View className="mt-[30px] py-[30px] border-t-0.5 border-[#A7A7A7] px-[3px]">
+            <View className="flex-row items-center justify-between">
+              <View className="flex-row items-center gap-x-[11px]">
+                <Pressable
+                  className="w-[15px] h-[15px] rounded-full border-0.5 border-[#848484] bg-[#D9D9D9]"
+                />
+                <Text className="font-normal text-[#515151] text-[13px]">Pay Now</Text>
+              </View>
+              <Pressable className={`bg-[#444444] rounded-[20px] w-[80px] p-[4px]`}>
+                <Text className="font-bold text-[13px] text-white text-center">Add card</Text>
+              </Pressable>
+            </View>
+
+            <View className="flex-row items-center justify-between mt-[20px]">
+              <View className="flex-row items-center gap-x-[11px]">
+                <Pressable
+                  className="w-[15px] h-[15px] rounded-full border-0.5 border-[#848484] bg-[#D9D9D9]"
+                />
+                <Text className="font-normal text-[#515151] text-[13px]">Pay at Pickup</Text>
+              </View>
+              <Text className="font-[600] text-[16px] text-black text-center">550.00$</Text>
+            </View>
+          </View>
+        </View>
+
+        <View className="pt-[50px] px-[30px] pb-[30px] bg-white" style={{
+          shadowColor: "",
+          shadowOffset: {
+            width: 0,
+            height: -3,
+          },
+          shadowOpacity: 0.22,
+          shadowRadius: 2.22,
+          elevation: 3,
+        }}>
+          <Pressable className="bg-[#FF3002] rounded-[25px] py-[14px] active:bg-[#FF0000]">
+            <Text className="text-center text-white font-bold text-base">Rent with</Text>
+          </Pressable>
+        </View>
       </ScrollView>
     </SafeAreaView>
   )
