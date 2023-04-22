@@ -95,7 +95,7 @@ const Review = () => {
             width: 0,
             height: -3,
           },
-          shadowOpacity: 0.22,
+          shadowOpacity: 0.05,
           shadowRadius: 2.22,
           elevation: 3,
         }}>
