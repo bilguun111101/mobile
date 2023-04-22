@@ -4,7 +4,7 @@ import {
 } from 'react-native';
 import Bottom from './Bottom';
 import { HeaderLeftBtn } from '../components';
-import { Review, Start, Vehicles, When } from '../screens';
+import { Contact, Review, Start, Vehicles, When } from '../screens';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -89,9 +89,21 @@ const Stack = () => {
                     }
                 }}
             /> */}
-            <Stck.Screen
+            {/* <Stck.Screen
                 name='Review'
                 component={Review}
+                options={{
+                    title: 'Review details',
+                    headerBackTitleVisible: false,
+                    headerTitleStyle: { color: 'black' },
+                    headerStyle: {
+                        backgroundColor: 'white',
+                    }
+                }}
+            /> */}
+            <Stck.Screen
+                name='Contact'
+                component={Contact}
                 options={{
                     title: 'Review details',
                     headerBackTitleVisible: false,
