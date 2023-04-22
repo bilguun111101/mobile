@@ -16,7 +16,7 @@ export const shadow = StyleSheet.create({
     header: {
       shadowColor: "#000",
       shadowOffset: {
-        width: 0,
+        width: 1,
         height: 1,
       },
       shadowOpacity: 0.22,
