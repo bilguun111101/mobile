@@ -1,10 +1,6 @@
-import {
-    Image,
-    Text, View,
-} from 'react-native';
 import Bottom from './Bottom';
 import { HeaderLeftBtn } from '../components';
-import { Contact, Review, Start, Vehicles, When } from '../screens';
+import { Contact, RentalDetails, Review, Start, Vehicles, When } from '../screens';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -101,11 +97,23 @@ const Stack = () => {
                     }
                 }}
             /> */}
-            <Stck.Screen
+            {/* <Stck.Screen
                 name='Contact'
                 component={Contact}
                 options={{
-                    title: 'Review details',
+                    title: 'Contact',
+                    headerBackTitleVisible: false,
+                    headerTitleStyle: { color: 'black' },
+                    headerStyle: {
+                        backgroundColor: 'white',
+                    }
+                }}
+            /> */}
+            <Stck.Screen
+                name='RentalDetails'
+                component={RentalDetails}
+                options={{
+                    title: 'Rental Details',
                     headerBackTitleVisible: false,
                     headerTitleStyle: { color: 'black' },
                     headerStyle: {

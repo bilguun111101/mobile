@@ -1,3 +1,5 @@
+import { useCallback, useState } from "react";
+import { FillDot } from "../components";
 import { Image, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 
 const Review = () => {
@@ -6,11 +8,16 @@ const Review = () => {
     { source: require('../assets/baby-car-seat.png'), text: "Car seats" },
     { source: require("../assets/gps.png"), text: 'GPS' }
   ]
+  const [confirm, setConfirm] = useState<boolean>(false);
+
+  const onSubmit = useCallback(() => {}, [confirm]);
   return (
     <SafeAreaView className="flex-1 bg-white relative">
       <ScrollView>
+
+        {/* introduction section */}
         <View className="w-full bg-[#F1F1F1] relative">
-          <View className="w-full pt-3 pb-6 flex-row justify-end ">
+          <View className="w-full pt-3 pb-6 flex-row justify-end">
             <Image
               source={require('../assets/testCar.png')}
               className="w-52"
@@ -41,6 +48,7 @@ const Review = () => {
             </View>
           </View>
         </View>
+        {/* -------------------------------- */}
 
         <View className="w-full p-[25px]">
           <View className="w-full p-[3px] flex-column gap-y-[14px]">
@@ -64,12 +72,11 @@ const Review = () => {
             })}
           </View>
 
+        {/* Payment section */}
           <View className="mt-[30px] py-[30px] border-t-0.5 border-[#A7A7A7] px-[3px]">
             <View className="flex-row items-center justify-between">
-              <View className="flex-row items-center gap-x-[11px]">
-                <Pressable
-                  className="w-[15px] h-[15px] rounded-full border-0.5 border-[#848484] bg-[#D9D9D9]"
-                />
+              <View className="flex-row items-center gap-x-[11px] pl-[10px]">
+                <FillDot active={confirm} onSubmit={() => setConfirm(!confirm)} />
                 <Text className="font-normal text-[#515151] text-[13px]">Pay Now</Text>
               </View>
               <Pressable className={`bg-[#444444] rounded-[20px] w-[80px] p-[4px]`}>
@@ -77,16 +84,15 @@ const Review = () => {
               </Pressable>
             </View>
 
-            <View className="flex-row items-center justify-between mt-[20px]">
+            <View className="flex-row items-center justify-between mt-[20px] pl-[10px]">
               <View className="flex-row items-center gap-x-[11px]">
-                <Pressable
-                  className="w-[15px] h-[15px] rounded-full border-0.5 border-[#848484] bg-[#D9D9D9]"
-                />
+                <FillDot active={!confirm} onSubmit={() => setConfirm(!confirm)} />
                 <Text className="font-normal text-[#515151] text-[13px]">Pay at Pickup</Text>
               </View>
               <Text className="font-[600] text-[16px] text-black text-center">550.00$</Text>
             </View>
           </View>
+          {/* -------------------------------- */}
         </View>
 
         <View className="pt-[50px] px-[30px] pb-[30px] bg-white" style={{
@@ -99,7 +105,7 @@ const Review = () => {
           shadowRadius: 2.22,
           elevation: 3,
         }}>
-          <Pressable className="bg-[#FF3002] rounded-[25px] py-[14px] active:bg-[#FF0000]">
+          <Pressable className="bg-[#FF3002] rounded-[25px] py-[14px] active:bg-[#FF0000]" onPressOut={onSubmit}>
             <Text className="text-center text-white font-bold text-base">Rent with</Text>
           </Pressable>
         </View>
