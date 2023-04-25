@@ -3,16 +3,6 @@ import "react-native-gesture-handler";
 import { Book, Profile, RentalDetails , Resources } from '../screens';
 import { Animated, Image, Text, View, Dimensions } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { HeaderLeftBtn } from "../components";
-
-// interface TabProps {
-//     name: string;
-//     source: number;
-//     toValue: number;
-//     tabOffsetValue: any;
-//     headerShown: boolean;
-//     component: JSX.Element;
-// }
 
 const Tab = createBottomTabNavigator();
 
@@ -51,56 +41,7 @@ const Buttons = [
         toValue: getWidth() * 4.43,
         source: require('../assets/more.png'),
     }
-]
-
-
-// const TabBottom = ({
-//     name,
-//     source,
-//     toValue,
-//     component,
-//     headerShown,
-//     tabOffsetValue,
-// }: TabProps) => {
-//     return (
-//         <Tab.Screen 
-//             name={name}
-//             component={component}
-//             options={{
-//                 headerShown,
-//                 tabBarIcon: ({ focused, size }) => (
-//                     <View 
-//                         style={{
-//                             gap: 5,
-//                             width: 60,
-//                             paddingTop: 12,
-//                             height: '100%', 
-//                             display: 'flex',
-//                             alignItems: 'center',
-//                             position: 'relative',
-//                             flexDirection: 'column',
-//                             justifyContent: 'flex-start',
-//                         }}
-//                     >
-//                         <Image source={source} />
-//                             <Text style={{ fontSize: 10, position: 'absolute', bottom: 0 }}>{ name }</Text>
-//                         </View>
-//                     ),
-//                     }}
-//                     listeners={({ navigation, route }) => ({
-//                         // Onpress Update....
-//                         tabPress: e => {
-//                             Animated.spring(tabOffsetValue, {
-//                                 toValue,
-//                                 useNativeDriver: true
-//                             }).start();
-//                         }
-//                     })}
-//                 />
-//         )
-// }
-
-
+];
 
 
 const Bottom = (): JSX.Element => {

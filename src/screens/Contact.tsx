@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react';
 import { FillDot, Input } from '../components';
 import { Pressable, SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Contact = () => {
@@ -9,6 +10,8 @@ const Contact = () => {
   const [lastName, setLastName] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [confirm, setConfirm] = useState<boolean>(false);
+
+  const navigation = useNavigation();
 
   const inputs = [
     { title: "First name", value: firstName, onChange: (text: string) => setFirstName(text), type: 'default' },
@@ -22,7 +25,8 @@ const Contact = () => {
       return;
     }
     const json = { email, phone, lastName, firstName, confirm }
-    console.log(json);
+    // console.log(json);
+    navigation.navigate('RentalDetails' as never);
   }, [email, phone, lastName, firstName, confirm]);
   return (
     <SafeAreaView className='flex-1 bg-white'>

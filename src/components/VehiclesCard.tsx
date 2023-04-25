@@ -1,3 +1,4 @@
+import { useNavigation } from '@react-navigation/native';
 import { Image, Pressable, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
@@ -8,6 +9,7 @@ const VehiclesCard = () => {
         { source: require('../assets/seatAmount.png'), text: 4 },
         { source: require('../assets/car-door.png'), text: 2 }
     ]
+    const navigation = useNavigation();
   return (
     <LinearGradient 
         className='w-full border-0.5 pl-5 py-5 rounded-lg flex-col mt-5'
@@ -44,7 +46,7 @@ const VehiclesCard = () => {
             })}
         </View>
         <View className='w-full pr-5 mt-5'>
-            <Pressable className='py-1 bg-[#444444] rounded-2xl'>
+            <Pressable className='py-1 bg-[#444444] rounded-2xl' onPress={() => navigation.navigate('Review' as never)}>
                 <Text className='text-white text-base font-medium text-center'>Selected Vehicle</Text>
             </Pressable>
         </View>

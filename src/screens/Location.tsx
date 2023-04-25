@@ -1,9 +1,11 @@
 import { HeaderLeftBtn, InfortantButton } from '../components';
 import LinearGradient from 'react-native-linear-gradient';
 import { Image, Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 
 const Location = () => {
+  const navigation = useNavigation();
   const districts = [
     { district: "Khan-Uul district", capital: "Ulaanbaatar" },
     { district: "Sukhbaatar district", capital: "Ulaanbaatar" },
@@ -50,7 +52,7 @@ const Location = () => {
       </ScrollView>
       <View className='px-[30px] pb-[40px]'>
         <Text className='text-center font-bold text-base mb-[20px]'>Choose active change button color</Text>
-        <InfortantButton text='Add Dates & Times' />
+        <InfortantButton text='Add Dates & Times' onSubmit={() => navigation.navigate('When' as never)} />
       </View>
     </View>
   )

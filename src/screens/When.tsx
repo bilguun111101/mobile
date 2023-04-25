@@ -3,6 +3,7 @@ import { months } from '../variables';
 import { Calendar } from 'react-native-calendars';
 import { HeaderContent, InfortantButton, shadow } from '../components';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 const date = new Date();
 const DateToday = {
@@ -12,6 +13,7 @@ const DateToday = {
 
 const When = () => {
   const [selected, setSelected] = useState<string>('');
+  const navigation = useNavigation();
   const pickup = [
     {},
     {}
@@ -71,7 +73,7 @@ const When = () => {
           }) }
         </View>
 
-        <InfortantButton text='See Result' />
+        <InfortantButton text='See Result' onSubmit={() => navigation.navigate('Vehicles' as never)} />
       </View>
     </View>
   )

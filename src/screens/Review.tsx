@@ -1,3 +1,4 @@
+import { useNavigation } from "@react-navigation/native";
 import { FillDot, InfortantButton } from "../components";
 import { useCallback, useState } from "react";
 import { Image, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
@@ -8,9 +9,12 @@ const Review = () => {
     { source: require('../assets/baby-car-seat.png'), text: "Car seats" },
     { source: require("../assets/gps.png"), text: 'GPS' }
   ]
+  const navigation = useNavigation();
   const [confirm, setConfirm] = useState<boolean>(false);
 
-  const onSubmit = useCallback(() => {}, [confirm]);
+  const onSubmit = useCallback(() => {
+    navigation.navigate('Contact' as never);
+  }, [confirm]);
   return (
     <SafeAreaView className="flex-1 bg-white relative">
       <ScrollView>
@@ -28,7 +32,7 @@ const Review = () => {
             <View className="w-full px-3 pb-3 flex-col items-start border-t-0.5 border-gray-600 gap-y-8">
 
               <View className="flex-row items-center gap-x-2">
-                <Image source={require('../assets/locationBlack.png')} />
+                <Image source={require('../assets/locationBlack.png')} className="w-[15px] h-[15px]" />
                 <View className="gap-y-1">
                   <Text className="text-base text-gray-600 font-medium">PICKUP</Text>
                   <Text className="text-[13px]">Khan-Uul district</Text>
@@ -37,7 +41,7 @@ const Review = () => {
               </View>
 
               <View className="flex-row items-center gap-x-2">
-                <Image source={require('../assets/locationBlack.png')} />
+                <Image source={require('../assets/locationBlack.png')} className="w-[15px] h-[15px]" />
                 <View className="gap-y-1">
                   <Text className="text-base text-gray-600 font-medium">DROP-OFF</Text>
                   <Text className="text-[13px]">Khan-Uul district</Text>
