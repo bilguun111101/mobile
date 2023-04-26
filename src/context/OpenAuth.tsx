@@ -3,12 +3,11 @@ import { PropsWithChildren, createContext, useCallback, useContext, useState } f
 interface Value {
     login: boolean;
     register: boolean;
+    toggle: () => void;
     openLogin: () => void;
     closeLogin: () => void;
-    toggleLogin: () => void;
     openRegister: () => void;
     closeRegister: () => void;
-    toggleRegister: () => void;
 }
 
 const Open = createContext<any>(null);
@@ -31,25 +30,19 @@ export const OpenProvider = ({ children }: PropsWithChildren) => {
         setRegister(true);
     }, [register])
 
-    // toggle
-    const toggleLogin = () => {
-        openLogin();
-        closeRegister();
-    }
-    const toggleRegister = () => {
-        openRegister();
-        closeRegister();
-    }
+    const toggle = useCallback(() => {
+        setLogin(!login)
+        setRegister(!register);
+    }, [login, register])
 
     const value: Value = {
         login,
+        toggle,
         register,
         openLogin,
         closeLogin,
-        toggleLogin,
         openRegister,
         closeRegister,
-        toggleRegister,
     }
     return (
         <Open.Provider value={value}>

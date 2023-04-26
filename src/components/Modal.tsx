@@ -10,11 +10,13 @@ interface Props {
 
 const Modal = ({ footer, body, active, onClick }: Props) => {
   return (
-    <View className={`flex-row flex-1 overflow-hidden fixed inset-0 z-50 outline-none bg-neutral-800 bg-opacity-70 px-[40px] py-[140px] ${!active && 'hidden'}`}>
+    <View className={`w-full h-full overflow-hidden absolute inset-0 z-50 outline-none bg-neutral-800 bg-opacity-70 px-[40px] py-[140px] ${!active && 'hidden'}`}>
         <View className='rounded-[10px] bg-white p-[20px]'>
-            <View className='relative'>
-                <View className='absolute top-0 right-0'>
-                    <CloseBtn onClick={onClick} />
+            <View className='relative flex-col gap-y-[20px]'>
+                <View className='top-0 right-0 w-full'>
+                    <View className='absolute right-0 top-0 z-10'>
+                        <CloseBtn onClick={onClick} />
+                    </View>
                     { body }
                     { footer }
                 </View>

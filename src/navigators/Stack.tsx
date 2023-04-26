@@ -10,13 +10,13 @@ const Stack = () => {
   return (
     <NavigationContainer>
         <Stck.Navigator>
-            <Stck.Screen
+            {/* <Stck.Screen
                 name='Start'
                 component={Start}
                 options={{
                     headerShown: false,
                 }}
-            />
+            /> */}
             <Stck.Screen
                 name='Bottom_tab_container'
                 component={Bottom}
