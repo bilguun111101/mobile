@@ -30,6 +30,56 @@ interface ListProps {
     }
 }
 
+interface User {
+    id?: string;
+    age?: string;
+    role: string;
+    email: string;
+    name?: string;
+    phone?: string;
+    rentals?: string;
+    cars?: Car[];
+    transactions: Transaction[];
+    password?: string;
+}
+
+interface Car {
+    id?: string;
+    image: string;
+    type: string;
+    typeDefinition: string;
+    model: string;
+    transmission: string;
+    kml: number;
+    passengers: number;
+    price: number;
+    user: User;
+    userId: string;
+}
+
+interface Rental {
+    id: string;
+    userId: string;
+    dateRent: string;
+    location: string;
+    totalDays: number;
+    dateReturn: string;
+    rental?: User;
+    extras: {
+        GPS: boolean;
+        coverage: boolean;
+        child_safety: boolean;
+    }
+}
+
+interface Transaction {
+    id: string;
+    verified: boolean;
+    rental?: User;
+    userId: string;
+    createdAt: string;
+}
+
 type InputType = 'default'
 | 'numeric'
 | 'phone-pad'
