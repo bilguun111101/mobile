@@ -1,15 +1,18 @@
-import { Login, Register } from './components';
-import { OpenProvider } from './context';
 import Stack from './navigators/Stack';
-import { TailwindProvider } from 'tailwindcss-react-native';
+import { Login, Register } from './components';
+import { OpenProvider, RentalProvider, UserProvider } from './context';
 
 const App = () => {
   return (
-    <OpenProvider>
-      <Login />
-      <Stack />
-      <Register />
-    </OpenProvider>
+    <UserProvider>
+      <RentalProvider>
+        <OpenProvider>
+          <Login />
+          <Stack />
+          <Register />
+        </OpenProvider>
+      </RentalProvider>
+    </UserProvider>
   )
 }
 
