@@ -23,7 +23,8 @@ const calculateDate = (startDate: Date, endDate: Date) => {
   return { stringStartDate, stringEndDate, totalDays };
 };
 
-const When = () => {
+const When = ({ route }: any) => {
+  const { carID, location } = route.params;
   const [dateRent, setDateRent] = useState<any>("");
   const [dateReturn, setDateReturn] = useState<any>("");
   const { rental, setRental } = useRental();
@@ -73,7 +74,7 @@ const When = () => {
               selectedDayTextColor: '#fff',
               calendarBackground: '#ffffff',
               textSectionTitleColor: '#b6c1cd',
-              selectedDayBackgroundColor: 'red',
+              selectedDayBackgroundColor: '#FF3002',
             }}
             />
         </View>

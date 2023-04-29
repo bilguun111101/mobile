@@ -1,6 +1,6 @@
 import { HeaderLeftBtn, InfortantButton } from '../components';
 import LinearGradient from 'react-native-linear-gradient';
-import { Image, Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { Image, Pressable, SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
 import { ParamListBase, useNavigation } from '@react-navigation/native';
 import { useCallback, useEffect, useState } from 'react';
 import { useRental } from '../context';
@@ -20,9 +20,10 @@ interface Params {
 
 const Location = ({ route }: any) => {
   const { id } = route.params;
-  const [params, setParams] = useState<Params>({ carId: id, location: '' });
   const navigation = useNavigation<any>();
   const { setRental, rental } = useRental();
+  const [search, setSearch] = useState<string>('');
+  const [params, setParams] = useState<Params>({ carId: id, location: '' });
 
   const districts = [
     { district: "Khan-Uul district", capital: "Ulaanbaatar" },
@@ -49,6 +50,11 @@ const Location = ({ route }: any) => {
     })
   }, [rental, params, focus])
 
+  const onJumpToDatePicker = useCallback(() => {
+    if(!params.location) return;
+    navigation.navigate('When', { ...params });
+  }, [params])
+
   return (
     <View className='flex-1 bg-white relative'>
       <ScrollView className='relative'>
@@ -61,13 +67,18 @@ const Location = ({ route }: any) => {
               source={require('../assets/location-white.png')}
               className='w-[20px] h-[20px]'
             />
-            <Text className='font-normal ml-[20px] text-[12px] text-[#444444]'>Where are you picking up?</Text>
+            <TextInput
+              onChangeText={(text) => setSearch(text)}
+              className='font-normal ml-[20px] text-[12px] text-[#444444] w-full border-none'
+              placeholder='Where are you picking up?'
+              value={search}
+            />
           </View>
         </LinearGradient>
 
 
         <View className='py-[45px] px-[40px]'>
-          <View className='flex-row items-center mb-[20px]'>
+          <View className='flex-row items-center mb-[20px] h-[30px]'>
             <Image
               source={require('../assets/locationBlack.png')}
               className='w-[15px] h-[15px]'
@@ -75,25 +86,38 @@ const Location = ({ route }: any) => {
             <Text className='font-bold text-base ml-[10px]'>Places</Text>
           </View>
           <View className='px-[30px] gap-y-[20px]'>
-            {districts.map((el, idx) => {
-              const { district, capital } = el;
-              return (
-                <Pressable 
-                  key={idx} 
-                  onPress={() => onSubmit(`${district}`, idx)} 
-                  className={`rounded-lg ${focus[idx] ? 'bg-[#FF2F01]' : null} px-[10px] py-[5px]`}
-                >
-                  <Text className={`font-normal text-[12px] ${focus[idx] && 'text-white'}`}>{ district }</Text>
-                  <Text className={`font-normal text-[10px] ${focus[idx] ? 'text-white' : 'text-[#808080]'}`}>{ capital }</Text>
-                </Pressable>
-              )
-            })}
+            {
+              districts.filter((el, idx) => {
+                if(search === "") return el;
+                else if(
+                  el.capital.toLowerCase().includes(search) 
+                    || 
+                  el.capital.toLowerCase().includes(search.toLowerCase())
+                    ||
+                  el.district.toLowerCase().includes(search) 
+                    || 
+                  el.district.toLowerCase().includes(search.toLowerCase())
+                  ) return el;
+              }).map((element, idx) => {
+                const { district, capital } = element;
+                return (
+                  <Pressable 
+                    key={idx} 
+                    onPress={() => onSubmit(`${district}`, idx)} 
+                    className={`rounded-lg ${focus[idx] ? 'bg-[#FF2F01]' : null} px-[10px] py-[5px]`}
+                  >
+                    <Text className={`font-normal text-[12px] ${focus[idx] && 'text-white'}`}>{ district }</Text>
+                    <Text className={`font-normal text-[10px] ${focus[idx] ? 'text-white' : 'text-[#808080]'}`}>{ capital }</Text>
+                  </Pressable>
+                )
+              })
+            }
           </View>
         </View>
       </ScrollView>
       <View className='px-[30px] pb-[40px]'>
         <Text className='text-center font-bold text-base mb-[20px]'>Choose active change button color</Text>
-        <InfortantButton text='Add Dates & Times' onSubmit={() => navigation.navigate('When', { ...params })} />
+        <InfortantButton text='Add Dates & Times' onSubmit={onJumpToDatePicker} />
       </View>
     </View>
   )
