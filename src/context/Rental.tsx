@@ -1,4 +1,4 @@
-import { PropsWithChildren, createContext, useContext, useState } from "react";
+import { PropsWithChildren, createContext, useContext, useEffect, useState } from "react";
 
 const RentalContext = createContext<any>(null);
 
@@ -14,6 +14,9 @@ export const RentalProvider = ({ children }: PropsWithChildren) => {
         rental,
         setRental
     }
+    useEffect(() => {
+        console.log(rental);
+    }, [rental])
     return (
         <RentalContext.Provider value={value}>
             { children }

@@ -1,19 +1,25 @@
 import React, { FC, useCallback, useEffect } from 'react';
 import { Image, Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { FillDot, InfortantButton } from '../components';
+import { useRental } from '../context';
+import { useNavigation } from '@react-navigation/native';
 
 const RentalDetails = () => {
+    const { rental, setRental } = useRental();
+    const navigation = useNavigation();
     const json = {
-        phone: 'askdfjk',
-        email: 'sdafasdf',
-        firstName: 'sdafasdf',
-        lastName: 'aslfkd.sadjfnl',
+        phone: rental?.phone,
+        email: rental?.email,
+        firstName: rental?.name.split(' ').at(0),
+        lastName: rental?.name.split(' ').at(-1),
         confirm: true
     }
     const onSubmit = useCallback(() => {
+        // setRental(undefined);
+        navigation.navigate('Bottom_tab_container' as never);
     }, [])
   return (
-    <SafeAreaView>
+    <SafeAreaView className='flex-1 relative pb-[300px]'>
         <ScrollView className='bg-white'>
             <View className='bg-[#F1F1F1]'>
                 <View className='py-[20px] px-[30px]'>
@@ -85,7 +91,7 @@ const RentalDetails = () => {
                 </View>
             </View>
             {/* -------------------------------- */}
-            <View className="pt-[50px] px-[30px] bg-white pb-[100px]" style={{
+            <View className="pt-[50px] w-full px-[30px] bg-white pb-[30px] absolute bottom-0" style={{
                 shadowColor: "",
                 shadowOffset: {
                     width: 0,

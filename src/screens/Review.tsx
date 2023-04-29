@@ -2,17 +2,34 @@ import { useNavigation } from "@react-navigation/native";
 import { FillDot, InfortantButton } from "../components";
 import { useCallback, useState } from "react";
 import { Image, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
+import { useRental } from "../context";
 
 const Review = () => {
-  const extras = [
-    { source: require('../assets/insurance.png'), text: 'Insurance' },
-    { source: require('../assets/baby-car-seat.png'), text: "Car seats" },
-    { source: require("../assets/gps.png"), text: 'GPS' }
-  ]
   const navigation = useNavigation();
+  const { rental, setRental } = useRental();
+  const [gps, setGps] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
+  const [carSeats, setCarSeats] = useState<boolean>(false);
+  const [insurance, setInsurance] = useState<boolean>(false);
+
+  const extras = [
+    { source: require('../assets/insurance.png'), text: 'Insurance', active: insurance, onClick: setInsurance },
+    { source: require('../assets/baby-car-seat.png'), text: "Car seats", active: carSeats, onClick: setCarSeats },
+    { source: require("../assets/gps.png"), text: 'GPS', active: gps, onClick: setGps }
+  ]
 
   const onSubmit = useCallback(() => {
+    setRental(() => {
+      return {
+        ...rental,
+        extras: {
+          GPS: gps,
+          coverage: insurance,
+          child_safety: carSeats
+        },
+        paymentType: confirm ? 'Pay Now': 'Pay at Pickup',
+      }
+    })
     navigation.navigate('Contact' as never);
   }, [confirm]);
   return (
@@ -58,7 +75,7 @@ const Review = () => {
           <View className="w-full p-[3px] flex-column gap-y-[14px]">
             <Text className="font-medium text-base">Coverage & extras</Text>
             {extras.map((el, idx) => {
-              const { source, text } = el;
+              const { source, text, active, onClick } = el;
               return (
                 <View className="flex-row items-center justify-between" key={idx}>
                   <View className="flex-row items-center gap-x-[11px]">
@@ -68,8 +85,8 @@ const Review = () => {
                     />
                     <Text className="font-medium text-base">{ text }</Text>
                   </View>
-                  <Pressable className={`bg-[#444444] rounded-[20px] w-[70px] p-[4px]`}>
-                    <Text className="font-bold text-[13px] text-white text-center">Added</Text>
+                  <Pressable className={`bg-[#444444] rounded-[20px] w-[70px] p-[4px]`} onPress={() => onClick(!active)}>
+                    <Text className="font-bold text-[13px] text-white text-center">{ active ? 'Added' : 'Add' }</Text>
                   </Pressable>
                 </View>
               )

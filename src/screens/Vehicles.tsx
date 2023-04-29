@@ -1,8 +1,63 @@
 import { FlatList, Image, Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
 import { HeaderContent, VehiclesCard } from '../components';
 
-// const array = new Array(20).fill(false);
-const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const FakeCar: Car[] = [
+  {
+    id: '1',
+    image: require('../assets/testCar.png'),
+    type: 'car',
+    typeDefinition: '',
+    model: '',
+    transmission: '',
+    kml: 3,
+    passengers: 5,
+    price: 10,
+  },
+  {
+    id: '2',
+    image: require('../assets/testCar.png'),
+    type: 'car',
+    typeDefinition: '',
+    model: '',
+    transmission: '',
+    kml: 3,
+    passengers: 5,
+    price: 10,
+  },
+  {
+    id: '1',
+    image: require('../assets/testCar.png'),
+    type: 'car',
+    typeDefinition: '',
+    model: '',
+    transmission: '',
+    kml: 3,
+    passengers: 5,
+    price: 10,
+  },
+  {
+    id: '3',
+    image: require('../assets/testCar.png'),
+    type: 'car',
+    typeDefinition: '',
+    model: '',
+    transmission: '',
+    kml: 3,
+    passengers: 5,
+    price: 10,
+  },
+  {
+    id: '4',
+    image: require('../assets/testCar.png'),
+    type: 'car',
+    typeDefinition: '',
+    model: '',
+    transmission: '',
+    kml: 3,
+    passengers: 5,
+    price: 10,
+  }
+]
 
 const Vehicles = () => {
   const body = (
@@ -26,11 +81,10 @@ const Vehicles = () => {
             <Text className='text-base font-bold'>+ Add</Text>
           </Pressable>
         </View>
-        <VehiclesCard />
         <View className='mb-[50px]'>
           <FlatList
-            data={array}
-            renderItem={({ item }) => <VehiclesCard />}
+            data={FakeCar}
+            renderItem={({ item }) => <VehiclesCard item={item} />}
             keyExtractor={(item, idx) => `key-index${idx}`}
           />
         </View>

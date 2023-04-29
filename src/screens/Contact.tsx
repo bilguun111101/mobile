@@ -2,9 +2,11 @@ import { useCallback, useState } from 'react';
 import { FillDot, Input } from '../components';
 import { Pressable, SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { useRental } from '../context';
 
 
 const Contact = () => {
+  const { rental, setRental } = useRental();
   const [email, setEmail] = useState<string>("")
   const [phone, setPhone] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
@@ -24,13 +26,17 @@ const Contact = () => {
     if(!email || !phone || !lastName || !firstName || !confirm) {
       return;
     }
-    const json = { email, phone, lastName, firstName, confirm }
-    // console.log(json);
+    if(!confirm) {
+      return;
+    }
+    setRental(() => {
+      return { ...rental , email, phone, name: `${firstName} ${lastName}` }
+    })
     navigation.navigate('RentalDetails' as never);
-  }, [email, phone, lastName, firstName, confirm]);
+  }, [email, phone, lastName, firstName, confirm, rental]);
   return (
-    <SafeAreaView className='flex-1 bg-white'>
-      <ScrollView>
+    <SafeAreaView className='flex-1 bg-white relative'>
+      <View className='w-full'>
         <View className='py-[45px] px-[25px] flex-col gap-y-[20px]'>
           {inputs.map((el, idx) => {
             const {
@@ -56,9 +62,9 @@ const Contact = () => {
             <Text className='text-[#515151] font-normal text-[13px]'>Үйлчилгээний нөхцөлийг хүлээн зөвшөөрөх</Text>
           </View>
         </View>
-      </ScrollView>
+      </View>
 
-      <View className="pt-[50px] px-[30px] pb-[30px] bg-white" style={{
+      <View className="pt-[50px] px-[30px] absolute bottom-0 w-full z-10 pb-[30px] bg-white" style={{
           shadowColor: "",
           shadowOffset: {
             width: 0,
