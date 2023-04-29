@@ -1,6 +1,6 @@
 import Bottom from './Bottom';
 import { HeaderLeftBtn } from '../components';
-import { Contact, Location, RentalDetails, Review, Start, Vehicles, When } from '../screens';
+import { Booking, Contact, Location, RentalDetails, Review, Start, Vehicles, When } from '../screens';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
@@ -98,6 +98,13 @@ const Stack = () => {
                     },
                     headerLeft: () => <HeaderLeftBtn />,
                     headerShadowVisible: false,
+                }}
+            />
+            <Stck.Screen
+                name='Booking'
+                component={Booking}
+                options={{
+                    headerShown: false
                 }}
             />
         </Stck.Navigator>

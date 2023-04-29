@@ -1,6 +1,8 @@
 import { useNavigation } from "@react-navigation/native";
+import { useCallback } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
+import { useRental } from "../context";
 
 interface CardProps {
     item: {
@@ -25,7 +27,14 @@ interface CardProps {
 }
 
 const BookingCard = ({ item }: CardProps) => {
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
+    const { rental, setRental } = useRental();
+    const onSubmit = useCallback(() => {
+        setRental(() => {
+            return { carId: item.id }
+        })
+        navigation.navigate('Location', { id: item.id })
+    }, [rental])
     return (
         <LinearGradient
             className=" relative w-[200px] h-[235px] ml-5 my-3 rounded-xl"
@@ -45,7 +54,7 @@ const BookingCard = ({ item }: CardProps) => {
             <Text className='absolute top-2 right-3 text-white text-tx font-bold' > $ {item.price}</Text>
             <Text className='absolute top-6 right-3 text-white text-[10px] font-medium ' >/day</Text>
             <Text className='absolute bottom-2 left-4 text-white text-[7px]' >Details</Text>
-            <Pressable className="absolute bottom-0 right-0 w-[109px] h-[28px] bg-black flex flex-row justify-center rounded-l-lg" onPress={() => navigation.navigate('Location' as never)}>
+            <Pressable className="absolute bottom-0 right-0 w-[109px] h-[28px] bg-black flex flex-row justify-center rounded-l-lg" onPress={onSubmit}>
                 <Text className='text-[7px] text-white text-center my-auto'>Rent now </Text>
                 <Image source={require('../assets/arrow-right.png')}  className='w-2 h-2 my-auto mx-1'/>
                 {/* <BeakerIcon className="h-6 w-6 text-blue-500" /> */}

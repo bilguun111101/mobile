@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import moment from 'moment';
 import { months } from '../variables';
+import { useRental } from '../context';
+import { useCallback, useState } from 'react';
 import { Calendar } from 'react-native-calendars';
-import { HeaderContent, InfortantButton, shadow } from '../components';
-import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Image, ScrollView, Text, View } from 'react-native';
+import { HeaderContent, InfortantButton, shadow } from '../components';
 
 const date = new Date();
 const DateToday = {
@@ -11,13 +13,34 @@ const DateToday = {
   month: +date.getMonth()
 }
 
+const calculateDate = (startDate: Date, endDate: Date) => {
+  const stringStartDate = moment(startDate).format().slice(0, 10);
+  const stringEndDate = moment(endDate).format().slice(0, 10);
+  const date1 = new Date(stringStartDate);
+  const date2 = new Date(stringEndDate);
+  const timeDifference = date2.getTime() - date1.getTime();
+  const totalDays = timeDifference / (1000 * 3600 * 24);
+  return { stringStartDate, stringEndDate, totalDays };
+};
+
 const When = () => {
-  const [selected, setSelected] = useState<string>('');
+  const [dateRent, setDateRent] = useState<any>("");
+  const [dateReturn, setDateReturn] = useState<any>("");
+  const { rental, setRental } = useRental();
   const navigation = useNavigation();
-  const pickup = [
-    {},
-    {}
-  ]
+  const onSubmit = useCallback(() => {
+    if(!dateRent || !dateReturn) return;
+    const totalDays = +calculateDate(dateRent, dateReturn).totalDays;
+    setRental(() => {
+      return {
+        ...rental, 
+        dateRent, 
+        totalDays,
+        dateReturn, 
+      }
+    })
+    navigation.navigate('Vehicles' as never);
+  }, [rental, dateRent, dateReturn])
   const header = <Text className='font-bold text-base'>When?</Text>
   return (
     <View className={`flex-1 bg-white relative`}>
@@ -27,12 +50,41 @@ const When = () => {
           <Text className='font-bold text-base text-[#555555]'>{ `${months[+DateToday.month].toUpperCase()} ${DateToday.year}` }</Text>
         </View>
         <View className='flex-1 p-2'>
+          <Text className='px-3 font-bold text-base'>Date rent</Text>
           <Calendar
             onDayPress={day => {
-              setSelected(day.dateString)
+              setDateRent(day.dateString);
             }}
             markedDates={{
-              [selected]: {selected: true, disableTouchEvent: true}
+              [dateReturn]: {selected: true, disableTouchEvent: true}
+            }}
+            style={{
+              height: 360,
+              borderWidth: 1,
+              borderColor: 'white',
+            }}
+            theme={{
+              arrowColor: '#000',
+              dayTextColor: '#000',
+              monthTextColor: '#000',
+              todayTextColor: '#00adf5',
+              textDisabledColor: '#d9e',
+              backgroundColor: '#F2F3F4',
+              selectedDayTextColor: '#fff',
+              calendarBackground: '#ffffff',
+              textSectionTitleColor: '#b6c1cd',
+              selectedDayBackgroundColor: 'red',
+            }}
+            />
+        </View>
+        <View className='flex-1 p-2 mb-52'>
+          <Text className='px-3 font-bold text-base'>Date return</Text>
+          <Calendar
+            onDayPress={day => {
+              setDateReturn(day.dateString);
+            }}
+            markedDates={{
+              [dateReturn]: {selected: true, disableTouchEvent: true}
             }}
             style={{
               height: 360,
@@ -57,7 +109,7 @@ const When = () => {
 
       <View className='absolute inset-x-0 pb-14 px-8 bottom-0 w-full h-52 bg-white flex-col pt-3' style={shadow.header}>
         <View className='flex-row w-full gap-x-5'>
-          { pickup.map((el, idx) => {
+          { new Array(2).fill(20).map((el, idx) => {
             return (
               <View className='w-1/2 flex-col gap-y-3' key={idx}>
                 <View>
@@ -72,8 +124,9 @@ const When = () => {
             )
           }) }
         </View>
-
-        <InfortantButton text='See Result' onSubmit={() => navigation.navigate('Vehicles' as never)} />
+        <View className='mt-[10px]'>
+          <InfortantButton text='See Result' onSubmit={onSubmit} />
+        </View>
       </View>
     </View>
   )

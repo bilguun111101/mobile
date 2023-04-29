@@ -1,8 +1,16 @@
 import { useNavigation } from '@react-navigation/native';
+import { useCallback } from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import { useRental } from '../context';
 
-const VehiclesCard = () => {
+interface Props {
+    item: Car;
+}
+
+const VehiclesCard = (props: Props) => {
+    const { kml, type, model, image, id, price, passengers, transmission, typeDefinition } = props.item;
+    const { rental, setRental } = useRental();
     const indicator = [
         { source: require('../assets/speed.png'), text: '15 KML' },
         { source: require('../assets/gearbox.png'), text: 'AUTO' },
@@ -10,6 +18,12 @@ const VehiclesCard = () => {
         { source: require('../assets/car-door.png'), text: 2 }
     ]
     const navigation = useNavigation();
+    const onSubmit = useCallback(() => {
+        setRental(() => {
+            return { ...rental, ...props.item };
+        })
+        navigation.navigate('Review' as never)
+    }, [rental])
   return (
     <LinearGradient 
         className='w-full border-0.5 pl-5 py-5 rounded-lg flex-col mt-5'
@@ -46,7 +60,7 @@ const VehiclesCard = () => {
             })}
         </View>
         <View className='w-full pr-5 mt-5'>
-            <Pressable className='py-1 bg-[#444444] rounded-2xl' onPress={() => navigation.navigate('Review' as never)}>
+            <Pressable className='py-1 bg-[#444444] rounded-2xl' onPress={onSubmit}>
                 <Text className='text-white text-base font-medium text-center'>Selected Vehicle</Text>
             </Pressable>
         </View>
