@@ -1,5 +1,7 @@
 import Input from "./Input";
 import FillDot from "./FillDot";
+import BookCard from "./BookCard";
+import RateCard from "./RateCard";
 import BookingCard from "./BookingCard";
 import VehiclesCard from "./VehiclesCard";
 import Login from "./Authentication/Login";
@@ -13,6 +15,7 @@ export {
     Input,
     Login,
     FillDot,
+    BookCard,
     Register,
     BookingCard,
     VehiclesCard,

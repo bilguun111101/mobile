@@ -1,8 +1,8 @@
 import { HeaderLeftBtn, InfortantButton } from '../components';
 import LinearGradient from 'react-native-linear-gradient';
-import { Image, Pressable, SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
-import { ParamListBase, useNavigation } from '@react-navigation/native';
-import { useCallback, useEffect, useState } from 'react';
+import { Image, Pressable,  ScrollView, Text, TextInput, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+import { useCallback, useState } from 'react';
 import { useRental } from '../context';
 
 interface Props {
