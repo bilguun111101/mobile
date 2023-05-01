@@ -28,7 +28,7 @@ const When = ({ route }: any) => {
   const [dateRent, setDateRent] = useState<any>("");
   const [dateReturn, setDateReturn] = useState<any>("");
   const { rental, setRental } = useRental();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const onSubmit = useCallback(() => {
     if(!dateRent || !dateReturn) return;
     const totalDays = +calculateDate(dateRent, dateReturn).totalDays;
@@ -40,7 +40,12 @@ const When = ({ route }: any) => {
         dateReturn, 
       }
     })
-    navigation.navigate('Vehicles' as never);
+    navigation.navigate('Vehicles', {
+      dateRent, 
+      totalDays,
+      dateReturn, 
+      ...route.params,
+    });
   }, [rental, dateRent, dateReturn])
   const header = <Text className='font-bold text-base'>When?</Text>
   return (

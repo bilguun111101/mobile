@@ -17,7 +17,7 @@ const Stack = () => {
                     headerShown: false,
                 }}
             /> */}
-            {/* <Stck.Screen
+            <Stck.Screen
                 name='Bottom_tab_container'
                 component={Bottom}
                 options={{
@@ -99,14 +99,14 @@ const Stack = () => {
                     headerLeft: () => <HeaderLeftBtn />,
                     headerShadowVisible: false,
                 }}
-            /> */}
-            <Stck.Screen
+            />
+            {/* <Stck.Screen
                 name='Booking'
                 component={Booking}
                 options={{
                     headerShown: false
                 }}
-            />
+            /> */}
         </Stck.Navigator>
     </NavigationContainer>
   );

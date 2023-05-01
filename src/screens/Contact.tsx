@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { useRental } from '../context';
 
 
-const Contact = () => {
+const Contact = ({ route }: any) => {
   const { rental, setRental } = useRental();
   const [email, setEmail] = useState<string>("")
   const [phone, setPhone] = useState<string>("");
@@ -13,7 +13,7 @@ const Contact = () => {
   const [firstName, setFirstName] = useState<string>("");
   const [confirm, setConfirm] = useState<boolean>(false);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   const inputs = [
     { title: "First name", value: firstName, onChange: (text: string) => setFirstName(text), type: 'default' },
@@ -32,7 +32,14 @@ const Contact = () => {
     setRental(() => {
       return { ...rental , email, phone, name: `${firstName} ${lastName}` }
     })
-    navigation.navigate('RentalDetails' as never);
+    navigation.navigate('RentalDetails', {
+      email, 
+      phone, 
+      lastName,
+      firstName,
+      ...route.params,
+      name: `${firstName} ${lastName}`
+    });
   }, [email, phone, lastName, firstName, confirm, rental]);
   return (
     <SafeAreaView className='flex-1 bg-white relative'>
