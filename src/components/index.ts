@@ -15,6 +15,7 @@ export {
     Input,
     Login,
     FillDot,
+    RateCard,
     BookCard,
     Register,
     BookingCard,

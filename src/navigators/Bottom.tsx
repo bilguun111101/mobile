@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import "react-native-gesture-handler";
-import { Book, Profile, RentalDetails , Resources } from '../screens';
+import { Book, Booking, Profile, RentalDetails , Resources } from '../screens';
 import { Animated, Image, Text, View, Dimensions } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
@@ -19,7 +19,7 @@ const getWidth = () => {
 const Buttons = [
     {
         name: 'Book',
-        component: Book,
+        component: Booking,
         toValue: 0,
         source: require('../assets/booking.png'),
     },
@@ -93,8 +93,8 @@ const Bottom = (): JSX.Element => {
                                                 }}
                                             >
                                                 <Image source={source} />
-                                                    <Text style={{ fontSize: 10, position: 'absolute', bottom: 0 }}>{ name }</Text>
-                                                </View>
+                                                <Text style={{ fontSize: 10, position: 'absolute', bottom: 0 }}>{ name }</Text>
+                                            </View>
                                             ),
                                         }}
                                         listeners={({ navigation, route }) => ({

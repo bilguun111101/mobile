@@ -65,6 +65,7 @@ interface Rental {
     location?: string;
     totalDays?: number;
     dateReturn?: string;
+    verified: boolean;
     rental?: User;
     extras?: {
         GPS: boolean;

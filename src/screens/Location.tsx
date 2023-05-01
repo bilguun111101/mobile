@@ -1,17 +1,9 @@
 import { HeaderLeftBtn, InfortantButton } from '../components';
 import LinearGradient from 'react-native-linear-gradient';
-import { Image, Pressable,  ScrollView, Text, TextInput, View } from 'react-native';
+import { Alert, Image, Pressable,  ScrollView, Text, TextInput, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useCallback, useState } from 'react';
 import { useRental } from '../context';
-
-interface Props {
-  route: {
-    params: {
-      id: string;
-    }
-  }
-}
 
 interface Params {
   carId: string;
@@ -19,11 +11,10 @@ interface Params {
 }
 
 const Location = ({ route }: any) => {
-  const { id } = route.params;
   const navigation = useNavigation<any>();
   const { setRental, rental } = useRental();
   const [search, setSearch] = useState<string>('');
-  const [params, setParams] = useState<Params>({ carId: id, location: '' });
+  const [location, setLocation] = useState<string>('');
 
   const districts = [
     { district: "Khan-Uul district", capital: "Ulaanbaatar" },
@@ -33,27 +24,26 @@ const Location = ({ route }: any) => {
   ]
 
   const [focus, setFocus] = useState<boolean[]>(new Array(districts.length).fill(false));
-  const onSubmit = useCallback((location: string, index: number) => {
+  const onSubmit = useCallback((place: string, index: number) => {
     setFocus(old => {
       return old.map((el, idx) => idx === index ? !el : false);
     })
     if(!focus[index]) 
-      setParams(() => {
-        return { ...params, location }
-      })
+      setLocation(place)
     else
-      setParams(() => {
-        return { ...params, location: '' }
-      })
+      setLocation('')
     setRental(() => {
       return { ...rental, location }
     })
-  }, [rental, params, focus])
+  }, [rental, location, focus])
 
   const onJumpToDatePicker = useCallback(() => {
-    if(!params.location) return;
-    navigation.navigate('When', { ...params });
-  }, [params])
+    if(!location) {
+      Alert.alert('Choose your location!!!');
+      return;
+    };
+    navigation.navigate('When', { location });
+  }, [])
 
   return (
     <View className='flex-1 bg-white relative'>
@@ -87,7 +77,7 @@ const Location = ({ route }: any) => {
           </View>
           <View className='px-[30px] gap-y-[20px]'>
             {
-              districts.filter((el, idx) => {
+              districts.filter(el => {
                 if(search === "") return el;
                 else if(
                   el.capital.toLowerCase().includes(search) 
@@ -116,8 +106,8 @@ const Location = ({ route }: any) => {
         </View>
       </ScrollView>
       <View className='px-[30px] pb-[40px]'>
-        <Text className='text-center font-bold text-base mb-[20px]'>Choose active change button color</Text>
-        <InfortantButton text='Add Dates & Times' onSubmit={onJumpToDatePicker} />
+        {/* <Text className='text-center font-bold text-base mb-[20px]'>Choose active change button color</Text> */}
+        <InfortantButton text='Add Dates & Times' onSubmit={onJumpToDatePicker} color={location ? '#FF3002' : '#D9D9D9'} disabled={!location ? true : false} />
       </View>
     </View>
   )
