@@ -24,11 +24,11 @@ const calculateDate = (startDate: Date, endDate: Date) => {
 };
 
 const When = ({ route }: any) => {
-  const { carID, location } = route.params;
+  const { location } = route.params;
+  const navigation = useNavigation<any>();
+  const { rental, setRental } = useRental();
   const [dateRent, setDateRent] = useState<any>("");
   const [dateReturn, setDateReturn] = useState<any>("");
-  const { rental, setRental } = useRental();
-  const navigation = useNavigation<any>();
   const onSubmit = useCallback(() => {
     if(!dateRent || !dateReturn) return;
     const totalDays = +calculateDate(dateRent, dateReturn).totalDays;
@@ -42,11 +42,12 @@ const When = ({ route }: any) => {
     })
     navigation.navigate('Vehicles', {
       dateRent, 
+      location,
       totalDays,
       dateReturn, 
-      ...route.params,
     });
   }, [rental, dateRent, dateReturn])
+
   const header = <Text className='font-bold text-base'>When?</Text>
   return (
     <View className={`flex-1 bg-white relative`}>
@@ -131,7 +132,7 @@ const When = ({ route }: any) => {
           }) }
         </View>
         <View className='mt-[10px]'>
-          <InfortantButton text='See Result' onSubmit={onSubmit} />
+          <InfortantButton text='See Result' onSubmit={onSubmit} disabled={(dateRent && dateReturn) ? false : true} color={location ? '#FF3002' : '#D9D9D9'} />
         </View>
       </View>
     </View>

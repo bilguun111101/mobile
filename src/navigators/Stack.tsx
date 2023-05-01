@@ -100,13 +100,6 @@ const Stack = () => {
                     headerShadowVisible: false,
                 }}
             />
-            {/* <Stck.Screen
-                name='Booking'
-                component={Booking}
-                options={{
-                    headerShown: false
-                }}
-            /> */}
         </Stck.Navigator>
     </NavigationContainer>
   );

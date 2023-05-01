@@ -1,13 +1,12 @@
-import { useState } from 'react';
-import { FlatList, ImageBackground, TextInput, View } from 'react-native';
+import { BookCard, RateCard } from '../components';
+import { useNavigation } from '@react-navigation/native';
+import { FlatList, ImageBackground, View } from 'react-native';
 import { Image, ScrollView, Text, Pressable } from 'react-native';
-import { BookCard } from '../components';
-import RateCard from '../components/RateCard';
 
 const array = new Array(20).fill(0);
 
 const Booking = () => {
-  const [search, setSearch] = useState<string>("");
+  const navigation = useNavigation<any>()
   return (
     <View className='flex-1 bg-white relative'>
       <ScrollView
@@ -19,19 +18,18 @@ const Booking = () => {
             resizeMode="cover"
             className='h-[275px] relative overflow-visible px-[30px]'
           >
-            <View className='py-[15px] flex-row px-[20px] items-center rounded-[30px] border border-[#CCCCCC] bg-white absolute w-full bottom-[-25px] left-[30px]'>
+            <Pressable 
+              onPress={() => navigation.navigate('Location')}
+              className='py-[15px] flex-row px-[20px] items-center rounded-[30px] border border-[#CCCCCC] bg-white absolute w-full bottom-[-25px] z-10 left-[30px]'
+            >
                 <Image
                     source={require('../assets/location-white.png')}
                     className='w-[20px] h-[20px]'
                 />
-                {/* <Text className='font-normal ml-[20px] text-[12px] text-[#444444]'>Where are you picking up?</Text> */}
-                <TextInput
-                  value={search}
-                  onChangeText={setSearch}
-                  placeholder='Where are you picking up?'
-                  className='font-normal ml-[20px] text-[12px] text-[#444444] w-full border-none'
-                />
-            </View>
+                <View>
+                  <Text className='font-normal ml-[20px] text-[12px] text-[#444444] w-full border-none'>Where are you picking up?</Text>
+                </View>
+            </Pressable>
         </ImageBackground>
 
         <View className='pt-[50px]'>
