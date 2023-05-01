@@ -39,7 +39,7 @@ interface User {
     phone?: string;
     rentals?: string;
     cars?: Car[];
-    transactions: Transaction[];
+    transactions?: Transaction[];
     password?: string;
 }
 

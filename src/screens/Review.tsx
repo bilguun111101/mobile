@@ -1,11 +1,11 @@
+import { useRental } from "../context";
+import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 import { FillDot, InfortantButton } from "../components";
-import { useCallback, useState } from "react";
 import { Image, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
-import { useRental } from "../context";
 
-const Review = () => {
-  const navigation = useNavigation();
+const Review = ({ route }: any) => {
+  const navigation = useNavigation<any>();
   const { rental, setRental } = useRental();
   const [gps, setGps] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
@@ -30,8 +30,16 @@ const Review = () => {
         paymentType: confirm ? 'Pay Now': 'Pay at Pickup',
       }
     })
-    navigation.navigate('Contact' as never);
+    navigation.navigate('Contact', {
+      ...route.params,
+      extras: {
+        GPS: gps,
+        coverage: insurance,
+        child_safety: carSeats
+      },
+    });
   }, [confirm]);
+
   return (
     <SafeAreaView className="flex-1 bg-white relative">
       <ScrollView>

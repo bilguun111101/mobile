@@ -6,10 +6,21 @@ import { useRental } from '../context';
 
 interface Props {
     item: Car;
+    params: Rental;
 }
 
 const VehiclesCard = (props: Props) => {
-    const { kml, type, model, image, id, price, passengers, transmission, typeDefinition } = props.item;
+    const {
+        id, 
+        kml, 
+        type, 
+        price, 
+        model, 
+        image, 
+        passengers, 
+        transmission, 
+        typeDefinition
+    } = props.item;
     const { rental, setRental } = useRental();
     const indicator = [
         { source: require('../assets/speed.png'), text: '15 KML' },
@@ -17,12 +28,15 @@ const VehiclesCard = (props: Props) => {
         { source: require('../assets/seatAmount.png'), text: 4 },
         { source: require('../assets/car-door.png'), text: 2 }
     ]
-    const navigation = useNavigation();
+    const navigation = useNavigation<any>();
     const onSubmit = useCallback(() => {
         setRental(() => {
             return { ...rental, ...props.item };
         })
-        navigation.navigate('Review' as never)
+        navigation.navigate('Review', {
+            ...props.item,
+            ...props.params
+        })
     }, [rental])
   return (
     <LinearGradient 

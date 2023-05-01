@@ -14,9 +14,6 @@ export const RentalProvider = ({ children }: PropsWithChildren) => {
         rental,
         setRental
     }
-    useEffect(() => {
-        console.log(rental);
-    }, [rental])
     return (
         <RentalContext.Provider value={value}>
             { children }

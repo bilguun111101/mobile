@@ -1,22 +1,39 @@
-import React, { FC, useCallback, useEffect } from 'react';
-import { Image, Pressable, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import {
+    Text, 
+    View,
+    Image, 
+    Pressable, 
+    ScrollView, 
+    SafeAreaView, 
+} from 'react-native';
+import React, { useCallback } from 'react';
+import { useOpenAuth, useUser } from '../context';
 import { FillDot, InfortantButton } from '../components';
-import { useRental } from '../context';
 import { useNavigation } from '@react-navigation/native';
 
-const RentalDetails = () => {
-    const { rental, setRental } = useRental();
-    const navigation = useNavigation();
-    const json = {
-        phone: rental?.phone,
-        email: rental?.email,
-        firstName: rental?.name.split(' ').at(0),
-        lastName: rental?.name.split(' ').at(-1),
-        confirm: true
-    }
+const RentalDetails = ({ route }: any) => {
+    const {
+        phone,
+        email,
+        confirm,
+        dateRent,
+        location,
+        lastName,
+        firstName,
+        dateReturn,
+    } = route.params;
+    const { user } = useUser();
+    const { openLogin } = useOpenAuth();
+    const navigation = useNavigation<any>();
     const onSubmit = useCallback(() => {
+        if(!user.email) {
+            openLogin();
+            return;
+        }
         // setRental(undefined);
-        navigation.navigate('Bottom_tab_container' as never);
+        // navigation.navigate('Bottom_tab_container', {
+            // ...route.params,
+        // });
     }, [])
   return (
     <SafeAreaView className='flex-1 relative pb-[300px]'>
@@ -27,19 +44,19 @@ const RentalDetails = () => {
                     <View className='gap-y-[3px]'>
                         <View className='flex-row items-center justify-between'>
                             <Text className='text-base font-medium'>First name</Text>
-                            <Text className='text-base font-medium'>{ json.firstName }</Text>
+                            <Text className='text-base font-medium'>{ firstName }</Text>
                         </View>
                         <View className='flex-row items-center justify-between'>
                             <Text className='text-base font-medium'>Last name</Text>
-                            <Text className='text-base font-medium'>{ json.lastName }</Text>
+                            <Text className='text-base font-medium'>{ lastName }</Text>
                         </View>
                         <View className='flex-row items-center justify-between'>
                             <Text className='text-base font-medium'>Email</Text>
-                            <Text className='text-base font-medium'>{ json.email }</Text>
+                            <Text className='text-base font-medium'>{ email }</Text>
                         </View>
                         <View className='flex-row items-center justify-between'>
                             <Text className='text-base font-medium'>Phone</Text>
-                            <Text className='text-base font-medium'>{ json.phone }</Text>
+                            <Text className='text-base font-medium'>{ phone }</Text>
                         </View>
                     </View>
                 </View>
@@ -50,12 +67,12 @@ const RentalDetails = () => {
                             source={require('../assets/locationBlack.png')}
                             className='w-[15px] h-[15px]'
                         />
-                        <Text className='text-[13px] font-medium text-[#444444]'>Khan-Uul district</Text>
+                        <Text className='text-[13px] font-medium text-[#444444]'>{ location }</Text>
                     </View>
                     <View>
                         <Text className='font-medium text-base text-[#777777] mb-[7px]'>Dates & Times</Text>
-                        <Text className='font-normal text-[13px] text-[#898989]'> * Thu, Apr 20 2023 @ 12:00PM</Text>
-                        <Text className='font-normal text-[13px] text-[#898989]'> * Fri, Apr 21 2023 @ 12:00PM</Text>
+                        <Text className='font-normal text-[13px] text-[#898989]'> * { dateRent }</Text>
+                        <Text className='font-normal text-[13px] text-[#898989]'> * { dateReturn }</Text>
                     </View>
                 </View>
             </View>
@@ -73,7 +90,7 @@ const RentalDetails = () => {
                 <View className="mt-[30px] mx-[10px] px-[20px] py-[30px] border-t-0.5 border-[#A7A7A7] px-[3px]">
                     <View className="flex-row items-center justify-between px-[20px]">
                         <View className="flex-row items-center gap-x-[11px]">
-                            <FillDot active={json.confirm}/>
+                            <FillDot active={confirm}/>
                             <Text className="font-normal text-[#515151] text-[13px]">Pay Now</Text>
                         </View>
                         <Pressable className={`bg-[#444444] rounded-[20px] w-[80px] p-[4px]`}>
@@ -83,7 +100,7 @@ const RentalDetails = () => {
 
                     <View className="flex-row items-center justify-between mt-[20px] px-[20px]">
                             <View className="flex-row items-center gap-x-[11px]">
-                                <FillDot active={!json.confirm} />
+                                <FillDot active={!confirm} />
                                 <Text className="font-normal text-[#515151] text-[13px]">Pay at Pickup</Text>
                             </View>
                             <Text className="font-[600] text-[16px] text-black text-center">550.00$</Text>

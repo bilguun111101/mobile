@@ -1,14 +1,22 @@
 import { PropsWithChildren, createContext, useContext, useState } from "react";
 
 interface Value {
-    user: User | undefined;
+    user: User;
     setUser: any;
 }
 
 const UserContext = createContext<any>(null);
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
-    const [user, setUser] = useState<User | undefined>(undefined);
+    const [user, setUser] = useState<User>({
+        id: "",
+        age: "",
+        role: "",
+        name: "",
+        email: "",
+        phone: "",
+        rentals: ""
+    });
     const value: Value = {
         user,
         setUser
