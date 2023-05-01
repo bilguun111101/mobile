@@ -80,7 +80,7 @@ const When = ({ route }: any) => {
               selectedDayTextColor: '#fff',
               calendarBackground: '#ffffff',
               textSectionTitleColor: '#b6c1cd',
-              selectedDayBackgroundColor: '#FF3002',
+              selectedDayBackgroundColor: 'red',
             }}
             />
         </View>

@@ -2,18 +2,21 @@ import { PropsWithChildren, createContext, useCallback, useContext, useState } f
 
 interface Value {
     login: boolean;
+    success: boolean;
     register: boolean;
     toggle: () => void;
     openLogin: () => void;
     closeLogin: () => void;
     openRegister: () => void;
     closeRegister: () => void;
+    setSuccess: (el: boolean) => void;
 }
 
 const Open = createContext<any>(null);
 
 export const OpenProvider = ({ children }: PropsWithChildren) => {
     const [login, setLogin] = useState<boolean>(false);
+    const [success, setSuccess] = useState<boolean>(false);
     const [register, setRegister] = useState<boolean>(false);
 
     // open or close
@@ -38,8 +41,10 @@ export const OpenProvider = ({ children }: PropsWithChildren) => {
     const value: Value = {
         login,
         toggle,
+        success,
         register,
         openLogin,
+        setSuccess,
         closeLogin,
         openRegister,
         closeRegister,

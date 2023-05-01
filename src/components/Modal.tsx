@@ -4,8 +4,9 @@ import { View } from 'react-native';
 interface Props {
     active: boolean;
     body: JSX.Element;
-    footer: JSX.Element;
+    footer?: JSX.Element;
     onClick: () => void;
+    onSubmit?: () => void;
 }
 
 const Modal = ({ footer, body, active, onClick }: Props) => {
