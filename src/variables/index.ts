@@ -1,7 +1,7 @@
 import months from "./Months";
-
-export * from "./InputType";
+import re from "./EmailCheck";
 
 export {
+    re,
     months,
 }

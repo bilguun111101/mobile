@@ -1,15 +1,20 @@
-import React from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { useCallback } from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
 interface Props {
-    item: number;
+    item: Car;
     index: number;
     lastIndex: number;
 }
 
 const BookCard = ({ index, item, lastIndex }: Props) => {
-    const {  } = item;
+    const { name, price, image } = item;
+    const navigation = useNavigation<any>();
+    const onRentNow = useCallback(() => {
+        navigation.navigate("Review", { ...item })
+    }, [])
   return (
     <LinearGradient 
         className={`w-[200px] rounded-2xl relative pt-[12px] ${index !== 0 && 'ml-[35px]'} ${lastIndex === index && 'mr-[45px]'}`}
@@ -17,8 +22,8 @@ const BookCard = ({ index, item, lastIndex }: Props) => {
     >
         <View className='px-[16px]'>
             <View className='flex-row items-center justify-between mb-[5px]'>
-                <Text className='font-bold text-[12px] text-white'>TOYATO</Text>
-                <Text className='font-medium text-[12px] text-white'>$100</Text>
+                <Text className='font-bold text-[12px] text-white'>{ name }</Text>
+                <Text className='font-medium text-[12px] text-white'>${price}</Text>
             </View>
             <View className='flex-row items-center justify-between'>
                 <Text className='font-medium text-[10px] text-white text-[white]'>LC 200</Text>
@@ -28,7 +33,7 @@ const BookCard = ({ index, item, lastIndex }: Props) => {
 
         <View className='ml-[25px] w-[200px] h-[160px] flex-row items-end overflow-visible'>
             <Image
-                source={require("../assets/testCard.png")}
+                source={image}
                 className='h-full w-full'
                 resizeMode='contain'
             />
@@ -38,7 +43,7 @@ const BookCard = ({ index, item, lastIndex }: Props) => {
             <Pressable className='w-1/2 py-[10px]'>
                 <Text className='text-center font-bold text-[7px] text-white'>Details</Text>
             </Pressable>
-            <Pressable className='w-1/2 py-[10px] rounded-tl-[15px] bg-[#292929]'>
+            <Pressable className='w-1/2 py-[10px] rounded-tl-[15px] bg-[#292929]' onPress={onRentNow}>
                 <Text className='text-center font-bold text-[7px] text-white'>Rent now</Text>
             </Pressable>
         </View>

@@ -45,7 +45,7 @@ interface User {
 
 interface Car {
     id?: string;
-    image: string;
+    image: number;
     type: string;
     typeDefinition: string;
     model: string;
@@ -55,6 +55,8 @@ interface Car {
     price: number;
     user?: User;
     userId?: string;
+    name?: string;
+    disctrict?: string;
 }
 
 interface Rental {

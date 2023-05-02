@@ -10,9 +10,9 @@ const App = () => {
       <UserProvider>
         <RentalProvider>
           <OpenProvider>
-            <Login />
+            {/* <Login /> */}
             <Stack />
-            <Register />
+            {/* <Register /> */}
           </OpenProvider>
         </RentalProvider>
       </UserProvider>

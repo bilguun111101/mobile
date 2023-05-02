@@ -1,8 +1,16 @@
-import { useCallback, useState } from 'react';
-import { FillDot, Input } from '../components';
-import { Pressable, SafeAreaView, ScrollView, Text, TextInput, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { re } from "../variables";
 import { useRental } from '../context';
+import { Text, View } from 'react-native';
+import { useCallback, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import { BottomButton, FillDot, Input } from '../components';
+
+// interface TypeOfInput {
+//   title: string;
+//   value: string;
+//   type: InputType;
+//   onChange: (text: string) => void;
+// }
 
 
 const Contact = ({ route }: any) => {
@@ -29,9 +37,6 @@ const Contact = ({ route }: any) => {
     if(!confirm) {
       return;
     }
-    setRental(() => {
-      return { ...rental , email, phone, name: `${firstName} ${lastName}` }
-    })
     navigation.navigate('RentalDetails', {
       email, 
       phone, 
@@ -40,9 +45,16 @@ const Contact = ({ route }: any) => {
       ...route.params,
       name: `${firstName} ${lastName}`
     });
-  }, [email, phone, lastName, firstName, confirm, rental]);
+  }, [
+    email, 
+    phone, 
+    rental,
+    confirm, 
+    lastName, 
+    firstName,
+  ]);
   return (
-    <SafeAreaView className='flex-1 bg-white relative'>
+    <View className='flex-1 bg-white relative'>
       <View className='w-full'>
         <View className='py-[45px] px-[25px] flex-col gap-y-[20px]'>
           {inputs.map((el, idx) => {
@@ -71,21 +83,26 @@ const Contact = ({ route }: any) => {
         </View>
       </View>
 
-      <View className="pt-[50px] px-[30px] absolute bottom-0 w-full z-10 pb-[30px] bg-white" style={{
-          shadowColor: "",
-          shadowOffset: {
-            width: 0,
-            height: -3,
-          },
-          shadowOpacity: 0.05,
-          shadowRadius: 2.22,
-          elevation: 3,
-        }}>
-          <Pressable className="bg-[#FF3002] rounded-[25px] py-[14px] active:bg-[#FF0000]" onPressOut={onSubmit}>
-            <Text className="text-center text-white font-bold text-base">Submit</Text>
-          </Pressable>
-        </View>
-    </SafeAreaView>
+      <BottomButton
+        text='Submit' 
+        onSubmit={onSubmit} 
+        color={(
+          !email 
+            || 
+          !phone 
+            || 
+          !lastName 
+            || 
+          !firstName 
+            || 
+          !confirm 
+            || 
+          isNaN(+phone) 
+            || 
+          !re.test(email)
+        ) ? true : false}
+      />
+    </View>
   )
 }
 

@@ -1,16 +1,19 @@
 import { useRental } from "../context";
 import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { FillDot, InfortantButton } from "../components";
+import { BottomButton, FillDot, InfortantButton } from "../components";
 import { Image, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 
 const Review = ({ route }: any) => {
   const navigation = useNavigation<any>();
   const { rental, setRental } = useRental();
+  const [location] = useState<boolean>(false);
   const [gps, setGps] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
   const [carSeats, setCarSeats] = useState<boolean>(false);
   const [insurance, setInsurance] = useState<boolean>(false);
+
+  const { image } = route.params;
 
   const extras = [
     { source: require('../assets/insurance.png'), text: 'Insurance', active: insurance, onClick: setInsurance },
@@ -41,46 +44,45 @@ const Review = ({ route }: any) => {
   }, [confirm]);
 
   return (
-    <SafeAreaView className="flex-1 bg-white relative">
+    <View className="flex-1 bg-white relative">
       <ScrollView>
 
         {/* introduction section */}
         <View className="w-full bg-[#F1F1F1] relative">
-          <View className="w-full pt-3 pb-6 flex-row justify-end">
+          <View className="w-full py-[10px] flex-row justify-end">
             <Image
-              source={require('../assets/testCar.png')}
-              className="w-52"
+              source={image}
+              className="w-[200px] h-auto"
             />
           </View>
 
-          <View className="w-full p-3">
-            <View className="w-full px-3 pb-3 flex-col items-start border-t-0.5 border-gray-600 gap-y-8">
+          <View className="w-full px-3">
 
-              <View className="flex-row items-center gap-x-2">
-                <Image source={require('../assets/locationBlack.png')} className="w-[15px] h-[15px]" />
-                <View className="gap-y-1">
-                  <Text className="text-base text-gray-600 font-medium">PICKUP</Text>
+            <View className="border-t-0.5 border-[#A7A7A7] p-[15px]">
+              <View className="flex-row items-center pb-[30px]">
+                <Image source={require('../assets/locationBlack.png')} className="w-[15px] h-[15px] mr-[10px]" />
+                <View className="gap-y-[5px]">
+                  <Text className="text-base text-[#777777] font-medium">PICKUP</Text>
                   <Text className="text-[13px]">Khan-Uul district</Text>
-                  <Text className="text-gray-500 text-base">{ `19 April | 12:00` }</Text>
+                  <Text className="text-[#898989] text-[13px]">{ `19 April | 12:00` }</Text>
                 </View>
               </View>
 
-              <View className="flex-row items-center gap-x-2">
-                <Image source={require('../assets/locationBlack.png')} className="w-[15px] h-[15px]" />
-                <View className="gap-y-1">
-                  <Text className="text-base text-gray-600 font-medium">DROP-OFF</Text>
+              <View className="flex-row items-center">
+                <Image source={require('../assets/locationBlack.png')} className="w-[15px] h-[15px] mr-[10px]" />
+                <View className="gap-y-[5px]">
+                  <Text className="text-base text-[#777777] font-medium">DROP-OFF</Text>
                   <Text className="text-[13px]">Khan-Uul district</Text>
-                  <Text className="text-gray-500 text-base">{ `19 April | 12:00` }</Text>
+                  <Text className="text-[#898989] text-[13px]">{ `19 April | 12:00` }</Text>
                 </View>
               </View>
-
             </View>
           </View>
         </View>
         {/* -------------------------------- */}
 
-        <View className="w-full p-[25px]">
-          <View className="w-full p-[3px] flex-column gap-y-[14px]">
+        <View className="w-full px-[25px] pt-[25px]">
+          <View className="w-full p-[3px] flex-column gap-y-[9px]">
             <Text className="font-medium text-base">Coverage & extras</Text>
             {extras.map((el, idx) => {
               const { source, text, active, onClick } = el;
@@ -93,8 +95,8 @@ const Review = ({ route }: any) => {
                     />
                     <Text className="font-medium text-base">{ text }</Text>
                   </View>
-                  <Pressable className={`bg-[#444444] rounded-[20px] w-[70px] p-[4px]`} onPress={() => onClick(!active)}>
-                    <Text className="font-bold text-[13px] text-white text-center">{ active ? 'Added' : 'Add' }</Text>
+                  <Pressable className={`${!active ? 'bg-[#444444]' : 'bg-[#BEBEBE]'} rounded-[20px] w-[70px] p-[4px]`} onPress={() => onClick(!active)}>
+                    <Text className={`font-bold text-[13px] text-white text-center`}>{ active ? 'Added' : 'Add' }</Text>
                   </Pressable>
                 </View>
               )
@@ -123,21 +125,9 @@ const Review = ({ route }: any) => {
           </View>
           {/* -------------------------------- */}
         </View>
-
-        <View className="pt-[50px] px-[30px] pb-[30px] bg-white" style={{
-          shadowColor: "",
-          shadowOffset: {
-            width: 0,
-            height: -3,
-          },
-          shadowOpacity: 0.05,
-          shadowRadius: 2.22,
-          elevation: 3,
-        }}>
-          <InfortantButton text="Rent with" onSubmit={onSubmit} />
-        </View>
       </ScrollView>
-    </SafeAreaView>
+      <BottomButton text="Rent with" onSubmit={onSubmit} />
+    </View>
   )
 }
 

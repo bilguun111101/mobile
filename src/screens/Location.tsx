@@ -1,4 +1,4 @@
-import { HeaderLeftBtn, InfortantButton } from '../components';
+import { BottomButton, HeaderLeftBtn, InfortantButton } from '../components';
 import LinearGradient from 'react-native-linear-gradient';
 import { Alert, Image, Pressable,  ScrollView, Text, TextInput, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
@@ -43,7 +43,7 @@ const Location = ({ route }: any) => {
       return;
     };
     navigation.navigate('When', { location });
-  }, [])
+  }, [location])
 
   return (
     <View className='flex-1 bg-white relative'>
@@ -78,13 +78,13 @@ const Location = ({ route }: any) => {
           <View className='px-[30px] gap-y-[20px]'>
             {
               districts.filter(el => {
-                if(search === "") return el;
+                if(!search) return el;
                 else if(
                   el.capital.toLowerCase().includes(search) 
                     || 
-                  el.capital.toLowerCase().includes(search.toLowerCase())
-                    ||
                   el.district.toLowerCase().includes(search) 
+                    ||
+                  el.capital.toLowerCase().includes(search.toLowerCase())
                     || 
                   el.district.toLowerCase().includes(search.toLowerCase())
                   ) return el;
@@ -105,10 +105,12 @@ const Location = ({ route }: any) => {
           </View>
         </View>
       </ScrollView>
-      <View className='px-[30px] pb-[40px]'>
-        {/* <Text className='text-center font-bold text-base mb-[20px]'>Choose active change button color</Text> */}
-        <InfortantButton text='Add Dates & Times' onSubmit={onJumpToDatePicker} color={location ? '#FF3002' : '#D9D9D9'} disabled={!location ? true : false} />
-      </View>
+      <BottomButton
+        text='Add Dates & Times' 
+        onSubmit={onJumpToDatePicker} 
+        disabled={!location ? true : false} 
+        color={location ? false : true} 
+      />
     </View>
   )
 }

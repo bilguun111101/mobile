@@ -5,6 +5,74 @@ import { Image, ScrollView, Text, Pressable } from 'react-native';
 
 const array = new Array(20).fill(0);
 
+const FakeCar: Car[] = [
+  {
+    id: '1',
+    image: require('../assets/testCar.png'),
+    type: 'car',
+    typeDefinition: '',
+    model: '',
+    transmission: '',
+    kml: 3,
+    passengers: 5,
+    price: 10,
+    name: 'TOYATO',
+    disctrict: "Khan-Uul"
+  },
+  {
+    id: '2',
+    image: require('../assets/testCar.png'),
+    type: 'car',
+    typeDefinition: '',
+    model: '',
+    transmission: '',
+    kml: 3,
+    passengers: 5,
+    price: 10,
+    name: 'TOYATO',
+    disctrict: "Khan-Uul"
+  },
+  {
+    id: '1',
+    image: require('../assets/testCar.png'),
+    type: 'car',
+    typeDefinition: '',
+    model: '',
+    transmission: '',
+    kml: 3,
+    passengers: 5,
+    price: 10,
+    name: 'TOYATO',
+    disctrict: "Khan-Uul"
+  },
+  {
+    id: '3',
+    image: require('../assets/testCar.png'),
+    type: 'car',
+    typeDefinition: '',
+    model: '',
+    transmission: '',
+    kml: 3,
+    passengers: 5,
+    price: 10,
+    name: 'TOYATO',
+    disctrict: "Khan-Uul"
+  },
+  {
+    id: '4',
+    image: require('../assets/testCar.png'),
+    type: 'car',
+    typeDefinition: '',
+    model: '',
+    transmission: '',
+    kml: 3,
+    passengers: 5,
+    price: 10,
+    name: 'TOYATO',
+    disctrict: "Khan-Uul"
+  }
+]
+
 const Booking = () => {
   const navigation = useNavigation<any>()
   return (
@@ -41,7 +109,7 @@ const Booking = () => {
           </View>
 
           <FlatList
-            data={array}
+            data={FakeCar}
             horizontal
             className='pl-[30px]'
             showsHorizontalScrollIndicator={false}

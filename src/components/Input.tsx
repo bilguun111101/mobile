@@ -2,8 +2,8 @@ import { TextInput } from "react-native";
 import { InputType } from "../variables";
 
 interface Props {
-    type?: InputType;
     value: string;
+    type?: InputType;
     placeholder?: string;
     secureTextEntry?: boolean
     onChange: (event: any) => void; 
