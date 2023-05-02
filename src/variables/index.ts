@@ -1,7 +1,4 @@
-import months from "./Months";
-import re from "./EmailCheck";
+import months from './Months';
+import re from './EmailCheck';
 
-export {
-    re,
-    months,
-}
+export {re, months};

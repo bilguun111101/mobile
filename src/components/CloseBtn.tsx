@@ -1,15 +1,20 @@
-import { Image, Pressable, View } from 'react-native';
+import {Image, Pressable, View} from 'react-native';
 
 interface Props {
-    onClick: () => void;
+  onClick: () => void;
 }
 
-const CloseBtn = ({ onClick }: Props) => {
+const CloseBtn = ({onClick}: Props) => {
   return (
-    <Pressable onPressOut={onClick} className='w-[28px] h-[28px] rounded-full bg-[#ECECEC] p-[10px]'>
-        <Image source={require('../assets/close.png')} className='w-full h-full' />
+    <Pressable
+      onPressOut={onClick}
+      className="w-[28px] h-[28px] rounded-full bg-[#ECECEC] p-[10px]">
+      <Image
+        source={require('../assets/close.png')}
+        className="w-full h-full"
+      />
     </Pressable>
-  )
-}
+  );
+};
 
-export default CloseBtn
+export default CloseBtn;

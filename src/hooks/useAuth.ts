@@ -1,24 +1,24 @@
 import Cookies from 'js-cookie';
-import { loggedInState } from '../atoms';
-import { useSetRecoilState } from 'recoil';
-import { useLazyQuery } from '@apollo/client';
-import { CHECK_TOKEN } from '../server/queries/users';
-import { PropsWithChildren, createContext, useContext, useEffect } from 'react';
+import {loggedInState} from '../atoms';
+import {useSetRecoilState} from 'recoil';
+import {useLazyQuery} from '@apollo/client';
+import {CHECK_TOKEN} from '../server/queries/users';
+import {PropsWithChildren, createContext, useContext, useEffect} from 'react';
 
 interface Value {
-    loading: boolean;
+  loading: boolean;
 }
 
 // const AuthContext = createContext({ loading: false });
-const AuthContext = createContext({ loading: false })
+const AuthContext = createContext({loading: false});
 
 interface AuthProviderProps {
   children: PropsWithChildren;
 }
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
+export const AuthProvider = ({children}: AuthProviderProps) => {
   const setLoggedIn = useSetRecoilState(loggedInState);
-  const [checkToken, { loading }] = useLazyQuery(CHECK_TOKEN);
+  const [checkToken, {loading}] = useLazyQuery(CHECK_TOKEN);
 
   // keep logged in when refresh
   useEffect(() => {
@@ -33,11 +33,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         });
 
         if (!data.data) {
-            console.log("You aren't logged in!!!");
-            return;
-        };
+          console.log("You aren't logged in!!!");
+          return;
+        }
 
-        const success = data?.data?.checkToken || "";
+        const success = data?.data?.checkToken || '';
 
         if (!success) {
           setLoggedIn(false);

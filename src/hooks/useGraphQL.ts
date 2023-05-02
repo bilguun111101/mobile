@@ -1,4 +1,4 @@
-import { CREATE_RENTAL } from '../server/mutations/rentals';
+import {CREATE_RENTAL} from '../server/mutations/rentals';
 import {
   CREATE_NEW_USER,
   LOGIN_USER,
@@ -9,41 +9,41 @@ import {
   GET_CARS_BY_PASSENGERS,
   GET_CARS_BY_TYPE,
 } from '../server/queries/cars';
-import { GET_USER_BY_ID } from '../server/queries/users';
-import { resetApolloContext, useLazyQuery, useMutation } from '@apollo/client';
+import {GET_USER_BY_ID} from '../server/queries/users';
+import {resetApolloContext, useLazyQuery, useMutation} from '@apollo/client';
 import Cookies from 'js-cookie';
 
 const useGraphql = () => {
   // USER QUERIES
-  const [getUserById, { loading: getUserByIdLoading }] = useLazyQuery(
+  const [getUserById, {loading: getUserByIdLoading}] = useLazyQuery(
     GET_USER_BY_ID,
-    { pollInterval: 500 }
+    {pollInterval: 500},
   );
 
   // USER MUTATIONS
-  const [createNewUser, { loading: createUserLoading }] =
+  const [createNewUser, {loading: createUserLoading}] =
     useMutation(CREATE_NEW_USER);
 
-  const [loginUser, { loading: loginUserLoading }] = useMutation(LOGIN_USER);
-  const [updateUserById, { loading: updateUserLoading }] =
+  const [loginUser, {loading: loginUserLoading}] = useMutation(LOGIN_USER);
+  const [updateUserById, {loading: updateUserLoading}] =
     useMutation(UPDATE_USER_BY_ID);
 
   // CARS QUERIES
-  const [getCarsByPagination, { loading: getCarsByPageLoading }] = useLazyQuery(
+  const [getCarsByPagination, {loading: getCarsByPageLoading}] = useLazyQuery(
     GET_ALL_CARS_WITH_PAGINATION,
-    { pollInterval: 500 }
+    {pollInterval: 500},
   );
 
-  const [getCarsByPassengers, { loading: getCarsByPassengerLoading }] =
-    useLazyQuery(GET_CARS_BY_PASSENGERS, { pollInterval: 500 });
+  const [getCarsByPassengers, {loading: getCarsByPassengerLoading}] =
+    useLazyQuery(GET_CARS_BY_PASSENGERS, {pollInterval: 500});
 
-  const [getCarsByType, { loading: getCarsByTypeLoading }] = useLazyQuery(
+  const [getCarsByType, {loading: getCarsByTypeLoading}] = useLazyQuery(
     GET_CARS_BY_TYPE,
-    { pollInterval: 500 }
+    {pollInterval: 500},
   );
 
   // RENTALS MUTATIONS
-  const [createRental, { loading: createRentalLoading }] =
+  const [createRental, {loading: createRentalLoading}] =
     useMutation(CREATE_RENTAL);
 
   //============================================================
@@ -59,7 +59,7 @@ const useGraphql = () => {
         })
       ).data;
 
-      const { createUser } = response;
+      const {createUser} = response;
 
       Cookies.set('token', createUser?.token);
       Cookies.set('userId', createUser?.user.id);
@@ -83,7 +83,7 @@ const useGraphql = () => {
         })
       ).data;
 
-      const { loginUser: data } = response;
+      const {loginUser: data} = response;
 
       Cookies.set('token', data?.token);
       Cookies.set('userId', data?.userId);
@@ -106,7 +106,7 @@ const useGraphql = () => {
         })
       ).data;
 
-      const { getUserById: data } = response;
+      const {getUserById: data} = response;
 
       return data;
     } catch (error: any) {
@@ -128,7 +128,7 @@ const useGraphql = () => {
         })
       ).data;
 
-      const { updateUserByID: data } = response;
+      const {updateUserByID: data} = response;
 
       return true;
     } catch (error: any) {
@@ -166,7 +166,7 @@ const useGraphql = () => {
         })
       ).data;
 
-      const { getCarsByPassengers: data } = response;
+      const {getCarsByPassengers: data} = response;
       return data;
     } catch (error: any) {
       console.log('ERROR with getAllCarsByPassengers', error);
@@ -186,7 +186,7 @@ const useGraphql = () => {
       if (!response) {
         console.log(response);
         return;
-      };
+      }
 
       const data = response?.getCarsByType;
       return data;
