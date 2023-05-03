@@ -17,7 +17,6 @@ const FakeCar: Car[] = [
     passengers: 5,
     price: 10,
     name: 'TOYATO',
-    disctrict: 'Khan-Uul',
   },
   {
     id: '2',
@@ -30,7 +29,6 @@ const FakeCar: Car[] = [
     passengers: 5,
     price: 10,
     name: 'TOYATO',
-    disctrict: 'Khan-Uul',
   },
   {
     id: '1',
@@ -43,7 +41,6 @@ const FakeCar: Car[] = [
     passengers: 5,
     price: 10,
     name: 'TOYATO',
-    disctrict: 'Khan-Uul',
   },
   {
     id: '3',
@@ -56,7 +53,6 @@ const FakeCar: Car[] = [
     passengers: 5,
     price: 10,
     name: 'TOYATO',
-    disctrict: 'Khan-Uul',
   },
   {
     id: '4',
@@ -69,7 +65,6 @@ const FakeCar: Car[] = [
     passengers: 5,
     price: 10,
     name: 'TOYATO',
-    disctrict: 'Khan-Uul',
   },
 ];
 
@@ -83,7 +78,7 @@ const Booking = () => {
           resizeMode="cover"
           className="h-[275px] relative overflow-visible px-[30px]">
           <Pressable
-            onPress={() => navigation.navigate('Location')}
+            onPress={() => navigation.navigate('Location', {from: 'anywhere'})}
             className="py-[15px] flex-row px-[20px] items-center rounded-[30px] border border-[#CCCCCC] bg-white absolute w-full bottom-[-25px] z-10 left-[30px]">
             <Image
               source={require('../assets/location-white.png')}

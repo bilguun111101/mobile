@@ -14,13 +14,14 @@ import {
 const Review = ({route}: any) => {
   const navigation = useNavigation<any>();
   const {rental, setRental} = useRental();
-  const [location] = useState<boolean>(false);
+  // const [location] = useState<boolean>(false);
   const [gps, setGps] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
   const [carSeats, setCarSeats] = useState<boolean>(false);
   const [insurance, setInsurance] = useState<boolean>(false);
 
-  const {image} = route.params;
+  const {image, dateRent, dateReturn, location} = route.params;
+  console.log(route.params);
 
   const extras = [
     {
@@ -85,7 +86,7 @@ const Review = ({route}: any) => {
                   <Text className="text-base text-[#777777] font-medium">
                     PICKUP
                   </Text>
-                  <Text className="text-[13px]">Khan-Uul district</Text>
+                  <Text className="text-[13px]">{location}</Text>
                   <Text className="text-[#898989] text-[13px]">{`19 April | 12:00`}</Text>
                 </View>
               </View>
@@ -99,7 +100,7 @@ const Review = ({route}: any) => {
                   <Text className="text-base text-[#777777] font-medium">
                     DROP-OFF
                   </Text>
-                  <Text className="text-[13px]">Khan-Uul district</Text>
+                  <Text className="text-[13px]">{location}</Text>
                   <Text className="text-[#898989] text-[13px]">{`19 April | 12:00`}</Text>
                 </View>
               </View>

@@ -12,7 +12,7 @@ import {
   shadow,
 } from '../components';
 
-const When = ({route}: any) => {
+const Date = ({route}: any) => {
   const {from, location} = route.params;
   const navigation = useNavigation<any>(),
     {rental, setRental} = useRental(),
@@ -151,4 +151,4 @@ const When = ({route}: any) => {
   );
 };
 
-export default When;
+export default Date;

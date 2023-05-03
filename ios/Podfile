@@ -24,6 +24,7 @@ end
 target 'mobile' do
   config = use_native_modules!
   pod 'RNScreens', :path => '../node_modules/react-native-screens'
+  pod 'react-native-date-picker', :path => '../node_modules/react-native-date-picker'
 
   # Flags change depending on the env values.
   flags = get_default_flags()

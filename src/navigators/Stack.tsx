@@ -1,31 +1,40 @@
 import Bottom from './Bottom';
 import {HeaderLeftBtn} from '../components';
 import {
-  Booking,
+  When,
+  Start,
+  Review,
   Contact,
   Location,
-  RentalDetails,
-  Review,
-  Start,
   Vehicles,
-  When,
+  RentalDetails,
 } from '../screens';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {useEffect, useState} from 'react';
 
 const Stck = createNativeStackNavigator();
 
 const Stack = () => {
+  const [data, setData] = useState(false);
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setData(true);
+    }, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
   return (
     <NavigationContainer>
       <Stck.Navigator>
-        {/* <Stck.Screen
-                name='Start'
-                component={Start}
-                options={{
-                    headerShown: false,
-                }}
-            /> */}
+        {!data && (
+          <Stck.Screen
+            name="Start"
+            component={Start}
+            options={{
+              headerShown: false,
+            }}
+          />
+        )}
         <Stck.Screen
           name="Bottom_tab_container"
           component={Bottom}

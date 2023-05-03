@@ -13,7 +13,7 @@ const BookCard = ({index, item, lastIndex}: Props) => {
   const {name, price, image} = item;
   const navigation = useNavigation<any>();
   const onRentNow = useCallback(() => {
-    navigation.navigate('Review', {...item});
+    navigation.navigate('Location', {...item, from: 'booking'});
   }, []);
   return (
     <LinearGradient

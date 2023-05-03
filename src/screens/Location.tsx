@@ -53,7 +53,16 @@ const Location = ({route}: any) => {
       Alert.alert('Choose your location!!!');
       return;
     }
-    navigation.navigate('When', {location});
+    if (!route.params.from) return;
+
+    if (route.params.from === 'booking') {
+      navigation.navigate('When', {
+        location,
+        ...route.params,
+      });
+      return;
+    }
+    navigation.navigate('When', {location, from: route.params.from});
   }, [location]);
 
   return (
