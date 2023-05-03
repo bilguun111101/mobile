@@ -69,7 +69,7 @@ const Date = ({route}: any) => {
           </View>
           <View className="flex-1 p-2">
             <Text className="px-3 font-bold text-base">Date rent</Text>
-            <Calendar
+            {/* <Calendar
               onDayPress={day => {
                 setDateRentSection(day);
                 setDateRent(day.dateString);
@@ -83,11 +83,11 @@ const Date = ({route}: any) => {
                 borderColor: 'white',
               }}
               theme={theme}
-            />
+            /> */}
           </View>
           <View className="flex-1 p-2 mb-52">
             <Text className="px-3 font-bold text-base">Date return</Text>
-            <Calendar
+            {/* <Calendar
               onDayPress={day => {
                 setDateReturnSection(day);
                 setDateReturn(day.dateString);
@@ -101,7 +101,7 @@ const Date = ({route}: any) => {
                 borderColor: 'white',
               }}
               theme={theme}
-            />
+            /> */}
           </View>
         </ScrollView>
 

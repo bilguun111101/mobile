@@ -1,5 +1,5 @@
 import {useRental} from '../context';
-import {useCallback, useState} from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import {Calendar} from 'react-native-calendars';
 import DatePicker from 'react-native-date-picker';
 import {useNavigation} from '@react-navigation/native';
@@ -17,9 +17,9 @@ const When = ({route}: any) => {
   const navigation = useNavigation<any>(),
     {rental, setRental} = useRental(),
     [rentTime, serRentTime] = useState<string>(''),
-    [dateRent, setDateRent] = useState<string>(''),
+    [dateRent, setDateRent] = useState<any>(),
     [returnTime, serReturnTime] = useState<string>(''),
-    [dateReturn, setDateReturn] = useState<string>(''),
+    [dateReturn, setDateReturn] = useState<any>(),
     [openRentModal, setOpenRentModal] = useState<boolean>(true),
     [openReturnModal, setOpenReturnModal] = useState<boolean>(false),
     [dateRentSection, setDateRentSection] = useState<ChooseDate | undefined>(),
@@ -27,6 +27,9 @@ const When = ({route}: any) => {
       ChooseDate | undefined
     >();
 
+  useEffect(() => {
+    console.log(dateRent);
+  }, [dateRent]);
   const onSubmit = useCallback(() => {
     if (!dateRentSection || !dateReturnSection) return;
     const totalDays = +calculateDate(dateRent, dateReturn).totalDays;
@@ -67,40 +70,18 @@ const When = ({route}: any) => {
               +DateToday.month
             ].toUpperCase()} ${DateToday.year}`}</Text>
           </View>
-          <View className="flex-1 p-2">
+          <View className="flex-1 p-2 flex-col items-center">
             <Text className="px-3 font-bold text-base">Date rent</Text>
-            <Calendar
-              onDayPress={day => {
-                setDateRentSection(day);
-                setDateRent(day.dateString);
-              }}
-              markedDates={{
-                [dateReturn]: {selected: true, disableTouchEvent: true},
-              }}
-              style={{
-                height: 360,
-                borderWidth: 1,
-                borderColor: 'white',
-              }}
-              theme={theme}
+            <DatePicker
+              date={new Date()}
+              onDateChange={date => setDateRent(date)}
             />
           </View>
-          <View className="flex-1 p-2 mb-52">
+          <View className="flex-1 p-2 mb-52 flex-col items-center">
             <Text className="px-3 font-bold text-base">Date return</Text>
-            <Calendar
-              onDayPress={day => {
-                setDateReturnSection(day);
-                setDateReturn(day.dateString);
-              }}
-              markedDates={{
-                [dateReturn]: {selected: true, disableTouchEvent: true},
-              }}
-              style={{
-                height: 360,
-                borderWidth: 1,
-                borderColor: 'white',
-              }}
-              theme={theme}
+            <DatePicker
+              date={new Date()}
+              onDateChange={date => setDateReturn(date)}
             />
           </View>
         </ScrollView>
