@@ -4,7 +4,7 @@ import Start from './Start';
 import Review from './Review';
 import Contact from './Contact';
 import Booking from './Booking';
-import Profile from './Profile';
+import Account from './Account';
 import Location from './Location';
 import Vehicles from './Vehicles';
 import Resources from './Resources';
@@ -16,7 +16,7 @@ export {
   Book,
   Start,
   Review,
-  Profile,
+  Account,
   Contact,
   Booking,
   Location,

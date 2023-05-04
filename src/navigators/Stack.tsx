@@ -26,7 +26,7 @@ const Stack = () => {
   return (
     <NavigationContainer>
       <Stck.Navigator>
-        {!data && (
+        {/* {!data && (
           <Stck.Screen
             name="Start"
             component={Start}
@@ -34,7 +34,7 @@ const Stack = () => {
               headerShown: false,
             }}
           />
-        )}
+        )} */}
         <Stck.Screen
           name="Bottom_tab_container"
           component={Bottom}

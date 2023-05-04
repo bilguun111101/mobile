@@ -1,6 +1,6 @@
 import {useRef} from 'react';
 import 'react-native-gesture-handler';
-import {Book, Booking, Profile, RentalDetails, Resources} from '../screens';
+import {Account, Booking, Resources} from '../screens';
 import {Animated, Image, Text, View, Dimensions} from 'react-native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 
@@ -24,21 +24,15 @@ const Buttons = [
     source: require('../assets/booking.png'),
   },
   {
-    name: 'My Rentals',
-    component: RentalDetails,
-    toValue: getWidth() * 1.5,
-    source: require('../assets/carLogo.png'),
-  },
-  {
     name: 'Account',
-    component: Profile,
-    toValue: getWidth() * 2.97,
+    component: Account,
+    toValue: getWidth() * 1.75,
     source: require('../assets/user.png'),
   },
   {
     name: 'Resources',
     component: Resources,
-    toValue: getWidth() * 4.43,
+    toValue: getWidth() * 3.5,
     source: require('../assets/more.png'),
   },
 ];
@@ -52,57 +46,23 @@ const Bottom = (): JSX.Element => {
           tabBarShowLabel: false,
           tabBarStyle: {
             position: 'absolute',
-            bottom: 0,
-            right: 0,
-            left: 0,
-            height: 90,
-            elevation: 10,
+            bottom: 25,
+            height: 60,
+            borderRadius: 10,
+            shadowColor: '#000',
+            shadowOpacity: 0.4,
+            marginHorizontal: 20,
             backgroundColor: '#fff',
+            shadowOffset: {
+              width: 1,
+              height: 1,
+            },
+            flexDirection: 'row',
+            justifyContent: 'space-around',
           },
         }}>
         {Buttons.map((el, idx) => {
           const {component, toValue, source, name} = el;
-          if (name === 'My Rentals') {
-            return (
-              <Tab.Screen
-                key={idx}
-                name={name}
-                component={component}
-                options={{
-                  headerShown: true,
-                  tabBarIcon: ({focused, size}) => (
-                    <View
-                      style={{
-                        gap: 5,
-                        width: 60,
-                        paddingTop: 12,
-                        height: '100%',
-                        display: 'flex',
-                        alignItems: 'center',
-                        position: 'relative',
-                        flexDirection: 'column',
-                        justifyContent: 'flex-start',
-                      }}>
-                      <Image source={source} />
-                      <Text
-                        style={{fontSize: 10, position: 'absolute', bottom: 0}}>
-                        {name}
-                      </Text>
-                    </View>
-                  ),
-                }}
-                listeners={({navigation, route}) => ({
-                  // Onpress Update....
-                  tabPress: e => {
-                    Animated.spring(tabOffsetValue, {
-                      toValue,
-                      useNativeDriver: true,
-                    }).start();
-                  },
-                })}
-              />
-            );
-          }
           return (
             <Tab.Screen
               key={idx}
@@ -124,10 +84,10 @@ const Bottom = (): JSX.Element => {
                       justifyContent: 'flex-start',
                     }}>
                     <Image source={source} />
-                    <Text
+                    {/* <Text
                       style={{fontSize: 10, position: 'absolute', bottom: 0}}>
                       {name}
-                    </Text>
+                    </Text> */}
                   </View>
                 ),
               }}
@@ -150,10 +110,10 @@ const Bottom = (): JSX.Element => {
           height: 2,
           backgroundColor: 'red',
           position: 'absolute',
-          bottom: 90,
+          bottom: 85,
           // Horizontal Padding = 25...
-          left: 25,
-          right: 25,
+          left: 55,
+          right: 55,
           borderRadius: 20,
           transform: [{translateX: tabOffsetValue}],
         }}></Animated.View>
