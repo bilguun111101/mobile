@@ -1,20 +1,24 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import Stack from "./src/navigators/Stack";
+import { Login, Register } from "./src/components";
+import { OpenProvider, RentalProvider, UserProvider } from "./src/context";
+import { ApolloProvider } from "@apollo/client";
+import { client } from "./src/server/apollo_client";
+// App.js
 
-export default function App() {
+const App = () => {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <ApolloProvider client={client}>
+      <UserProvider>
+        <RentalProvider>
+          <OpenProvider>
+            <Login />
+            <Stack />
+            <Register />
+          </OpenProvider>
+        </RentalProvider>
+      </UserProvider>
+    </ApolloProvider>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
