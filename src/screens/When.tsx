@@ -1,62 +1,79 @@
-import {useRental} from '../context';
-import {useCallback, useEffect, useState} from 'react';
-import {Calendar} from 'react-native-calendars';
-import DatePicker from 'react-native-date-picker';
-import {useNavigation} from '@react-navigation/native';
-import {Image, ScrollView, Text, View} from 'react-native';
-import {months, calculateDate, DateToday, theme, week} from '../variables';
-import {
-  BottomButton,
-  HeaderContent,
-  InfortantButton,
-  shadow,
-} from '../components';
+import { useRental } from "../context";
+import DatePicker from "react-native-date-picker";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { months, calculateDate, DateToday, theme, week } from "../variables";
+import { shadow, HeaderContent, InfortantButton } from "../components";
 
-const When = ({route}: any) => {
-  const {from, location} = route.params;
-  const navigation = useNavigation<any>(),
-    {rental, setRental} = useRental(),
-    [rentTime, serRentTime] = useState<string>(''),
-    [dateRent, setDateRent] = useState<any>(),
-    [returnTime, serReturnTime] = useState<string>(''),
-    [dateReturn, setDateReturn] = useState<any>(),
-    [openRentModal, setOpenRentModal] = useState<boolean>(true),
-    [openReturnModal, setOpenReturnModal] = useState<boolean>(false),
-    [dateRentSection, setDateRentSection] = useState<ChooseDate | undefined>(),
-    [dateReturnSection, setDateReturnSection] = useState<
-      ChooseDate | undefined
-    >();
+const When = ({ route }: any) => {
+  const { from, location } = route.params;
+  const navigation = useNavigation<any>();
+  const { rental, setRental } = useRental();
+  const [openRentModal, setOpenRentModal] = useState<boolean>(false);
+  const [openReturnModal, setOpenReturnModal] = useState<boolean>(false);
+  const [dateRentSection, setDateRentSection] = useState<any>();
+  const [dateReturnSection, setDateReturnSection] = useState<any>();
 
-  useEffect(() => {
-    console.log(dateRent);
-  }, [dateRent]);
   const onSubmit = useCallback(() => {
     if (!dateRentSection || !dateReturnSection) return;
-    const totalDays = +calculateDate(dateRent, dateReturn).totalDays;
-    if (from === 'booking') {
-      navigation.navigate('Review', {
+    const totalDays = +calculateDate(dateRentSection.day, dateReturnSection.day)
+      .totalDays;
+    if (from === "booking") {
+      navigation.navigate("Review", {
         totalDays,
-        dateRent: dateRentSection?.dateString,
-        dateReturn: dateReturnSection?.dateString,
+        dateRent: dateRentSection?.day,
+        dateReturn: dateReturnSection?.day,
         ...route.params,
       });
       return;
     }
-    navigation.navigate('Vehicles', {
+    navigation.navigate("Vehicles", {
       location,
       totalDays,
-      dateRent: dateRentSection?.dateString,
-      dateReturn: dateReturnSection?.dateString,
+      dateRent: dateRentSection?.day,
+      dateReturn: dateReturnSection?.day,
     });
   }, [rental, dateRentSection, dateReturnSection]);
 
   const RentOnConfirm = useCallback(
     (date: any) => {
-      console.log(date);
+      setDateRentSection({
+        time: `${date.getHours()}:${date.getMinutes()}`,
+        day: `${date.getFullYear()}-${
+          date.getMonth() > 9 ? date.getMonth() : `0${date.getMonth()}`
+        }-${date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`}`,
+      });
       setOpenRentModal(false);
     },
-    [openRentModal, rentTime],
+    [openRentModal, dateRentSection]
   );
+
+  const ReturnOnConfirm = useCallback(
+    (date: any) => {
+      setDateReturnSection({
+        time: `${date.getHours()}:${date.getMinutes()}`,
+        day: `${date.getFullYear()}-${
+          date.getMonth() > 9 ? date.getMonth() : `0${date.getMonth()}`
+        }-${date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`}`,
+      });
+      setOpenReturnModal(false);
+    },
+    [openReturnModal, dateReturnSection]
+  );
+
+  const bottom = [
+    {
+      title: "PICKUP",
+      date: dateRentSection?.day,
+      time: dateRentSection?.time,
+    },
+    {
+      title: "DROP-OFF",
+      date: dateReturnSection?.day,
+      time: dateReturnSection?.time,
+    },
+  ];
 
   return (
     <>
@@ -71,62 +88,80 @@ const When = ({route}: any) => {
             ].toUpperCase()} ${DateToday.year}`}</Text>
           </View>
           <View className="flex-1 p-2 flex-col items-center">
-            <Text className="px-3 font-bold text-base">Date rent</Text>
+            <Pressable
+              className="px-[15px] py-[10px] rounded-[10px] bg-red-primary"
+              onPress={() => {
+                setOpenRentModal(true);
+              }}
+            >
+              <Text className="text-white font-medium">
+                Choose your date of rent
+              </Text>
+            </Pressable>
             <DatePicker
               date={new Date()}
-              onDateChange={date => setDateRent(date)}
+              modal
+              open={openRentModal}
+              onConfirm={RentOnConfirm}
+              onCancel={() => setOpenRentModal(false)}
             />
           </View>
           <View className="flex-1 p-2 mb-52 flex-col items-center">
-            <Text className="px-3 font-bold text-base">Date return</Text>
+            <Pressable
+              className="px-[15px] py-[10px] rounded-[10px] bg-red-primary"
+              onPress={() => {
+                setOpenReturnModal(!openReturnModal);
+              }}
+            >
+              <Text className="text-white font-medium">
+                Choose your date of return
+              </Text>
+            </Pressable>
             <DatePicker
               date={new Date()}
-              onDateChange={date => setDateReturn(date)}
+              modal
+              open={openReturnModal}
+              onConfirm={ReturnOnConfirm}
+              onCancel={() => setOpenReturnModal(false)}
             />
           </View>
         </ScrollView>
 
         <View
           className="absolute inset-x-0 pb-14 px-8 bottom-0 w-full h-52 bg-white flex-col pt-3"
-          style={shadow.header}>
+          style={shadow.header}
+        >
           <View className="flex-row w-full gap-x-5">
-            {new Array(2).fill(20).map((el, idx) => {
+            {bottom.map((el, idx) => {
+              const { title, date, time } = el;
               return (
                 <View className="w-1/2 flex-col gap-y-3" key={idx}>
                   <View>
                     <Text className="font-bold text-base text-zinc-400">
-                      PICKUP
+                      {title}
                     </Text>
-                    <Text className="font-normal text-base">{`Wed, 19 Apr`}</Text>
+                    <Text className="font-normal text-base">{date}</Text>
                   </View>
                   <View className="w-full p-2.5 flex-row gap-x-3 border-0.5 items-center rounded border-gray-600">
                     <Image
-                      source={require('../assets/clock.png')}
+                      source={require("../assets/clock.png")}
                       className="w-4"
                     />
-                    <Text className="text-base font-medium">{`12:00`}</Text>
+                    <Text className="text-base font-medium">{time}</Text>
                   </View>
                 </View>
               );
             })}
           </View>
-          <View className="mt-[10px]">
+          <View className="mt-[30px]">
             <InfortantButton
               text="See Result"
               onSubmit={onSubmit}
-              disabled={dateRent && dateReturn ? false : true}
-              color={location ? '#FF3002' : '#D9D9D9'}
+              color={location ? "#FF3002" : "#D9D9D9"}
+              disabled={dateRentSection && dateReturnSection ? false : true}
             />
           </View>
         </View>
-        {/* <DatePicker
-          modal
-          open={openRentModal}
-          date={}
-          mode="time"
-          onConfirm={RentOnConfirm}
-          onCancel={() => setOpenRentModal(false)}
-        /> */}
       </View>
     </>
   );

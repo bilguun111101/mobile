@@ -69,7 +69,7 @@ const VehiclesCard = (props: Props) => {
       <View className="w-full pr-5 mt-5">
         <Pressable className="py-1 bg-[#444444] rounded-2xl" onPress={onSubmit}>
           <Text className="text-white text-base font-medium text-center">
-            Selected Vehicle
+            Select Vehicle
           </Text>
         </Pressable>
       </View>

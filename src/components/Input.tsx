@@ -1,5 +1,5 @@
-import {TextInput} from 'react-native';
-import {InputType} from '../variables';
+import { TextInput } from "react-native";
+import { InputType } from "../variables";
 
 interface Props {
   value: string;
@@ -23,7 +23,7 @@ const Input = ({
       onChangeText={onChange}
       secureTextEntry={secureTextEntry}
       placeholder={placeholder}
-      className="h-[37px] rounded-[10px] border border-[#CBCBCB] mt-[3px] px-[10px]"
+      className="h-[37px] rounded-[10px] border border-gray-forth mt-[3px] px-[10px]"
     />
   );
 };

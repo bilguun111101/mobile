@@ -1,70 +1,70 @@
-import {BookCard, RateCard} from '../components';
-import {useNavigation} from '@react-navigation/native';
-import {FlatList, ImageBackground, View} from 'react-native';
-import {Image, ScrollView, Text, Pressable} from 'react-native';
+import { BookCard, RateCard } from "../components";
+import { useNavigation } from "@react-navigation/native";
+import { FlatList, ImageBackground, View } from "react-native";
+import { Image, ScrollView, Text, Pressable } from "react-native";
 
 const array = new Array(20).fill(0);
 
 const FakeCar: Car[] = [
   {
-    id: '1',
-    image: require('../assets/testCar.png'),
-    type: 'car',
-    typeDefinition: '',
-    model: '',
-    transmission: '',
+    id: "1",
+    image: require("../assets/testCar.png"),
+    type: "car",
+    typeDefinition: "",
+    model: "",
+    transmission: "",
     kml: 3,
     passengers: 5,
     price: 10,
-    name: 'TOYATO',
+    name: "TOYATO",
   },
   {
-    id: '2',
-    image: require('../assets/testCar.png'),
-    type: 'car',
-    typeDefinition: '',
-    model: '',
-    transmission: '',
+    id: "2",
+    image: require("../assets/testCar.png"),
+    type: "car",
+    typeDefinition: "",
+    model: "",
+    transmission: "",
     kml: 3,
     passengers: 5,
     price: 10,
-    name: 'TOYATO',
+    name: "TOYATO",
   },
   {
-    id: '1',
-    image: require('../assets/testCar.png'),
-    type: 'car',
-    typeDefinition: '',
-    model: '',
-    transmission: '',
+    id: "1",
+    image: require("../assets/testCar.png"),
+    type: "car",
+    typeDefinition: "",
+    model: "",
+    transmission: "",
     kml: 3,
     passengers: 5,
     price: 10,
-    name: 'TOYATO',
+    name: "TOYATO",
   },
   {
-    id: '3',
-    image: require('../assets/testCar.png'),
-    type: 'car',
-    typeDefinition: '',
-    model: '',
-    transmission: '',
+    id: "3",
+    image: require("../assets/testCar.png"),
+    type: "car",
+    typeDefinition: "",
+    model: "",
+    transmission: "",
     kml: 3,
     passengers: 5,
     price: 10,
-    name: 'TOYATO',
+    name: "TOYATO",
   },
   {
-    id: '4',
-    image: require('../assets/testCar.png'),
-    type: 'car',
-    typeDefinition: '',
-    model: '',
-    transmission: '',
+    id: "4",
+    image: require("../assets/testCar.png"),
+    type: "car",
+    typeDefinition: "",
+    model: "",
+    transmission: "",
     kml: 3,
     passengers: 5,
     price: 10,
-    name: 'TOYATO',
+    name: "TOYATO",
   },
 ];
 
@@ -74,14 +74,18 @@ const Booking = () => {
     <View className="flex-1 bg-white relative">
       <ScrollView className="relative" showsVerticalScrollIndicator={false}>
         <ImageBackground
-          source={require('../assets/smart-car.png')}
+          source={require("../assets/smart-car.png")}
           resizeMode="cover"
-          className="h-[275px] relative overflow-visible px-[30px]">
+          className="h-[275px] relative overflow-visible px-[30px]"
+        >
           <Pressable
-            onPress={() => navigation.navigate('Location', {from: 'anywhere'})}
-            className="py-[15px] flex-row px-[20px] items-center rounded-[30px] border border-[#CCCCCC] bg-white absolute w-full bottom-[-25px] z-10 left-[30px]">
+            onPress={() =>
+              navigation.navigate("Location", { from: "anywhere" })
+            }
+            className="py-[15px] flex-row px-[20px] items-center rounded-[30px] border border-[#CCCCCC] bg-white absolute w-full bottom-[-25px] z-10 left-[30px]"
+          >
             <Image
-              source={require('../assets/location-white.png')}
+              source={require("../assets/location-white.png")}
               className="w-[20px] h-[20px]"
             />
             <View>
@@ -105,7 +109,7 @@ const Booking = () => {
             horizontal
             className="pl-[30px]"
             showsHorizontalScrollIndicator={false}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <BookCard
                 index={index}
                 item={item}
@@ -127,9 +131,9 @@ const Booking = () => {
           <FlatList
             data={array}
             horizontal
-            className="pl-[30px]"
+            className="pl-[30px] pb-bottom"
             showsHorizontalScrollIndicator={false}
-            renderItem={({item, index}) => (
+            renderItem={({ item, index }) => (
               <RateCard
                 index={index}
                 item={item}
