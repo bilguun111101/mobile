@@ -1,49 +1,51 @@
-import {CREATE_RENTAL} from '../server/mutations/rentals';
+import { CREATE_RENTAL } from "../server/mutations/rentals";
 import {
   CREATE_NEW_USER,
   LOGIN_USER,
   UPDATE_USER_BY_ID,
-} from '../server/mutations/users';
+} from "../server/mutations/users";
 import {
   GET_ALL_CARS_WITH_PAGINATION,
   GET_CARS_BY_PASSENGERS,
   GET_CARS_BY_TYPE,
-} from '../server/queries/cars';
-import {GET_USER_BY_ID} from '../server/queries/users';
-import {resetApolloContext, useLazyQuery, useMutation} from '@apollo/client';
-import Cookies from 'js-cookie';
+} from "../server/queries/cars";
+// import Cookies from "universal-cookie";
+// import Cookies from "js-cookie";
+import { GET_USER_BY_ID } from "../server/queries/users";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { resetApolloContext, useLazyQuery, useMutation } from "@apollo/client";
 
 const useGraphql = () => {
   // USER QUERIES
-  const [getUserById, {loading: getUserByIdLoading}] = useLazyQuery(
+  const [getUserById, { loading: getUserByIdLoading }] = useLazyQuery(
     GET_USER_BY_ID,
-    {pollInterval: 500},
+    { pollInterval: 500 }
   );
 
   // USER MUTATIONS
-  const [createNewUser, {loading: createUserLoading}] =
+  const [createNewUser, { loading: createUserLoading }] =
     useMutation(CREATE_NEW_USER);
 
-  const [loginUser, {loading: loginUserLoading}] = useMutation(LOGIN_USER);
-  const [updateUserById, {loading: updateUserLoading}] =
+  const [loginUser, { loading: loginUserLoading }] = useMutation(LOGIN_USER);
+  const [updateUserById, { loading: updateUserLoading }] =
     useMutation(UPDATE_USER_BY_ID);
 
   // CARS QUERIES
-  const [getCarsByPagination, {loading: getCarsByPageLoading}] = useLazyQuery(
+  const [getCarsByPagination, { loading: getCarsByPageLoading }] = useLazyQuery(
     GET_ALL_CARS_WITH_PAGINATION,
-    {pollInterval: 500},
+    { pollInterval: 500 }
   );
 
-  const [getCarsByPassengers, {loading: getCarsByPassengerLoading}] =
-    useLazyQuery(GET_CARS_BY_PASSENGERS, {pollInterval: 500});
+  const [getCarsByPassengers, { loading: getCarsByPassengerLoading }] =
+    useLazyQuery(GET_CARS_BY_PASSENGERS, { pollInterval: 500 });
 
-  const [getCarsByType, {loading: getCarsByTypeLoading}] = useLazyQuery(
+  const [getCarsByType, { loading: getCarsByTypeLoading }] = useLazyQuery(
     GET_CARS_BY_TYPE,
-    {pollInterval: 500},
+    { pollInterval: 500 }
   );
 
   // RENTALS MUTATIONS
-  const [createRental, {loading: createRentalLoading}] =
+  const [createRental, { loading: createRentalLoading }] =
     useMutation(CREATE_RENTAL);
 
   //============================================================
@@ -59,14 +61,16 @@ const useGraphql = () => {
         })
       ).data;
 
-      const {createUser} = response;
+      const { createUser } = response;
 
-      Cookies.set('token', createUser?.token);
-      Cookies.set('userId', createUser?.user.id);
+      // Cookies.set("token", createUser?.token);
+      // Cookies.set("userId", createUser?.user.id);
+      AsyncStorage.setItem("token", createUser?.token);
+      AsyncStorage.setItem("userID", createUser?.user.id);
 
       return true;
     } catch (error: any) {
-      console.log('error from apollo/createNewUser', error);
+      console.log("error from apollo/createNewUser", error);
       const errors = new Error(error);
       return false;
     }
@@ -83,14 +87,14 @@ const useGraphql = () => {
         })
       ).data;
 
-      const {loginUser: data} = response;
+      const { loginUser: data } = response;
 
-      Cookies.set('token', data?.token);
-      Cookies.set('userId', data?.userId);
+      AsyncStorage.setItem("token", data?.token);
+      AsyncStorage.setItem("userId", data?.userId);
 
       return true;
     } catch (error: any) {
-      console.log('error from apollo/loginUser', error);
+      console.log("error from apollo/loginUser", error);
       const errors = new Error(error);
       return false;
     }
@@ -106,11 +110,11 @@ const useGraphql = () => {
         })
       ).data;
 
-      const {getUserById: data} = response;
+      const { getUserById: data } = response;
 
       return data;
     } catch (error: any) {
-      console.log('error from apollo/getUserUserById', error);
+      console.log("error from apollo/getUserUserById", error);
       const errors = new Error(error);
       return false;
     }
@@ -128,11 +132,11 @@ const useGraphql = () => {
         })
       ).data;
 
-      const {updateUserByID: data} = response;
+      const { updateUserByID: data } = response;
 
       return true;
     } catch (error: any) {
-      console.log('error from apollo/updateUser', error);
+      console.log("error from apollo/updateUser", error);
       const errors = new Error(error);
       return false;
     }
@@ -151,7 +155,7 @@ const useGraphql = () => {
 
       return response;
     } catch (error: any) {
-      console.log('ERROR with getAllCarsByPage', error);
+      console.log("ERROR with getAllCarsByPage", error);
       const errors = new Error(error);
     }
   };
@@ -166,10 +170,10 @@ const useGraphql = () => {
         })
       ).data;
 
-      const {getCarsByPassengers: data} = response;
+      const { getCarsByPassengers: data } = response;
       return data;
     } catch (error: any) {
-      console.log('ERROR with getAllCarsByPassengers', error);
+      console.log("ERROR with getAllCarsByPassengers", error);
       const errors = new Error(error);
     }
   };
@@ -191,7 +195,7 @@ const useGraphql = () => {
       const data = response?.getCarsByType;
       return data;
     } catch (error: any) {
-      console.log('ERROR with getAllCarsByPassengers', error);
+      console.log("ERROR with getAllCarsByPassengers", error);
       const errors = new Error(error);
     }
   };
@@ -224,11 +228,12 @@ const useGraphql = () => {
       ).data;
 
       // if (!response) toast.error(`No cars found with ${type} type`);
+      if (!response) console.log(`No cars found with type`);
 
       const data = response?.createRental;
       return data;
     } catch (error: any) {
-      console.log('ERROR with getAllCarsByPassengers', error);
+      console.log("ERROR with getAllCarsByPassengers", error);
       return new Error(error);
     }
   };
