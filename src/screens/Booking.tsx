@@ -1,6 +1,7 @@
 import { BookCard, RateCard } from "../components";
 import { useNavigation } from "@react-navigation/native";
-import { FlatList, ImageBackground, View } from "react-native";
+import { useState } from "react";
+import { FlatList, ImageBackground, RefreshControl, View } from "react-native";
 import { Image, ScrollView, Text, Pressable } from "react-native";
 
 const array = new Array(20).fill(0);
@@ -70,9 +71,16 @@ const FakeCar: Car[] = [
 
 const Booking = () => {
   const navigation = useNavigation<any>();
+  const [refreshing, setRefreshing] = useState<boolean>(false);
   return (
     <View className="flex-1 bg-white relative">
-      <ScrollView className="relative" showsVerticalScrollIndicator={false}>
+      <ScrollView
+        className="relative"
+        showsVerticalScrollIndicator={false}
+        refreshControl={
+          <RefreshControl refreshing={refreshing} onRefresh={() => {}} />
+        }
+      >
         <ImageBackground
           source={require("../assets/smart-car.png")}
           resizeMode="cover"
