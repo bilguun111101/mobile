@@ -6,74 +6,73 @@ import {
   ScrollView,
   Text,
   View,
-} from 'react-native';
-import {HeaderContent, VehiclesCard} from '../components';
-import {useEffect} from 'react';
+} from "react-native";
+import { HeaderContent, VehiclesCard } from "../components";
 
 const FakeCar: Car[] = [
   {
-    id: '1',
-    image: require('../assets/testCar.png'),
-    type: 'car',
-    typeDefinition: '',
-    model: '',
-    transmission: '',
+    id: "1",
+    image: require("../assets/testCar.png"),
+    type: "car",
+    typeDefinition: "",
+    model: "",
+    transmission: "",
     kml: 3,
     passengers: 5,
     price: 10,
   },
   {
-    id: '2',
-    image: require('../assets/testCar.png'),
-    type: 'car',
-    typeDefinition: '',
-    model: '',
-    transmission: '',
+    id: "2",
+    image: require("../assets/testCar.png"),
+    type: "car",
+    typeDefinition: "",
+    model: "",
+    transmission: "",
     kml: 3,
     passengers: 5,
     price: 10,
   },
   {
-    id: '1',
-    image: require('../assets/testCar.png'),
-    type: 'car',
-    typeDefinition: '',
-    model: '',
-    transmission: '',
+    id: "1",
+    image: require("../assets/testCar.png"),
+    type: "car",
+    typeDefinition: "",
+    model: "",
+    transmission: "",
     kml: 3,
     passengers: 5,
     price: 10,
   },
   {
-    id: '3',
-    image: require('../assets/testCar.png'),
-    type: 'car',
-    typeDefinition: '',
-    model: '',
-    transmission: '',
+    id: "3",
+    image: require("../assets/testCar.png"),
+    type: "car",
+    typeDefinition: "",
+    model: "",
+    transmission: "",
     kml: 3,
     passengers: 5,
     price: 10,
   },
   {
-    id: '4',
-    image: require('../assets/testCar.png'),
-    type: 'car',
-    typeDefinition: '',
-    model: '',
-    transmission: '',
+    id: "4",
+    image: require("../assets/testCar.png"),
+    type: "car",
+    typeDefinition: "",
+    model: "",
+    transmission: "",
     kml: 3,
     passengers: 5,
     price: 10,
   },
 ];
 
-const Vehicles = ({route}: any) => {
+const Vehicles = ({ route }: any) => {
   const body = (
     <View className="w-full flex-row justify-between items-center">
       <Text className="text-lg font-normal ">Khan-Uul district</Text>
       <Pressable>
-        <Image source={require('../assets/downArrow.png')} className="w-4" />
+        <Image source={require("../assets/downArrow.png")} className="w-4" />
       </Pressable>
     </View>
   );
@@ -91,7 +90,7 @@ const Vehicles = ({route}: any) => {
         <View className="mb-[50px]">
           <FlatList
             data={FakeCar}
-            renderItem={({item}) => (
+            renderItem={({ item }) => (
               <VehiclesCard item={item} params={route.params} />
             )}
             keyExtractor={(item, idx) => `key-index${idx}`}

@@ -14,7 +14,7 @@ const RateCard = ({ item, index, lastIndex }: Props) => {
         index !== 0 && "ml-[10px]"
       } ${lastIndex === index && "mr-[50px]"} border-0.5`}
     >
-      {/* <View className="bg-[#FFD600] rounded-[5px] w-[30px] h-[30px]"></View> */}
+      <View className="bg-[#FFD600] rounded-[5px] w-[30px] h-[30px]"></View>
       <View className="w-[50px]">
         <Rating
           type="star"

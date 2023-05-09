@@ -1,5 +1,5 @@
-import Bottom from './Bottom';
-import {HeaderLeftBtn} from '../components';
+import Bottom from "./Bottom";
+import { HeaderLeftBtn } from "../components";
 import {
   When,
   Start,
@@ -8,10 +8,10 @@ import {
   Location,
   Vehicles,
   RentalDetails,
-} from '../screens';
-import {useEffect, useState} from 'react';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+} from "../screens";
+import { useEffect, useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stck = createNativeStackNavigator();
 
@@ -26,7 +26,7 @@ const Stack = () => {
   return (
     <NavigationContainer>
       <Stck.Navigator>
-        {/* {!data && (
+        {!data && (
           <Stck.Screen
             name="Start"
             component={Start}
@@ -34,7 +34,7 @@ const Stack = () => {
               headerShown: false,
             }}
           />
-        )} */}
+        )}
         <Stck.Screen
           name="Bottom_tab_container"
           component={Bottom}
@@ -53,11 +53,11 @@ const Stack = () => {
           name="When"
           component={When}
           options={{
-            headerTitle: '',
+            headerTitle: "",
             headerStyle: {
-              backgroundColor: 'white',
+              backgroundColor: "white",
             },
-            headerBackTitle: '',
+            headerBackTitle: "",
             headerShadowVisible: false,
             headerLeft: () => <HeaderLeftBtn />,
           }}
@@ -66,11 +66,11 @@ const Stack = () => {
           name="Vehicles"
           component={Vehicles}
           options={{
-            title: 'Vehicles',
+            title: "Vehicles",
             headerBackTitleVisible: false,
-            headerTitleStyle: {color: 'black'},
+            headerTitleStyle: { color: "black" },
             headerStyle: {
-              backgroundColor: 'white',
+              backgroundColor: "white",
             },
             headerLeft: () => <HeaderLeftBtn />,
             headerShadowVisible: false,
@@ -80,11 +80,11 @@ const Stack = () => {
           name="Review"
           component={Review}
           options={{
-            title: 'Review details',
+            title: "Review details",
             headerBackTitleVisible: false,
-            headerTitleStyle: {color: 'black'},
+            headerTitleStyle: { color: "black" },
             headerStyle: {
-              backgroundColor: 'white',
+              backgroundColor: "white",
             },
             headerLeft: () => <HeaderLeftBtn />,
             headerShadowVisible: false,
@@ -94,11 +94,11 @@ const Stack = () => {
           name="Contact"
           component={Contact}
           options={{
-            title: 'Contact',
+            title: "Contact",
             headerBackTitleVisible: false,
-            headerTitleStyle: {color: 'black'},
+            headerTitleStyle: { color: "black" },
             headerStyle: {
-              backgroundColor: 'white',
+              backgroundColor: "white",
             },
             headerLeft: () => <HeaderLeftBtn />,
             headerShadowVisible: false,
@@ -108,11 +108,11 @@ const Stack = () => {
           name="RentalDetails"
           component={RentalDetails}
           options={{
-            title: 'Rental Details',
+            title: "Rental Details",
             headerBackTitleVisible: false,
-            headerTitleStyle: {color: 'black'},
+            headerTitleStyle: { color: "black" },
             headerStyle: {
-              backgroundColor: 'white',
+              backgroundColor: "white",
             },
             headerLeft: () => <HeaderLeftBtn />,
             headerShadowVisible: false,
