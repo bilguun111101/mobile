@@ -1,4 +1,3 @@
-// import Cookies from 'js-cookie';
 import { loggedInState } from "../atoms";
 import { useSetRecoilState } from "recoil";
 import { useLazyQuery } from "@apollo/client";

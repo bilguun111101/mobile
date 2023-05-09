@@ -1,5 +1,5 @@
 import { View } from "react-native";
-import useGraphql from "../hooks/useGraphQL";
+import useGraphql from "../hooks/useGraphql";
 import { ChangeEvent, useEffect, useState } from "react";
 
 const take = 5;

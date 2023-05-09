@@ -3,6 +3,7 @@ import { Login, Register } from "./src/components";
 import { OpenProvider, RentalProvider, UserProvider } from "./src/context";
 import { ApolloProvider } from "@apollo/client";
 import { client } from "./src/graphql/apollo_client";
+import { AppRegistry } from "react-native";
 // App.js
 
 const App = () => {
