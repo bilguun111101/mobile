@@ -2,9 +2,10 @@ import { useRental } from "../context";
 import DatePicker from "react-native-date-picker";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Image, Pressable, ScrollView, Text, View } from "react-native";
+import { Alert, Image, Pressable, ScrollView, Text, View } from "react-native";
 import { months, calculateDate, DateToday, theme, week } from "../variables";
-import { shadow, HeaderContent, InfortantButton } from "../components";
+import { shadow, HeaderContent, BottomButton } from "../components";
+import InfortantButton from "../components/InfortantButton";
 
 const When = ({ route }: any) => {
   const { from, location } = route.params;
@@ -26,6 +27,10 @@ const When = ({ route }: any) => {
         dateReturn: dateReturnSection?.day,
         ...route.params,
       });
+      return;
+    }
+    if (!totalDays) {
+      Alert.alert("1-ээс дээш хоногоор түрээслүүлнэ!");
       return;
     }
     navigation.navigate("Vehicles", {
@@ -140,25 +145,38 @@ const When = ({ route }: any) => {
                     <Text className="font-bold text-base text-zinc-400">
                       {title}
                     </Text>
-                    <Text className="font-normal text-base">{date}</Text>
+                    <Text className="font-normal text-base">
+                      {!date ? "0000-0-0" : date}
+                    </Text>
                   </View>
                   <View className="w-full p-2.5 flex-row gap-x-3 border-0.5 items-center rounded border-gray-600">
                     <Image
                       source={require("../assets/clock.png")}
                       className="w-4"
                     />
-                    <Text className="text-base font-medium">{time}</Text>
+                    <Text className="text-base font-medium">
+                      {!time ? "00:00" : time}
+                    </Text>
                   </View>
                 </View>
               );
             })}
           </View>
-          <View className="mt-[30px]">
+          <View className="mt-[20px]">
+            {/* <BottomButton
+              text="See Result"
+              onSubmit={onSubmit}
+              color={dateRentSection && dateReturnSection ? false : true}
+              disabled={dateRentSection && dateReturnSection ? false : true}
+            /> */}
             <InfortantButton
               text="See Result"
               onSubmit={onSubmit}
-              color={location ? "#FF3002" : "#D9D9D9"}
-              disabled={dateRentSection && dateReturnSection ? false : true}
+              color={
+                dateRentSection && dateReturnSection ? "#FF2F01" : "#D9D9D9"
+              }
+              disabled={!(dateRentSection && dateReturnSection) ? true : false}
+              // disabled={false}
             />
           </View>
         </View>

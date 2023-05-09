@@ -1,68 +1,57 @@
-import {useRental} from '../context';
-import {useCallback, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {BottomButton, FillDot, InfortantButton} from '../components';
+import { useRental } from "../context";
+import { useCallback, useState } from "react";
+import { BottomButton, FillDot } from "../components";
+import { useNavigation } from "@react-navigation/native";
 import {
-  Image,
-  Pressable,
-  SafeAreaView,
-  ScrollView,
   Text,
   View,
-} from 'react-native';
+  Image,
+  Pressable,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
 
-const Review = ({route}: any) => {
+const Review = ({ route }: any) => {
   const navigation = useNavigation<any>();
-  const {rental, setRental} = useRental();
-  // const [location] = useState<boolean>(false);
+  const { rental, setRental } = useRental();
   const [gps, setGps] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
   const [carSeats, setCarSeats] = useState<boolean>(false);
   const [insurance, setInsurance] = useState<boolean>(false);
 
-  const {image, dateRent, dateReturn, location} = route.params;
+  const { image, dateRent, dateReturn, location } = route.params;
   console.log(route.params);
 
   const extras = [
     {
-      source: require('../assets/insurance.png'),
-      text: 'Insurance',
+      source: require("../assets/insurance.png"),
+      text: "Insurance",
       active: insurance,
       onClick: setInsurance,
     },
     {
-      source: require('../assets/baby-car-seat.png'),
-      text: 'Car seats',
+      source: require("../assets/baby-car-seat.png"),
+      text: "Car seats",
       active: carSeats,
       onClick: setCarSeats,
     },
     {
-      source: require('../assets/gps.png'),
-      text: 'GPS',
+      source: require("../assets/gps.png"),
+      text: "GPS",
       active: gps,
       onClick: setGps,
     },
   ];
 
   const onSubmit = useCallback(() => {
-    setRental(() => {
-      return {
-        ...rental,
-        extras: {
-          GPS: gps,
-          coverage: insurance,
-          child_safety: carSeats,
-        },
-        paymentType: confirm ? 'Pay Now' : 'Pay at Pickup',
-      };
-    });
-    navigation.navigate('Contact', {
+    navigation.navigate("Contact", {
       ...route.params,
       extras: {
         GPS: gps,
         coverage: insurance,
         child_safety: carSeats,
       },
+      paymentType: confirm ? "Pay Now" : "Pay at Pickup",
     });
   }, [confirm]);
 
@@ -72,14 +61,14 @@ const Review = ({route}: any) => {
         {/* introduction section */}
         <View className="w-full bg-[#F1F1F1] relative">
           <View className="w-full py-[10px] flex-row justify-end">
-            <Image source={image} className="w-[200px] h-auto" />
+            <Image source={image} className="w-[200px] h-[120px]" />
           </View>
 
           <View className="w-full px-3">
             <View className="border-t-0.5 border-[#A7A7A7] p-[15px]">
               <View className="flex-row items-center pb-[30px]">
                 <Image
-                  source={require('../assets/locationBlack.png')}
+                  source={require("../assets/locationBlack.png")}
                   className="w-[15px] h-[15px] mr-[10px]"
                 />
                 <View className="gap-y-[5px]">
@@ -93,7 +82,7 @@ const Review = ({route}: any) => {
 
               <View className="flex-row items-center">
                 <Image
-                  source={require('../assets/locationBlack.png')}
+                  source={require("../assets/locationBlack.png")}
                   className="w-[15px] h-[15px] mr-[10px]"
                 />
                 <View className="gap-y-[5px]">
@@ -113,23 +102,26 @@ const Review = ({route}: any) => {
           <View className="w-full p-[3px] flex-column gap-y-[9px]">
             <Text className="font-medium text-base">Coverage & extras</Text>
             {extras.map((el, idx) => {
-              const {source, text, active, onClick} = el;
+              const { source, text, active, onClick } = el;
               return (
                 <View
                   className="flex-row items-center justify-between"
-                  key={idx}>
+                  key={idx}
+                >
                   <View className="flex-row items-center gap-x-[11px]">
                     <Image source={source} className="w-[20px] h-[20px]" />
                     <Text className="font-medium text-base">{text}</Text>
                   </View>
                   <Pressable
                     className={`${
-                      !active ? 'bg-[#444444]' : 'bg-[#BEBEBE]'
+                      !active ? "bg-[#444444]" : "bg-[#BEBEBE]"
                     } rounded-[20px] w-[70px] p-[4px]`}
-                    onPress={() => onClick(!active)}>
+                    onPress={() => onClick(!active)}
+                  >
                     <Text
-                      className={`font-bold text-[13px] text-white text-center`}>
-                      {active ? 'Added' : 'Add'}
+                      className={`font-bold text-[13px] text-white text-center`}
+                    >
+                      {active ? "Added" : "Add"}
                     </Text>
                   </Pressable>
                 </View>
@@ -150,7 +142,8 @@ const Review = ({route}: any) => {
                 </Text>
               </View>
               <Pressable
-                className={`bg-[#444444] rounded-[20px] w-[80px] p-[4px]`}>
+                className={`bg-[#444444] rounded-[20px] w-[80px] p-[4px]`}
+              >
                 <Text className="font-bold text-[13px] text-white text-center">
                   Add card
                 </Text>

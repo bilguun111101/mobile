@@ -22,6 +22,9 @@ interface CardProps {
 interface Props {
   navigation: any;
 }
+interface createCarDataType extends Car {
+  userId: string;
+}
 
 interface ListProps {
   item: {

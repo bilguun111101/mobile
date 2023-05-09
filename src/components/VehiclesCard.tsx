@@ -1,8 +1,8 @@
-import {useNavigation} from '@react-navigation/native';
-import {useCallback} from 'react';
-import {Image, Pressable, Text, View} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {useRental} from '../context';
+import { useNavigation } from "@react-navigation/native";
+import { useCallback } from "react";
+import { Image, Pressable, Text, View } from "react-native";
+import LinearGradient from "react-native-linear-gradient";
+import { useRental } from "../context";
 
 interface Props {
   item: Car;
@@ -21,19 +21,16 @@ const VehiclesCard = (props: Props) => {
     transmission,
     typeDefinition,
   } = props.item;
-  const {rental, setRental} = useRental();
+  const { rental, setRental } = useRental();
   const indicator = [
-    {source: require('../assets/speed.png'), text: '15 KML'},
-    {source: require('../assets/gearbox.png'), text: 'AUTO'},
-    {source: require('../assets/seatAmount.png'), text: 4},
-    {source: require('../assets/car-door.png'), text: 2},
+    { source: require("../assets/speed.png"), text: "15 KML" },
+    { source: require("../assets/gearbox.png"), text: "AUTO" },
+    { source: require("../assets/seatAmount.png"), text: 4 },
+    { source: require("../assets/car-door.png"), text: 2 },
   ];
   const navigation = useNavigation<any>();
   const onSubmit = useCallback(() => {
-    setRental(() => {
-      return {...rental, ...props.item};
-    });
-    navigation.navigate('Review', {
+    navigation.navigate("Review", {
       ...props.item,
       ...props.params,
     });
@@ -41,7 +38,8 @@ const VehiclesCard = (props: Props) => {
   return (
     <LinearGradient
       className="w-full border-0.5 pl-5 py-5 rounded-lg flex-col mt-5"
-      colors={['#D9D9D9', '#F2F3F4']}>
+      colors={["#D9D9D9", "#F2F3F4"]}
+    >
       <Text className="font-bold text-base">Small Sedan</Text>
       <View className="w-full flex-row gap-5 items-center justify-between">
         <View>
@@ -52,12 +50,12 @@ const VehiclesCard = (props: Props) => {
           <Text className="text-[10px]">$550.00 est total</Text>
         </View>
         <View>
-          <Image source={require('../assets/testCard.png')} className="w-52" />
+          <Image source={require("../assets/testCard.png")} className="w-52" />
         </View>
       </View>
       <View className="w-full flex-row justify-center gap-x-5">
         {indicator.map((el, idx) => {
-          const {source, text} = el;
+          const { source, text } = el;
           return (
             <View className="flex-row gap-1 items-center" key={idx}>
               <Image source={source} className="w-4 h-4" />

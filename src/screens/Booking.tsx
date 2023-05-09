@@ -9,7 +9,7 @@ const array = new Array(20).fill(0);
 const FakeCar: Car[] = [
   {
     id: "1",
-    image: require("../assets/testCar.png"),
+    image: require("../assets/toyato.png"),
     type: "car",
     typeDefinition: "",
     model: "",
@@ -103,7 +103,6 @@ const Booking = () => {
             </View>
           </Pressable>
         </ImageBackground>
-
         <View className="pt-[50px]">
           <View className="flex-row justify-between items-center mb-[12px] px-[36px]">
             <Text className="font-normal text-[15px]">Hot deals</Text>
