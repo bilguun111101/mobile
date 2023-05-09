@@ -1,15 +1,15 @@
-import {useLazyQuery} from '@apollo/client';
-import Cookies from 'js-cookie';
+import { useLazyQuery } from "@apollo/client";
+import Cookies from "js-cookie";
 import {
   PropsWithChildren,
   createContext,
   useContext,
   useEffect,
   useState,
-} from 'react';
-import {useSetRecoilState} from 'recoil';
-import {loggedInState} from '../atoms';
-import {CHECK_TOKEN} from '../server/queries/users';
+} from "react";
+import { useSetRecoilState } from "recoil";
+import { loggedInState } from "../atoms";
+import { CHECK_TOKEN } from "../graphql/queries/users";
 
 interface Value {
   user: User;
@@ -17,24 +17,24 @@ interface Value {
   loading: boolean;
 }
 
-const UserContext = createContext<any>({loading: false});
+const UserContext = createContext<any>({ loading: false });
 
-export const UserProvider = ({children}: PropsWithChildren) => {
+export const UserProvider = ({ children }: PropsWithChildren) => {
   const [user, setUser] = useState<User>({
-    id: '',
-    age: '',
-    role: '',
-    name: '',
-    email: '',
-    phone: '',
-    rentals: '',
+    id: "",
+    age: "",
+    role: "",
+    name: "",
+    email: "",
+    phone: "",
+    rentals: "",
   });
   const setLoggedIn = useSetRecoilState(loggedInState);
-  const [checkToken, {loading}] = useLazyQuery(CHECK_TOKEN);
+  const [checkToken, { loading }] = useLazyQuery(CHECK_TOKEN);
 
   // keep logged in when refresh
   useEffect(() => {
-    const token = Cookies.get('token');
+    const token = Cookies.get("token");
 
     (async () => {
       try {
@@ -49,7 +49,7 @@ export const UserProvider = ({children}: PropsWithChildren) => {
           return;
         }
 
-        const success = data?.data?.checkToken || '';
+        const success = data?.data?.checkToken || "";
 
         if (!success) {
           setLoggedIn(false);
@@ -58,7 +58,7 @@ export const UserProvider = ({children}: PropsWithChildren) => {
 
         setLoggedIn(true);
       } catch (error: any) {
-        console.log('ERROR with getAllCarsByPassengers', error);
+        console.log("ERROR with getAllCarsByPassengers", error);
         throw new Error(error);
       }
     })();

@@ -1,25 +1,32 @@
-import { CREATE_RENTAL } from "../server/mutations/rentals";
+import { CREATE_RENTAL } from "../graphql/mutations/rentals";
 import {
   CREATE_NEW_USER,
   LOGIN_USER,
   UPDATE_USER_BY_ID,
-} from "../server/mutations/users";
+} from "../graphql/mutations/users";
 import {
   GET_ALL_CARS_WITH_PAGINATION,
   GET_CARS_BY_PASSENGERS,
   GET_CARS_BY_TYPE,
-} from "../server/queries/cars";
+} from "../graphql/queries/cars";
 // import Cookies from "universal-cookie";
 // import Cookies from "js-cookie";
-import { GET_USER_BY_ID } from "../server/queries/users";
+import { GET_USER_BY_ID } from "../graphql/queries/users";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { resetApolloContext, useLazyQuery, useMutation } from "@apollo/client";
+import { CREATE_CAR } from "../graphql/mutations/cars";
+import { GET_OWN_RENTALS } from "../graphql/queries/rentals";
+import { Alert } from "react-native";
 
 const useGraphql = () => {
   // USER QUERIES
   const [getUserById, { loading: getUserByIdLoading }] = useLazyQuery(
     GET_USER_BY_ID,
-    { pollInterval: 500 }
+    {
+      pollInterval: 100,
+      fetchPolicy: "network-only",
+      nextFetchPolicy: "network-only",
+    }
   );
 
   // USER MUTATIONS
@@ -41,6 +48,15 @@ const useGraphql = () => {
 
   const [getCarsByType, { loading: getCarsByTypeLoading }] = useLazyQuery(
     GET_CARS_BY_TYPE,
+    { pollInterval: 500 }
+  );
+
+  // CARS MUTATIONS
+  const [createCar, { loading: createCarLoading }] = useMutation(CREATE_CAR);
+
+  // RENTALS QUERIES
+  const [getOwnRentals, { loading: getOwnRentalsLoading }] = useLazyQuery(
+    GET_OWN_RENTALS,
     { pollInterval: 500 }
   );
 
@@ -120,7 +136,12 @@ const useGraphql = () => {
     }
   };
 
-  const updateUserByID = async (id: string, name: string, phone: string) => {
+  const updateUserByID = async (
+    id: string,
+    name: string,
+    phone: string,
+    email?: string
+  ) => {
     try {
       const response = (
         await updateUserById({
@@ -128,11 +149,12 @@ const useGraphql = () => {
             id,
             name,
             phone,
+            email,
           },
         })
       ).data;
 
-      const { updateUserByID: data } = response;
+      const { updateUserById: data } = response;
 
       return true;
     } catch (error: any) {
@@ -142,13 +164,59 @@ const useGraphql = () => {
     }
   };
 
-  const getAllCarsByPage = async (skip: number, take: number) => {
+  const createCarData = async (params: createCarDataType) => {
+    const {
+      image,
+      type,
+      typeDefinition,
+      model,
+      kml,
+      transmission,
+      passengers,
+      price,
+      userId,
+    } = params;
+
+    try {
+      const response = (
+        await createCar({
+          variables: {
+            image,
+            type,
+            typeDefinition,
+            model,
+            kml,
+            transmission,
+            passengers,
+            price,
+            userId,
+          },
+        })
+      ).data;
+
+      if (response) {
+        const { createCar: data } = response;
+        return data;
+      }
+    } catch (error: any) {
+      console.log("ERROR with createCar", error);
+      const errors = new Error(error);
+      Alert.alert("Something wrong with user id");
+    }
+  };
+
+  const getAllCarsByPage = async (
+    skip: number,
+    take: number,
+    priceSort: string
+  ) => {
     try {
       const response = (
         await getCarsByPagination({
           variables: {
             skip,
             take,
+            priceSort,
           },
         })
       ).data;
@@ -157,6 +225,7 @@ const useGraphql = () => {
     } catch (error: any) {
       console.log("ERROR with getAllCarsByPage", error);
       const errors = new Error(error);
+      Alert.alert(error);
     }
   };
 
@@ -175,6 +244,7 @@ const useGraphql = () => {
     } catch (error: any) {
       console.log("ERROR with getAllCarsByPassengers", error);
       const errors = new Error(error);
+      Alert.alert(errors?.message);
     }
   };
   const getAllCarsByType = async (type: string) => {
@@ -188,7 +258,7 @@ const useGraphql = () => {
       ).data;
 
       if (!response) {
-        console.log(response);
+        Alert.alert(`No cars found with ${type} type`);
         return;
       }
 
@@ -228,13 +298,38 @@ const useGraphql = () => {
       ).data;
 
       // if (!response) toast.error(`No cars found with ${type} type`);
-      if (!response) console.log(`No cars found with type`);
+      if (!response) {
+        Alert.alert(`No cars found with type`);
+        return;
+      }
 
       const data = response?.createRental;
       return data;
     } catch (error: any) {
       console.log("ERROR with getAllCarsByPassengers", error);
-      return new Error(error);
+      const errors = new Error(error);
+      Alert.alert(errors?.message);
+      // return new Error(error);
+    }
+  };
+
+  const getOwnRentalsById = async (userId: string) => {
+    try {
+      const response = (
+        await getOwnRentals({
+          variables: {
+            userId,
+          },
+        })
+      ).data;
+
+      const data = response?.getOwnRentals;
+
+      return data;
+    } catch (error: any) {
+      console.log("ERROR with getAllCarsByPage", error);
+      const errors = new Error(error);
+      Alert.alert(errors?.message);
     }
   };
 
@@ -246,6 +341,7 @@ const useGraphql = () => {
     updateUserByID,
     getAllCarsByType,
     getAllCarsByPage,
+    getOwnRentalsById,
     getAllCarsByPeople,
     loginUserLoading,
     updateUserLoading,

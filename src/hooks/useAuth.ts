@@ -2,7 +2,7 @@
 import { loggedInState } from "../atoms";
 import { useSetRecoilState } from "recoil";
 import { useLazyQuery } from "@apollo/client";
-import { CHECK_TOKEN } from "../server/queries/users";
+import { CHECK_TOKEN } from "../graphql/queries/users";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { PropsWithChildren, createContext, useContext, useEffect } from "react";
 
