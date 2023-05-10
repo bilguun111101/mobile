@@ -9,24 +9,18 @@ import {
   Vehicles,
   RentalDetails,
 } from "../screens";
-import { useEffect, useState } from "react";
+import { useCarsData } from "../context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stck = createNativeStackNavigator();
 
 const Stack = () => {
-  const [data, setData] = useState(false);
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      setData(true);
-    }, 2000);
-    return () => clearTimeout(timeout);
-  }, []);
+  const { loading } = useCarsData();
   return (
     <NavigationContainer>
       <Stck.Navigator>
-        {!data && (
+        {!loading && (
           <Stck.Screen
             name="Start"
             component={Start}

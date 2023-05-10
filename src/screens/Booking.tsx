@@ -1,77 +1,17 @@
+import { useCarsData } from "../context";
 import { BookCard, RateCard } from "../components";
 import { useNavigation } from "@react-navigation/native";
-import { useState } from "react";
-import { FlatList, ImageBackground, RefreshControl, View } from "react-native";
+import { ChangeEvent, useEffect, useState } from "react";
 import { Image, ScrollView, Text, Pressable } from "react-native";
+import { FlatList, ImageBackground, RefreshControl, View } from "react-native";
 
 const array = new Array(20).fill(0);
 
-const FakeCar: Car[] = [
-  {
-    id: "1",
-    image: require("../assets/toyato.png"),
-    type: "car",
-    typeDefinition: "",
-    model: "",
-    transmission: "",
-    kml: 3,
-    passengers: 5,
-    price: 10,
-    name: "TOYATO",
-  },
-  {
-    id: "2",
-    image: require("../assets/testCar.png"),
-    type: "car",
-    typeDefinition: "",
-    model: "",
-    transmission: "",
-    kml: 3,
-    passengers: 5,
-    price: 10,
-    name: "TOYATO",
-  },
-  {
-    id: "1",
-    image: require("../assets/testCar.png"),
-    type: "car",
-    typeDefinition: "",
-    model: "",
-    transmission: "",
-    kml: 3,
-    passengers: 5,
-    price: 10,
-    name: "TOYATO",
-  },
-  {
-    id: "3",
-    image: require("../assets/testCar.png"),
-    type: "car",
-    typeDefinition: "",
-    model: "",
-    transmission: "",
-    kml: 3,
-    passengers: 5,
-    price: 10,
-    name: "TOYATO",
-  },
-  {
-    id: "4",
-    image: require("../assets/testCar.png"),
-    type: "car",
-    typeDefinition: "",
-    model: "",
-    transmission: "",
-    kml: 3,
-    passengers: 5,
-    price: 10,
-    name: "TOYATO",
-  },
-];
-
 const Booking = () => {
   const navigation = useNavigation<any>();
+  const { firstFiveCarsData } = useCarsData();
   const [refreshing, setRefreshing] = useState<boolean>(false);
+
   return (
     <View className="flex-1 bg-white relative">
       <ScrollView
@@ -112,7 +52,7 @@ const Booking = () => {
           </View>
 
           <FlatList
-            data={FakeCar}
+            data={firstFiveCarsData}
             horizontal
             className="pl-[30px]"
             showsHorizontalScrollIndicator={false}

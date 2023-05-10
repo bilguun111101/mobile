@@ -1,45 +1,40 @@
 import { useRef } from "react";
 import "react-native-gesture-handler";
 import { Account, Booking, Resources } from "../screens";
-import { Animated, Image, Text, View, Dimensions } from "react-native";
+import { Animated, Image, View, Dimensions } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 const Tab = createBottomTabNavigator();
 
 const getWidth = () => {
   let width = Dimensions.get("window").width;
-
-  // Horizontal Padding = 20...
   width = width - 60;
-
-  // Total five Tabs...
   return width / 5;
 };
-
-const Buttons = [
-  {
-    name: "Book",
-    component: Booking,
-    toValue: 0,
-    source: require("../assets/booking.png"),
-  },
-  {
-    name: "Account",
-    component: Account,
-    toValue: getWidth() * 1.75,
-    source: require("../assets/user.png"),
-  },
-  {
-    name: "Resources",
-    component: Resources,
-    toValue: getWidth() * 3.5,
-    source: require("../assets/more.png"),
-  },
-];
 
 const Bottom = (): JSX.Element => {
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
   const windowHeight = Dimensions.get("window").height;
+  const Buttons = [
+    {
+      name: "Book",
+      component: Booking,
+      toValue: 0,
+      source: require("../assets/booking.png"),
+    },
+    {
+      name: "Account",
+      component: Account,
+      toValue: getWidth() * 1.75,
+      source: require("../assets/user.png"),
+    },
+    {
+      name: "Resources",
+      component: Resources,
+      toValue: getWidth() * 3.5,
+      source: require("../assets/more.png"),
+    },
+  ];
   return (
     <>
       <Tab.Navigator

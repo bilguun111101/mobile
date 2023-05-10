@@ -1,5 +1,4 @@
 import { useLazyQuery } from "@apollo/client";
-import Cookies from "js-cookie";
 import {
   PropsWithChildren,
   createContext,
@@ -8,7 +7,9 @@ import {
   useState,
 } from "react";
 import { useSetRecoilState } from "recoil";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loggedInState } from "../atoms";
+import { GET_CARS_BY_PASSENGERS } from "../graphql/queries/cars";
 import { CHECK_TOKEN } from "../graphql/queries/users";
 
 interface Value {
@@ -16,6 +17,7 @@ interface Value {
   setUser: any;
   loading: boolean;
 }
+
 
 const UserContext = createContext<any>({ loading: false });
 
@@ -34,9 +36,8 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
 
   // keep logged in when refresh
   useEffect(() => {
-    const token = Cookies.get("token");
-
     (async () => {
+      const token = await AsyncStorage.getItem("token");
       try {
         const data = await checkToken({
           variables: {
