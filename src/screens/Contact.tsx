@@ -1,51 +1,42 @@
-import {re} from '../variables';
-import {useRental} from '../context';
-import {Text, View} from 'react-native';
-import {useCallback, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
-import {BottomButton, FillDot, Input} from '../components';
+import { re } from "../variables";
+import { Text, View } from "react-native";
+import { useCallback, useState } from "react";
+import { useNavigation } from "@react-navigation/native";
+import { BottomButton, FillDot, Input } from "../components";
 
-// interface TypeOfInput {
-//   title: string;
-//   value: string;
-//   type: InputType;
-//   onChange: (text: string) => void;
-// }
-
-const Contact = ({route}: any) => {
-  const {rental, setRental} = useRental();
-  const [email, setEmail] = useState<string>('');
-  const [phone, setPhone] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
-  const [firstName, setFirstName] = useState<string>('');
+const Contact = ({ route }: any) => {
+  const [email, setEmail] = useState<string>("");
+  const [phone, setPhone] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
   const [confirm, setConfirm] = useState<boolean>(false);
 
   const navigation = useNavigation<any>();
 
   const inputs = [
     {
-      title: 'First name',
+      title: "First name",
       value: firstName,
       onChange: (text: string) => setFirstName(text),
-      type: 'default',
+      type: "default",
     },
     {
-      title: 'Last name',
+      title: "Last name",
       value: lastName,
       onChange: (text: string) => setLastName(text),
-      type: 'default',
+      type: "default",
     },
     {
-      title: 'Email',
+      title: "Email",
       value: email,
       onChange: (text: string) => setEmail(text),
-      type: 'email-address',
+      type: "email-address",
     },
     {
-      title: 'Phone',
+      title: "Phone",
       value: phone,
       onChange: (text: string) => setPhone(text),
-      type: 'numeric',
+      type: "numeric",
     },
   ];
 
@@ -56,7 +47,7 @@ const Contact = ({route}: any) => {
     if (!confirm) {
       return;
     }
-    navigation.navigate('RentalDetails', {
+    navigation.navigate("RentalDetails", {
       email,
       phone,
       lastName,
@@ -64,13 +55,13 @@ const Contact = ({route}: any) => {
       ...route.params,
       name: `${firstName} ${lastName}`,
     });
-  }, [email, phone, rental, confirm, lastName, firstName]);
+  }, [email, phone, confirm, lastName, firstName]);
   return (
     <View className="flex-1 bg-white relative">
       <View className="w-full">
         <View className="py-[45px] px-[25px] flex-col gap-y-[20px]">
           {inputs.map((el, idx) => {
-            const {type, title, value, onChange} = el;
+            const { type, title, value, onChange } = el;
             return (
               <View key={idx}>
                 <Text className="font-medium text-base">{title}</Text>

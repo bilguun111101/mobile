@@ -1,4 +1,3 @@
-import { useRental } from "../context";
 import DatePicker from "react-native-date-picker";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
@@ -10,7 +9,6 @@ import InfortantButton from "../components/InfortantButton";
 const When = ({ route }: any) => {
   const { from, location } = route.params;
   const navigation = useNavigation<any>();
-  const { rental, setRental } = useRental();
   const [openRentModal, setOpenRentModal] = useState<boolean>(false);
   const [openReturnModal, setOpenReturnModal] = useState<boolean>(false);
   const [dateRentSection, setDateRentSection] = useState<any>();
@@ -39,7 +37,7 @@ const When = ({ route }: any) => {
       dateRent: dateRentSection?.day,
       dateReturn: dateReturnSection?.day,
     });
-  }, [rental, dateRentSection, dateReturnSection]);
+  }, [dateRentSection, dateReturnSection]);
 
   const RentOnConfirm = useCallback(
     (date: any) => {

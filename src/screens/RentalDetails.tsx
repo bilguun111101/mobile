@@ -88,7 +88,7 @@ const RentalDetails = ({ route }: any) => {
           <View className="pt-[30px] pl-[20px]">
             <Text className="font-medium text-base">Small Sedan</Text>
             <View className="w-full pb-[18px] flex-row justify-end scroll-hidden relative h-[140px]">
-              <Image source={image} className="w-[200px] mr-[-30px]" />
+              <Image source={{ uri: image }} className="w-[200px] mr-[-30px]" />
             </View>
           </View>
 

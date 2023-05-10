@@ -1,4 +1,4 @@
-import { BottomButton, HeaderLeftBtn, InfortantButton } from "../components";
+import { BottomButton, HeaderLeftBtn } from "../components";
 import LinearGradient from "react-native-linear-gradient";
 import {
   Alert,
@@ -9,13 +9,11 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { useRental } from "../context";
 import { useCallback, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 const Location = ({ route }: any) => {
   const navigation = useNavigation<any>();
-  const { setRental, rental } = useRental();
   const [search, setSearch] = useState<string>("");
   const [location, setLocation] = useState<string>("");
 
@@ -36,11 +34,8 @@ const Location = ({ route }: any) => {
       });
       if (!focus[index]) setLocation(place);
       else setLocation("");
-      setRental(() => {
-        return { ...rental, location };
-      });
     },
-    [rental, location, focus]
+    [location, focus]
   );
 
   const onJumpToDatePicker = useCallback(() => {

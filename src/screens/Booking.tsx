@@ -1,135 +1,16 @@
+import { useCarsData } from "../context";
 import { BookCard, RateCard } from "../components";
 import { useNavigation } from "@react-navigation/native";
 import { ChangeEvent, useEffect, useState } from "react";
-import { FlatList, ImageBackground, RefreshControl, View } from "react-native";
 import { Image, ScrollView, Text, Pressable } from "react-native";
-import useGraphql from "../hooks/useGraphql";
-// import { useGraphql from "../hooks/useGraphql";
+import { FlatList, ImageBackground, RefreshControl, View } from "react-native";
 
 const array = new Array(20).fill(0);
-const take = 5;
-const perPage = 5;
-
-const FakeCar: Car[] = [
-  {
-    id: "1",
-    image: require("../assets/toyato.png"),
-    type: "car",
-    typeDefinition: "",
-    model: "",
-    transmission: "",
-    kml: 3,
-    passengers: 5,
-    price: 10,
-    name: "TOYATO",
-  },
-  {
-    id: "2",
-    image: require("../assets/testCar.png"),
-    type: "car",
-    typeDefinition: "",
-    model: "",
-    transmission: "",
-    kml: 3,
-    passengers: 5,
-    price: 10,
-    name: "TOYATO",
-  },
-  {
-    id: "1",
-    image: require("../assets/testCar.png"),
-    type: "car",
-    typeDefinition: "",
-    model: "",
-    transmission: "",
-    kml: 3,
-    passengers: 5,
-    price: 10,
-    name: "TOYATO",
-  },
-  {
-    id: "3",
-    image: require("../assets/testCar.png"),
-    type: "car",
-    typeDefinition: "",
-    model: "",
-    transmission: "",
-    kml: 3,
-    passengers: 5,
-    price: 10,
-    name: "TOYATO",
-  },
-  {
-    id: "4",
-    image: require("../assets/testCar.png"),
-    type: "car",
-    typeDefinition: "",
-    model: "",
-    transmission: "",
-    kml: 3,
-    passengers: 5,
-    price: 10,
-    name: "TOYATO",
-  },
-];
 
 const Booking = () => {
   const navigation = useNavigation<any>();
+  const { firstFiveCarsData } = useCarsData();
   const [refreshing, setRefreshing] = useState<boolean>(false);
-  const { getAllCarsByPage, getCarsByPageLoading: loading } = useGraphql();
-  const [carsData, setCarsData] = useState<Car[] | []>([]);
-  const [active, setActive] = useState(1);
-
-  // Get data at every click on the PAGINATION number
-  const paginationHandler = async (page: number) => {
-    const skip = page === 1 ? 0 : perPage * page - perPage;
-
-    const data = await getAllCarsByPage(skip, take, "desc");
-
-    if (data) {
-      setCarsData([...data]);
-    } else {
-      setCarsData([]);
-    }
-  };
-
-  // Get data at every click on the Price Sort select option
-  const onSelectHandler = async (e: ChangeEvent<HTMLSelectElement>) => {
-    const priceValue = e.target.value;
-    if (priceValue === "Price: High to Low") {
-      const data = await getAllCarsByPage(0, take, "desc");
-
-      if (data) {
-        setCarsData([...data]);
-      } else {
-        setCarsData([]);
-      }
-    }
-    if (priceValue === "Price: Low to High") {
-      const data = await getAllCarsByPage(0, take, "asc");
-
-      if (data) {
-        setCarsData([...data]);
-      } else {
-        setCarsData([]);
-      }
-    }
-  };
-
-  useEffect(() => {
-    (async () => {
-      const data = await getAllCarsByPage(0, take, "desc");
-
-      if (data) setCarsData(data.getAllCarsWithPagination);
-    })();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // useEffect(() => {
-  //   const totalDays = rentals.totalDays;
-  //   if (totalDays === 0) toast.error('Та байршил, өдрөө сонгоно уу');
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   return (
     <View className="flex-1 bg-white relative">
@@ -171,7 +52,7 @@ const Booking = () => {
           </View>
 
           <FlatList
-            data={FakeCar}
+            data={firstFiveCarsData}
             horizontal
             className="pl-[30px]"
             showsHorizontalScrollIndicator={false}

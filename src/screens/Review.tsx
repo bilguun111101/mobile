@@ -1,26 +1,16 @@
-import { useRental } from "../context";
 import { useCallback, useState } from "react";
 import { BottomButton, FillDot } from "../components";
 import { useNavigation } from "@react-navigation/native";
-import {
-  Text,
-  View,
-  Image,
-  Pressable,
-  ScrollView,
-  SafeAreaView,
-} from "react-native";
+import { Text, View, Image, Pressable, ScrollView } from "react-native";
 
 const Review = ({ route }: any) => {
   const navigation = useNavigation<any>();
-  const { rental, setRental } = useRental();
   const [gps, setGps] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
   const [carSeats, setCarSeats] = useState<boolean>(false);
   const [insurance, setInsurance] = useState<boolean>(false);
 
   const { image, dateRent, dateReturn, location } = route.params;
-  console.log(route.params);
 
   const extras = [
     {
@@ -61,7 +51,7 @@ const Review = ({ route }: any) => {
         {/* introduction section */}
         <View className="w-full bg-[#F1F1F1] relative">
           <View className="w-full py-[10px] flex-row justify-end">
-            <Image source={image} className="w-[200px] h-[120px]" />
+            <Image source={{ uri: image }} className="w-[200px] h-[120px]" />
           </View>
 
           <View className="w-full px-3">

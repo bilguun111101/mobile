@@ -10,7 +10,8 @@ interface Props {
 }
 
 const BookCard = ({ index, item, lastIndex }: Props) => {
-  const { name, price, image } = item;
+  const { price, image, model } = item;
+  console.log(image);
   const navigation = useNavigation<any>();
   const onRentNow = useCallback(() => {
     navigation.navigate("Location", { ...item, from: "booking" });
@@ -24,7 +25,7 @@ const BookCard = ({ index, item, lastIndex }: Props) => {
     >
       <View className="px-[16px]">
         <View className="flex-row items-center justify-between mb-[5px]">
-          <Text className="font-bold text-[12px] text-white">{name}</Text>
+          <Text className="font-bold text-[12px] text-white">{model}</Text>
           <Text className="font-medium text-[12px] text-white">${price}</Text>
         </View>
         <View className="flex-row items-center justify-between">
@@ -34,7 +35,11 @@ const BookCard = ({ index, item, lastIndex }: Props) => {
       </View>
 
       <View className="ml-[25px] w-[200px] h-[160px] flex-row items-end overflow-visible">
-        <Image source={image} className="h-full w-full" resizeMode="contain" />
+        <Image
+          source={{ uri: image }}
+          className="h-full w-full"
+          resizeMode="contain"
+        />
       </View>
 
       <View className="flex-row">

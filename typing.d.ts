@@ -48,7 +48,7 @@ interface User {
 
 interface Car {
   id?: string;
-  image: number;
+  image: string;
   type: string;
   typeDefinition: string;
   model: string;
@@ -102,4 +102,8 @@ interface ChooseDate {
   month: number;
   timestamp: number;
   dateString: string;
+}
+
+interface NeedCarsData {
+  carsData: Car[] | undefined;
 }
