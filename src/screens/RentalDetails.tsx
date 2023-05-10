@@ -1,8 +1,8 @@
-import { Text, View, Image, ScrollView } from "react-native";
 import React, { useCallback } from "react";
 import { useOpenAuth, useUser } from "../context";
-import { BottomButton, FillDot, Login } from "../components";
 import { useNavigation } from "@react-navigation/native";
+import { Text, View, Image, ScrollView } from "react-native";
+import { BottomButton, FillDot, Login } from "../components";
 
 const RentalDetails = ({ route }: any) => {
   const {
@@ -30,7 +30,7 @@ const RentalDetails = ({ route }: any) => {
     // });
   }, []);
   return (
-    <View className="flex-1 relative bg-white pb-[120px]">
+    <View className="flex-1 relative bg-white pb-bottom">
       <ScrollView>
         <View className="bg-[#F1F1F1]">
           <View className="pt-[10px] pb-[20px] px-[30px]">
@@ -108,13 +108,7 @@ const RentalDetails = ({ route }: any) => {
         </View>
         {/* -------------------------------- */}
       </ScrollView>
-      <View className="relative">
-        <BottomButton
-          text="Confirm Rentals"
-          onSubmit={onSubmit}
-          color={false}
-        />
-      </View>
+      <BottomButton text="Confirm Rentals" onSubmit={onSubmit} color={false} />
     </View>
   );
 };

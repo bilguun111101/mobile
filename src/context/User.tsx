@@ -18,7 +18,6 @@ interface Value {
   loading: boolean;
 }
 
-
 const UserContext = createContext<any>({ loading: false });
 
 export const UserProvider = ({ children }: PropsWithChildren) => {
@@ -37,25 +36,28 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   // keep logged in when refresh
   useEffect(() => {
     (async () => {
-      const token = await AsyncStorage.getItem("token");
       try {
+        const userId = await AsyncStorage.getItem("userId");
+        const token = await AsyncStorage.getItem("token");
         const data = await checkToken({
           variables: {
             token,
           },
         });
 
-        if (!data.data) {
-          console.log("You aren't logged in!!!");
-          return;
-        }
+        // if (!data.data) {
+        // console.log("You aren't logged in!!!");
+        // return;
+        // }
+        console.log(userId);
+        console.log(token);
 
-        const success = data?.data?.checkToken || "";
+        // const success = data?.data?.checkToken || "";
 
-        if (!success) {
-          setLoggedIn(false);
-          return;
-        }
+        // if (!success) {
+        // setLoggedIn(false);
+        // return;
+        // }
 
         setLoggedIn(true);
       } catch (error: any) {

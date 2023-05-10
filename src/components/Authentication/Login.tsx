@@ -1,22 +1,27 @@
-import Modal from '../Modal';
-import Input from '../Input';
-import {useCallback, useState} from 'react';
-import {useOpenAuth} from '../../context';
-import {Text, View, Pressable} from 'react-native';
+import Modal from "../Modal";
+import Input from "../Input";
+import { memo, useCallback, useState } from "react";
+import { useOpenAuth } from "../../context";
+import { Text, View, Pressable, Alert } from "react-native";
+import useGraphql from "../../hooks/useGraphql";
 
 const re =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const Login = () => {
-  const {login, closeLogin, toggle} = useOpenAuth();
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const { login: loginFunction } = useGraphql();
+  const [email, setEmail] = useState<string>("");
+  const { login, closeLogin, toggle } = useOpenAuth();
+  const [password, setPassword] = useState<string>("");
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback(async () => {
     if (!(email && re.test(email)) || !password) {
+      Alert.alert("You have to input your email or password!!!");
       return;
     }
-    console.log(email);
+    const response = await loginFunction(email, password);
+    console.log(response);
+    closeLogin();
   }, [email, password]);
   const body = (
     <>
@@ -40,7 +45,8 @@ const Login = () => {
       <View className="mt-[31px]">
         <Pressable
           className="bg-[#FF3002] rounded-[3px] py-[14px] active:bg-[#FF0000]"
-          onPressOut={onSubmit}>
+          onPressOut={onSubmit}
+        >
           <Text className="text-center text-white font-normal text-[12px]">
             Log in
           </Text>
@@ -68,8 +74,8 @@ const Login = () => {
     </View>
   );
   return (
-    <Modal active={login} body={body} onClick={closeLogin} footer={footer} />
+    <Modal body={body} active={login} footer={footer} onClick={closeLogin} />
   );
 };
 
-export default Login;
+export default memo(Login);

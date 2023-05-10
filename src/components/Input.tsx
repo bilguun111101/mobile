@@ -1,5 +1,5 @@
 import { TextInput } from "react-native";
-import { InputType } from "../variables";
+// import { InputType } from "../variables";
 
 interface Props {
   value: string;

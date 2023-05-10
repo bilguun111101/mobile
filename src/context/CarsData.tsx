@@ -21,10 +21,8 @@ export const CarsDataProvider = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     (async () => {
       const data = await getAllCarsByPage(0, 5, "desc");
-      console.log(data);
 
       if (data) {
-        console.log(data.getAllCarsWithPagination);
         const timeout = setTimeout(() => {
           setFirstFiveCarsData(data.getAllCarsWithPagination);
           setLoading(true);
