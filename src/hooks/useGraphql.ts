@@ -9,8 +9,6 @@ import {
   GET_CARS_BY_PASSENGERS,
   GET_CARS_BY_TYPE,
 } from "../graphql/queries/cars";
-// import Cookies from "universal-cookie";
-// import Cookies from "js-cookie";
 import { GET_USER_BY_ID } from "../graphql/queries/users";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { resetApolloContext, useLazyQuery, useMutation } from "@apollo/client";
@@ -82,7 +80,7 @@ const useGraphql = () => {
       // Cookies.set("token", createUser?.token);
       // Cookies.set("userId", createUser?.user.id);
       AsyncStorage.setItem("token", createUser?.token);
-      AsyncStorage.setItem("userID", createUser?.user.id);
+      AsyncStorage.setItem("userId", createUser?.user.id);
 
       return true;
     } catch (error: any) {
@@ -337,6 +335,7 @@ const useGraphql = () => {
     login,
     signUp,
     getUserByID,
+    createCarData,
     createRentals,
     updateUserByID,
     getAllCarsByType,

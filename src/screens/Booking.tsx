@@ -1,7 +1,7 @@
+import { useState } from "react";
 import { useCarsData } from "../context";
 import { BookCard, RateCard } from "../components";
 import { useNavigation } from "@react-navigation/native";
-import { ChangeEvent, useEffect, useState } from "react";
 import { Image, ScrollView, Text, Pressable } from "react-native";
 import { FlatList, ImageBackground, RefreshControl, View } from "react-native";
 
@@ -60,7 +60,7 @@ const Booking = () => {
               <BookCard
                 index={index}
                 item={item}
-                lastIndex={array.length - 1}
+                lastIndex={firstFiveCarsData.length - 1}
               />
             )}
             keyExtractor={(item, index) => `index-${index}`}

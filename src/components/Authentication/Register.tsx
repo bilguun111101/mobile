@@ -1,36 +1,40 @@
-import Modal from '../Modal';
-import Input from '../Input';
-import {useCallback, useEffect, useState} from 'react';
-import {useOpenAuth} from '../../context';
-import {View, Pressable, Text} from 'react-native';
-import {SelectList} from 'react-native-dropdown-select-list';
+import Modal from "../Modal";
+import Input from "../Input";
+import { memo, useCallback, useEffect, useState } from "react";
+import { useOpenAuth } from "../../context";
+import { View, Pressable, Text } from "react-native";
+import { SelectList } from "react-native-dropdown-select-list";
+import useGraphql from "../../hooks/useGraphql";
 
-const data = ['admin', 'user'];
+const data = ["admin", "user"];
 const re =
   /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 const Register = () => {
-  const {register, closeRegister, toggle} = useOpenAuth();
-  const [email, setEmail] = useState<string>('');
-  const [selected, setSelected] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const { signUp } = useGraphql();
+  const [email, setEmail] = useState<string>("");
+  const [selected, setSelected] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const { register, closeRegister, toggle } = useOpenAuth();
+  const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback(async () => {
     if (!password || !confirmPassword || !(password === confirmPassword)) {
       return;
     }
     if (!(email && re.test(email)) || !selected) {
       return;
     }
-    console.log(email);
+    const response = await signUp(email, password, selected);
+    console.log(response);
+    toggle();
   }, [selected, email, password, confirmPassword]);
   const body = (
     <>
       <Text className="mt-[10px] font-normal text-[18px]">Register</Text>
       <View className="mt-[20px]">
         <Input
-          onChange={setEmail}
+          onChange={(text: string) => setEmail(text)}
           value={email}
           type="email-address"
           placeholder="Email"
@@ -47,7 +51,7 @@ const Register = () => {
       </View>
       <View className="mt-[13px]">
         <Input
-          onChange={setPassword}
+          onChange={(text: string) => setPassword(text)}
           value={password}
           placeholder="Password"
           secureTextEntry
@@ -55,7 +59,7 @@ const Register = () => {
       </View>
       <View className="mt-[13px]">
         <Input
-          onChange={setConfirmPassword}
+          onChange={(text: string) => setConfirmPassword(text)}
           value={confirmPassword}
           placeholder="Confirm"
           secureTextEntry
@@ -64,7 +68,8 @@ const Register = () => {
       <View className="mt-[31px]">
         <Pressable
           className="bg-[#FF3002] rounded-[3px] py-[14px] active:bg-[#FF0000]"
-          onPressOut={onSubmit}>
+          onPress={onSubmit}
+        >
           <Text className="text-center text-white font-normal text-[12px]">
             Register
           </Text>
@@ -101,10 +106,11 @@ const Register = () => {
     <Modal
       active={register}
       body={body}
+      // onSubmit={onSubmit}
       onClick={closeRegister}
       footer={footer}
     />
   );
 };
 
-export default Register;
+export default memo(Register);

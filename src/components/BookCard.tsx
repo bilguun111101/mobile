@@ -11,7 +11,6 @@ interface Props {
 
 const BookCard = ({ index, item, lastIndex }: Props) => {
   const { price, image, model } = item;
-  console.log(image);
   const navigation = useNavigation<any>();
   const onRentNow = useCallback(() => {
     navigation.navigate("Location", { ...item, from: "booking" });

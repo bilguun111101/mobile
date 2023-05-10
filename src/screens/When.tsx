@@ -1,10 +1,10 @@
 import DatePicker from "react-native-date-picker";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { Alert, Image, Pressable, ScrollView, Text, View } from "react-native";
-import { months, calculateDate, DateToday, theme, week } from "../variables";
-import { shadow, HeaderContent, BottomButton } from "../components";
 import InfortantButton from "../components/InfortantButton";
+import { shadow, HeaderContent, BottomButton } from "../components";
+import { months, calculateDate, DateToday, theme, week } from "../variables";
+import { Alert, Image, Pressable, ScrollView, Text, View } from "react-native";
 
 const When = ({ route }: any) => {
   const { from, location } = route.params;
