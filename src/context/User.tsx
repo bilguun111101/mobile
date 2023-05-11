@@ -6,16 +6,22 @@ import {
   useEffect,
   useState,
 } from "react";
-import { useSetRecoilState } from "recoil";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { loggedInState } from "../atoms";
-import { GET_CARS_BY_PASSENGERS } from "../graphql/queries/cars";
+import { useSetRecoilState } from "recoil";
 import { CHECK_TOKEN } from "../graphql/queries/users";
+import { GET_CARS_BY_PASSENGERS } from "../graphql/queries/cars";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Value {
   user: User;
   setUser: any;
   loading: boolean;
+  userStorage: AsyncStorageUserType;
+}
+
+interface AsyncStorageUserType {
+  token: string;
+  userId: string;
 }
 
 const UserContext = createContext<any>({ loading: false });
@@ -32,6 +38,10 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
   });
   const setLoggedIn = useSetRecoilState(loggedInState);
   const [checkToken, { loading }] = useLazyQuery(CHECK_TOKEN);
+  const [userStorage, setUserStorage] = useState<AsyncStorageUserType>({
+    token: "",
+    userId: "",
+  });
 
   // keep logged in when refresh
   useEffect(() => {
@@ -44,21 +54,21 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
             token,
           },
         });
+        if (!userId || !token) {
+          console.log("You aren't logged in!!!");
+          return;
+        }
 
-        // if (!data.data) {
-        // console.log("You aren't logged in!!!");
-        // return;
-        // }
-        console.log(userId);
-        console.log(token);
+        const success = data?.data?.checkToken || "";
 
-        // const success = data?.data?.checkToken || "";
-
-        // if (!success) {
-        // setLoggedIn(false);
-        // return;
-        // }
-
+        if (!success) {
+          setLoggedIn(false);
+          return;
+        }
+        setUserStorage({
+          token,
+          userId,
+        });
         setLoggedIn(true);
       } catch (error: any) {
         console.log("ERROR with getAllCarsByPassengers", error);
@@ -71,7 +81,9 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
     user,
     setUser,
     loading,
+    userStorage,
   };
+
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>;
 };
 

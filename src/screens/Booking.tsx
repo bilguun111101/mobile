@@ -9,8 +9,8 @@ const array = new Array(20).fill(0);
 
 const Booking = () => {
   const navigation = useNavigation<any>();
-  const { firstFiveCarsData } = useCarsData();
-  const [refreshing, setRefreshing] = useState<boolean>(false);
+  const { firstFiveCarsData, getFirstFiveCarsData, secondLoading } =
+    useCarsData();
 
   return (
     <View className="flex-1 bg-white relative">
@@ -18,7 +18,10 @@ const Booking = () => {
         className="relative"
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={() => {}} />
+          <RefreshControl
+            refreshing={secondLoading}
+            onRefresh={getFirstFiveCarsData}
+          />
         }
       >
         <ImageBackground

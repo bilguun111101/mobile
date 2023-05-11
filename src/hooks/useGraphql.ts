@@ -164,15 +164,15 @@ const useGraphql = () => {
 
   const createCarData = async (params: createCarDataType) => {
     const {
-      image,
-      type,
-      typeDefinition,
-      model,
       kml,
-      transmission,
-      passengers,
+      type,
+      image,
+      model,
       price,
       userId,
+      passengers,
+      transmission,
+      typeDefinition,
     } = params;
 
     try {
@@ -268,16 +268,8 @@ const useGraphql = () => {
     }
   };
   const createRentals = async (args: Rental) => {
-    const {
-      userId,
-      dateRent,
-      dateReturn,
-      totalDays,
-      location,
-      verified,
-      extras,
-      car,
-    } = args;
+    const { userId, dateRent, dateReturn, totalDays, location, extras, car } =
+      args;
 
     try {
       const response = (
@@ -288,14 +280,12 @@ const useGraphql = () => {
             dateReturn,
             totalDays,
             location,
-            verified,
             extras,
             car,
           },
         })
       ).data;
 
-      // if (!response) toast.error(`No cars found with ${type} type`);
       if (!response) {
         Alert.alert(`No cars found with type`);
         return;
