@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useCarsData } from "../context";
 import { BookCard, RateCard } from "../components";
 import { useNavigation } from "@react-navigation/native";

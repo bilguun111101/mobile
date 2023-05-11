@@ -5,10 +5,10 @@ import { Text, View, Image, Pressable, ScrollView } from "react-native";
 
 const Review = ({ route }: any) => {
   const navigation = useNavigation<any>();
-  const [gps, setGps] = useState<boolean>(false);
+  const [GPS, setGPS] = useState<boolean>(false);
   const [confirm, setConfirm] = useState<boolean>(false);
-  const [carSeats, setCarSeats] = useState<boolean>(false);
-  const [insurance, setInsurance] = useState<boolean>(false);
+  const [child_safety, setChild_safety] = useState<boolean>(false);
+  const [coverage, setCoverage] = useState<boolean>(false);
 
   const { image, dateRent, dateReturn, location } = route.params;
 
@@ -16,20 +16,20 @@ const Review = ({ route }: any) => {
     {
       source: require("../assets/insurance.png"),
       text: "Insurance",
-      active: insurance,
-      onClick: setInsurance,
+      active: coverage,
+      onClick: setCoverage,
     },
     {
       source: require("../assets/baby-car-seat.png"),
       text: "Car seats",
-      active: carSeats,
-      onClick: setCarSeats,
+      active: child_safety,
+      onClick: setChild_safety,
     },
     {
       source: require("../assets/gps.png"),
       text: "GPS",
-      active: gps,
-      onClick: setGps,
+      active: GPS,
+      onClick: setGPS,
     },
   ];
 
@@ -37,9 +37,9 @@ const Review = ({ route }: any) => {
     navigation.navigate("Contact", {
       ...route.params,
       extras: {
-        GPS: gps,
-        coverage: insurance,
-        child_safety: carSeats,
+        GPS,
+        coverage,
+        child_safety,
       },
       paymentType: confirm ? "Pay Now" : "Pay at Pickup",
     });
