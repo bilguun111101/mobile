@@ -9,13 +9,27 @@ import {
   TextInput,
   View,
 } from "react-native";
-import { useCallback, useState } from "react";
+import { fetchPlaces } from "../utils";
+import { useQuery } from "@tanstack/react-query";
+import SearchResults from "../components/SearchResults";
+import { useCallback, useEffect, useState } from "react";
+// import { NEXT_PUBLIC_MAPBOX_KEY_SEARCK_ACCESS_TOKEN } from '@env';
 import { useNavigation } from "@react-navigation/native";
 
 const Location = ({ route }: any) => {
   const navigation = useNavigation<any>();
   const [search, setSearch] = useState<string>("");
   const [location, setLocation] = useState<string>("");
+  const {
+    data: places,
+    refetch,
+    isFetching,
+  } = useQuery({
+    queryKey: ["places"],
+    queryFn: async () => search && (await fetchPlaces(search)),
+  });
+  console.log(places);
+  // useEffect(() => )
 
   const districts = [
     { district: "Khan-Uul district", capital: "Ulaanbaatar" },
@@ -27,6 +41,7 @@ const Location = ({ route }: any) => {
   const [focus, setFocus] = useState<boolean[]>(
     new Array(districts.length).fill(false)
   );
+
   const onSubmit = useCallback(
     (place: string, index: number) => {
       setFocus((old) => {
@@ -88,7 +103,7 @@ const Location = ({ route }: any) => {
             <Text className="font-bold text-base ml-[10px]">Places</Text>
           </View>
           <View className="px-[30px] gap-y-[20px]">
-            {districts
+            {/* {districts
               .filter((el) => {
                 if (!search) return el;
                 else if (
@@ -100,7 +115,7 @@ const Location = ({ route }: any) => {
                   return el;
               })
               .map((element, idx) => {
-                const { district, capital } = element;
+                const district, capital } = element;
                 return (
                   <Pressable
                     key={idx}
@@ -124,8 +139,9 @@ const Location = ({ route }: any) => {
                       {capital}
                     </Text>
                   </Pressable>
-                );
-              })}
+                ); 
+              })} */}
+            <SearchResults />
           </View>
         </View>
       </ScrollView>

@@ -131,7 +131,7 @@ const When = ({ route }: any) => {
         </ScrollView>
 
         <View
-          className="absolute inset-x-0 pb-14 px-8 bottom-0 w-full h-52 bg-white flex-col pt-3"
+          className="absolute inset-x-0 pb-14 px-8 bottom-0 w-full h-[218px] bg-white flex-col pt-3"
           style={shadow.header}
         >
           <View className="flex-row w-full gap-x-5">
@@ -161,20 +161,15 @@ const When = ({ route }: any) => {
             })}
           </View>
           <View className="mt-[20px]">
-            {/* <BottomButton
-              text="See Result"
-              onSubmit={onSubmit}
-              color={dateRentSection && dateReturnSection ? false : true}
-              disabled={dateRentSection && dateReturnSection ? false : true}
-            /> */}
             <InfortantButton
               text="See Result"
               onSubmit={onSubmit}
               color={
-                dateRentSection && dateReturnSection ? "#FF2F01" : "#D9D9D9"
+                dateRentSection && dateReturnSection
+                  ? "bg-red-primary"
+                  : "bg-gray-primary"
               }
-              disabled={!(dateRentSection && dateReturnSection) ? true : false}
-              // disabled={false}
+              disabled={dateRentSection && dateReturnSection ? false : true}
             />
           </View>
         </View>
