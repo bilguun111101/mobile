@@ -56,23 +56,18 @@ interface Car {
   kml: number;
   passengers: number;
   price: number;
-  user?: User;
   userId?: string;
-  name?: string;
-  disctrict?: string;
+  model?: string;
 }
 
 interface Rental {
-  car?: Car;
-  paymentType: string;
+  car: Car;
   userId?: string;
   dateRent?: string;
   location?: string;
   totalDays?: number;
   dateReturn?: string;
-  verified: boolean;
-  rental?: User;
-  extras?: {
+  extras: {
     GPS: boolean;
     coverage: boolean;
     child_safety: boolean;

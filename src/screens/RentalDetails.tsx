@@ -1,33 +1,67 @@
 import React, { useCallback } from "react";
 import { useOpenAuth, useUser } from "../context";
+import { BottomButton, FillDot } from "../components";
 import { useNavigation } from "@react-navigation/native";
 import { Text, View, Image, ScrollView } from "react-native";
-import { BottomButton, FillDot, Login } from "../components";
+import useGraphql from "../hooks/useGraphql";
 
 const RentalDetails = ({ route }: any) => {
   const {
+    id,
+    kml,
+    type,
     phone,
     email,
+    model,
     image,
+    price,
+    extras,
     confirm,
     dateRent,
     location,
     lastName,
+    totalDays,
     firstName,
+    passengers,
     dateReturn,
+    paymentType,
+    transmission,
+    typeDefinition,
+    userId: carRenterUserId,
   } = route.params;
-  const { user } = useUser();
+  const { userStorage } = useUser();
   const { openLogin } = useOpenAuth();
+  const { createRentals } = useGraphql();
   const navigation = useNavigation<any>();
-  const onSubmit = useCallback(() => {
-    console.log(route.params);
-    if (!user.email) {
+  const onSubmit = useCallback(async () => {
+    if (!userStorage.token || !userStorage.userId) {
       openLogin();
       return;
     }
-    // navigation.navigate('Bottom_tab_container', {
-    // ...route.params,
-    // });
+    const car = {
+      kml,
+      type,
+      price,
+      image,
+      model,
+      passengers,
+      transmission,
+      typeDefinition,
+    };
+    const response = await createRentals({
+      car,
+      extras,
+      location,
+      dateRent,
+      totalDays,
+      dateReturn,
+      userId: userStorage.userId,
+    });
+    if (!response) {
+      console.log("rental is failed!!!");
+      return;
+    }
+    navigation.navigate("Bottom_tab_container");
   }, []);
   return (
     <View className="flex-1 relative bg-white pb-bottom">
