@@ -1,5 +1,5 @@
+// import { NEXT_PUBLIC_MAPBOX_KEY_SEARCK_ACCESS_TOKEN } from "@env";
 import { NEXT_PUBLIC_MAPBOX_KEY_SEARCK_ACCESS_TOKEN } from "@env";
-// import "dotenv/config";
 
 export const fetchPlaces = async (searchInput: string) => {
   const searchResults = await fetch(

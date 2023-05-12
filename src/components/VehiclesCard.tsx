@@ -1,8 +1,7 @@
 import { useNavigation } from "@react-navigation/native";
-import { useCallback } from "react";
+import { memo, useCallback } from "react";
 import { Image, Pressable, Text, View } from "react-native";
 import LinearGradient from "react-native-linear-gradient";
-import { useRental } from "../context";
 
 interface Props {
   item: Car;
@@ -21,7 +20,6 @@ const VehiclesCard = (props: Props) => {
     transmission,
     typeDefinition,
   } = props.item;
-  const { rental, setRental } = useRental();
   const indicator = [
     { source: require("../assets/speed.png"), text: "15 KML" },
     { source: require("../assets/gearbox.png"), text: "AUTO" },
@@ -34,7 +32,7 @@ const VehiclesCard = (props: Props) => {
       ...props.item,
       ...props.params,
     });
-  }, [rental]);
+  }, [props.item, props.params]);
   return (
     <LinearGradient
       className="w-full border-0.5 pl-5 py-5 rounded-lg flex-col mt-5"
@@ -75,4 +73,4 @@ const VehiclesCard = (props: Props) => {
   );
 };
 
-export default VehiclesCard;
+export default memo(VehiclesCard);
