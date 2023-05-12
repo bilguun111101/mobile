@@ -1,9 +1,9 @@
+import { useCallback, useState } from "react";
 import DatePicker from "react-native-date-picker";
-import { useCallback, useEffect, useState } from "react";
+import { shadow, HeaderContent } from "../components";
 import { useNavigation } from "@react-navigation/native";
 import InfortantButton from "../components/InfortantButton";
-import { shadow, HeaderContent, BottomButton } from "../components";
-import { months, calculateDate, DateToday, theme, week } from "../variables";
+import { months, calculateDate, DateToday } from "../variables";
 import { Alert, Image, Pressable, ScrollView, Text, View } from "react-native";
 
 const When = ({ route }: any) => {

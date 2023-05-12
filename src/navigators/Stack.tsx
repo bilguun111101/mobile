@@ -2,25 +2,33 @@ import Bottom from "./Bottom";
 import { HeaderLeftBtn } from "../components";
 import {
   When,
-  Start,
+  // Start,
   Review,
   Contact,
   Location,
   Vehicles,
   RentalDetails,
 } from "../screens";
-import { useCarsData } from "../context";
+// import { useCarsData } from "../context";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { useEffect } from "react";
+import * as SplashScreen from "expo-splash-screen";
 
 const Stck = createNativeStackNavigator();
 
 const Stack = () => {
-  const { loading } = useCarsData();
+  // const { loading } = useCarsData();
+
+  useEffect(() => {
+    SplashScreen.preventAutoHideAsync();
+    const timeout = setTimeout(SplashScreen.hideAsync, 2000);
+    return () => clearTimeout(timeout);
+  }, []);
   return (
     <NavigationContainer>
       <Stck.Navigator>
-        {!loading && (
+        {/* {!loading && (
           <Stck.Screen
             name="Start"
             component={Start}
@@ -28,7 +36,7 @@ const Stack = () => {
               headerShown: false,
             }}
           />
-        )}
+        )} */}
         <Stck.Screen
           name="Bottom_tab_container"
           component={Bottom}

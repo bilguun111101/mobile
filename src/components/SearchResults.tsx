@@ -1,33 +1,11 @@
 import { memo, useCallback, useState } from "react";
 import { View, Text, Pressable } from "react-native";
 
-// const Place = (props: any) => {
-//   return (
-//     <Pressable
-//       key={idx}
-//       onPress={() => onSubmit(`${district}`, idx)}
-//       className={`rounded-lg ${
-//         focus[idx] ? "bg-[#FF2F01]" : null
-//       } px-[10px] py-[5px]`}
-//     >
-//       <Text className={`font-normal text-[12px] ${focus[idx] && "text-white"}`}>
-//         {district}
-//       </Text>
-//       <Text
-//         className={`font-normal text-[10px] ${
-//           focus[idx] ? "text-white" : "text-[#808080]"
-//         }`}
-//       >
-//         {/* {capital} */}
-//         hello
-//       </Text>
-//     </Pressable>
-//   );
-// };
-
 const SearchResults = (props: any) => {
-  const [location, setLocation] = useState<string>("");
-  const [focus, setFocus] = useState<boolean[]>(new Array(5).fill(false));
+  const { places, setLocation, location } = props;
+  const [focus, setFocus] = useState<boolean[]>(
+    new Array(places + 6).fill(false)
+  );
   const onSubmit = useCallback(
     (place: string, index: number) => {
       setFocus((old) => {
@@ -40,11 +18,12 @@ const SearchResults = (props: any) => {
   );
   return (
     <View className="px-[30px] gap-y-[20px]">
-      {focus.map((el, idx) => {
+      {places.map((el: any, idx: number) => {
+        const { text, place_name } = el;
         return (
           <Pressable
             key={idx}
-            onPress={() => onSubmit(`{district}`, idx)}
+            onPress={() => onSubmit(text, idx)}
             className={`rounded-lg ${
               focus[idx] ? "bg-[#FF2F01]" : null
             } px-[10px] py-[5px]`}
@@ -54,16 +33,14 @@ const SearchResults = (props: any) => {
                 focus[idx] && "text-white"
               }`}
             >
-              {/* {district} */}
-              bayngol
+              {text}
             </Text>
             <Text
               className={`font-normal text-[10px] ${
                 focus[idx] ? "text-white" : "text-[#808080]"
               }`}
             >
-              {/* {capital} */}
-              hello
+              {place_name}
             </Text>
           </Pressable>
         );

@@ -1,14 +1,34 @@
-import { View, Text, Dimensions } from "react-native";
-import React from "react";
+import * as React from "react";
+import { View, useWindowDimensions } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { TabView, SceneMap } from "react-native-tab-view";
+import { MyProfile, MyRentals } from "../components";
 
-const { width, height } = Dimensions.get("window");
+const renderScene = SceneMap({
+  myRentals: MyRentals,
+  myProfile: MyProfile,
+});
 
 const Account = () => {
+  const layout = useWindowDimensions();
+
+  const [index, setIndex] = React.useState(0);
+  const [routes] = React.useState([
+    { key: "myRentals", title: "My Rentals" },
+    { key: "myProfile", title: "My Profile" },
+  ]);
+
   return (
-    <View className="flex-1">
-      <Text>Account</Text>
-    </View>
+    <SafeAreaView className="flex-1">
+      <TabView
+        navigationState={{ index, routes }}
+        renderScene={renderScene}
+        // tvParallaxMagnification={{ }}
+        onIndexChange={setIndex}
+        initialLayout={{ width: layout.width }}
+      />
+    </SafeAreaView>
   );
 };
 
-export default Account;
+export default React.memo(Account);
