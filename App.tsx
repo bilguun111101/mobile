@@ -4,7 +4,7 @@ import { Login, Register } from "./src/components";
 import { client } from "./src/graphql/apollo_client";
 import { QueryClientProvider, QueryClient } from "@tanstack/react-query";
 import { CarsDataProvider, OpenProvider, UserProvider } from "./src/context";
-// App.js
+// App.tsx
 
 const queryClient = new QueryClient();
 

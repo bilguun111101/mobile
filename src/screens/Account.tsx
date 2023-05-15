@@ -23,7 +23,6 @@ const Account = () => {
       <TabView
         navigationState={{ index, routes }}
         renderScene={renderScene}
-        // tvParallaxMagnification={{ }}
         onIndexChange={setIndex}
         initialLayout={{ width: layout.width }}
       />
