@@ -7,7 +7,7 @@
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./src/assets/logo.png",
+      "image": "./src/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -16,14 +16,14 @@
       "supportsTablet": true,
       "bundleIdentifier": "com.anonymous.mobile",
       "splash": {
-        "image": "./src/assets/logo.png",
+        "image": "./src/assets/splash.png",
         "resizeMode": "contain",
         "backgroundColor": "#ffffff"
       }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./src/assets/splash.png",
         "backgroundColor": "#ffffff"
       },
       "package": "com.anonymous.mobile"

@@ -8,6 +8,7 @@ import Login from "./Authentication/Login";
 import MyProfile from "./Account/MyProfile";
 import MyRentals from "./Account/MyRentals";
 import HeaderLeftBtn from "./HeaderLeftBtn";
+import BookLoadingCard from "./BookLoadingCard";
 import Register from "./Authentication/Register";
 
 export * from "./HeaderContent";
@@ -23,4 +24,5 @@ export {
   BottomButton,
   VehiclesCard,
   HeaderLeftBtn,
+  BookLoadingCard,
 };

@@ -4,6 +4,7 @@ import {
   useContext,
   createContext,
   PropsWithChildren,
+  useCallback,
 } from "react";
 import useGraphql from "../hooks/useGraphql";
 
@@ -12,6 +13,7 @@ const CarsData = createContext<any>(null);
 interface Value {
   loading: boolean;
   secondLoading: boolean;
+  controllCarsData: () => void;
   firstFiveCarsData: Car[] | [];
   getFirstFiveCarsData: () => void;
 }
@@ -23,21 +25,32 @@ export const CarsDataProvider = ({ children }: PropsWithChildren) => {
   const [firstFiveCarsData, setFirstFiveCarsData] = useState<Car[] | []>([]);
 
   const getFirstFiveCarsData = async () => {
-    setSecondLoading(true);
     try {
       const data = await getAllCarsByPage(0, 5, "desc");
       if (data) {
         const timeout = setTimeout(() => {
           setFirstFiveCarsData(data.getAllCarsWithPagination);
-          setLoading(true);
-          setSecondLoading(false);
         }, 2000);
         return () => clearTimeout(timeout);
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      setLoading(true);
+      setSecondLoading(false);
     }
   };
+
+  const controllCarsData = useCallback(async () => {
+    try {
+      setSecondLoading(true);
+      await getFirstFiveCarsData();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setSecondLoading(false);
+    }
+  }, [secondLoading]);
 
   useEffect(() => {
     getFirstFiveCarsData();
@@ -45,10 +58,11 @@ export const CarsDataProvider = ({ children }: PropsWithChildren) => {
   }, []);
 
   const value: Value = {
-    firstFiveCarsData,
     loading,
-    getFirstFiveCarsData,
     secondLoading,
+    controllCarsData,
+    firstFiveCarsData,
+    getFirstFiveCarsData,
   };
 
   return <CarsData.Provider value={value}>{children}</CarsData.Provider>;
