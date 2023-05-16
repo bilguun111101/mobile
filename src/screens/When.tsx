@@ -44,7 +44,7 @@ const When = ({ route }: any) => {
       setDateRentSection({
         time: `${date.getHours()}:${date.getMinutes()}`,
         day: `${date.getFullYear()}-${
-          date.getMonth() > 9 ? date.getMonth() : `0${date.getMonth()}`
+          date.getMonth() > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`
         }-${date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`}`,
       });
       setOpenRentModal(false);
@@ -57,7 +57,7 @@ const When = ({ route }: any) => {
       setDateReturnSection({
         time: `${date.getHours()}:${date.getMinutes()}`,
         day: `${date.getFullYear()}-${
-          date.getMonth() > 9 ? date.getMonth() : `0${date.getMonth()}`
+          date.getMonth() > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`
         }-${date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`}`,
       });
       setOpenReturnModal(false);
@@ -144,7 +144,7 @@ const When = ({ route }: any) => {
                       {title}
                     </Text>
                     <Text className="font-normal text-base">
-                      {!date ? "0000-0-0" : date}
+                      {date || "0000-0-0"}
                     </Text>
                   </View>
                   <View className="w-full p-2.5 flex-row gap-x-3 border-0.5 items-center rounded border-gray-600">
@@ -153,7 +153,7 @@ const When = ({ route }: any) => {
                       className="w-4"
                     />
                     <Text className="text-base font-medium">
-                      {!time ? "00:00" : time}
+                      {time || "00:00"}
                     </Text>
                   </View>
                 </View>

@@ -8,6 +8,7 @@ import {
   Location,
   Vehicles,
   RentalDetails,
+  Account,
 } from "../screens";
 // import { useCarsData } from "../context";
 import { NavigationContainer } from "@react-navigation/native";

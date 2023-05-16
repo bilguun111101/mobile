@@ -77,8 +77,6 @@ const useGraphql = () => {
 
       const { createUser } = response;
 
-      // Cookies.set("token", createUser?.token);
-      // Cookies.set("userId", createUser?.user.id);
       AsyncStorage.setItem("token", createUser?.token);
       AsyncStorage.setItem("userId", createUser?.user.id);
 
@@ -280,6 +278,7 @@ const useGraphql = () => {
             dateReturn,
             totalDays,
             location,
+            verified: false,
             extras,
             car,
           },

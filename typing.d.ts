@@ -47,7 +47,6 @@ interface User {
 }
 
 interface Car {
-  id?: string;
   image: string;
   type: string;
   typeDefinition: string;
@@ -101,4 +100,10 @@ interface ChooseDate {
 
 interface NeedCarsData {
   carsData: Car[] | undefined;
+}
+
+interface ExtrasInput {
+  GPS: boolean;
+  coverage: boolean;
+  child_safety: boolean;
 }

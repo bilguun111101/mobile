@@ -29,40 +29,51 @@ const RentalDetails = ({ route }: any) => {
     typeDefinition,
     userId: carRenterUserId,
   } = route.params;
+
   const { userStorage } = useUser();
   const { openLogin } = useOpenAuth();
   const { createRentals } = useGraphql();
   const navigation = useNavigation<any>();
   const onSubmit = useCallback(async () => {
-    if (!userStorage.token || !userStorage.userId) {
-      openLogin();
-      return;
+    try {
+      if (!userStorage.token || !userStorage.userId) {
+        openLogin();
+        return;
+      }
+
+      const car = {
+        // id,
+        kml,
+        type,
+        price,
+        image,
+        model,
+        passengers,
+        transmission,
+        typeDefinition,
+      };
+
+      const response = await createRentals({
+        userId: userStorage?.userId,
+        dateReturn,
+        totalDays,
+        dateRent,
+        location,
+        // verified: true,
+        extras,
+        car,
+      });
+
+      if (!response) {
+        console.log("rental is failed!!!");
+        return;
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      navigation.navigate("Bottom_tab_container");
     }
-    const car = {
-      kml,
-      type,
-      price,
-      image,
-      model,
-      passengers,
-      transmission,
-      typeDefinition,
-    };
-    const response = await createRentals({
-      car,
-      extras,
-      location,
-      dateRent,
-      totalDays,
-      dateReturn,
-      userId: userStorage.userId,
-    });
-    if (!response) {
-      console.log("rental is failed!!!");
-      return;
-    }
-    navigation.navigate("Bottom_tab_container");
-  }, []);
+  }, [route.params, userStorage]);
   return (
     <View className="flex-1 relative bg-white pb-bottom">
       <ScrollView>

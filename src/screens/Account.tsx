@@ -1,7 +1,7 @@
 import * as React from "react";
-import { View, useWindowDimensions } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { TabView, SceneMap } from "react-native-tab-view";
+import { View, useWindowDimensions, Text, SafeAreaView } from "react-native";
+import { TabView, SceneMap, TabBar } from "react-native-tab-view";
+
 import { MyProfile, MyRentals } from "../components";
 
 const renderScene = SceneMap({
@@ -19,15 +19,43 @@ const Account = () => {
   ]);
 
   return (
-    <SafeAreaView className="flex-1">
+    <View className="flex-1 relative pt-[50px] bg-white">
       <TabView
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
         onIndexChange={setIndex}
+        renderScene={renderScene}
+        navigationState={{ index, routes }}
         initialLayout={{ width: layout.width }}
+        renderTabBar={(props) => (
+          <TabBar
+            {...props}
+            style={{
+              backgroundColor: "#fff",
+              borderBottomWidth: 0.5,
+              borderColor: "silver",
+            }}
+            indicatorStyle={{ backgroundColor: "#FF2F01" }}
+            renderLabel={({ focused, route }) => {
+              return (
+                <View
+                  className={`${
+                    focused ? "bg-red-primary" : null
+                  } py-[10px] px-[35px] rounded-[8px]`}
+                >
+                  <Text
+                    className={`${
+                      focused ? "text-white" : "text-black"
+                    } text-[12px] font-semibold`}
+                  >
+                    {route.title}
+                  </Text>
+                </View>
+              );
+            }}
+          />
+        )}
       />
-    </SafeAreaView>
+    </View>
   );
 };
 
-export default React.memo(Account);
+export default Account;
