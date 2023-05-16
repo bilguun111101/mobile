@@ -7,7 +7,7 @@ import {
   useState,
 } from "react";
 import { loggedInState } from "../atoms";
-import { useSetRecoilState } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { CHECK_TOKEN } from "../graphql/queries/users";
 import { GET_CARS_BY_PASSENGERS } from "../graphql/queries/cars";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -65,6 +65,7 @@ export const UserProvider = ({ children }: PropsWithChildren) => {
           setLoggedIn(false);
           return;
         }
+
         setUserStorage({
           token,
           userId,
